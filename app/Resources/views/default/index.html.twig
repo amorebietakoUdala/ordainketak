@@ -1,0 +1,19 @@
+<html>
+<head>
+<meta http-equiv='Expires'content='Tue, 01 Jan 1980 1:00:00 GMT'>
+<meta http-equiv='Pragma' content='no-cache'>
+<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+</head>
+<body>
+<form name='p12FormOids' id='p12FormOids' method='POST' action='https://www.testpago.euskadi.net/p12iWar/p12iRPCDispatcherServlet'>
+<input type='hidden' name='module' value='IU'>
+<input type='hidden' name='p12iOidsPago' value="{{p12OidsPago}}">
+<input type='hidden' name='p12iPresentationRequestData' value="{{p12iPresentationRequestData | raw }}">
+<input type='hidden' name='p12iProtocolData' value="{{p12iProtocolData | raw }}">
+</form>
+<script language='JavaScript'>
+document.getElementById('p12FormOids').submit();
+</script>
+</body>
+</html>
+
