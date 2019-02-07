@@ -12,6 +12,19 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Payment
 {
+    
+    const PAYMENT_STATUS_INITIALIZED = '01';
+    
+    const PAYMENT_STATUS_OK = '04';
+    
+    const PAYMENT_STATUS_NOK = '05';
+
+    const PAYMENT_STATUS_MESSAGES = [
+	Payment::PAYMENT_STATUS_INITIALIZED => 'Payment initialized. Sended to MiPago.',
+	Payment::PAYMENT_STATUS_OK => 'Payment paid succesfully.',
+	Payment::PAYMENT_STATUS_NOK => 'The was an error during payment.',
+    ];
+
     /**
      * @var int
      *
@@ -71,6 +84,62 @@ class Payment
      */
     
     private $statusMessage;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    
+    private $nrc;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    
+    private $operationNumber;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    
+    private $entity;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    
+    private $office;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    
+    private $paymentDate;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    
+    private $paymentHour;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    
+    private $type;
 
     /**
      * @var string
@@ -189,6 +258,34 @@ class Payment
 	return $this->statusMessage;
     }
 
+    public function getNrc() {
+	return $this->nrc;
+    }
+
+    public function getOperationNumber() {
+	return $this->operationNumber;
+    }
+
+    public function getEntity() {
+	return $this->entity;
+    }
+
+    public function getOffice() {
+	return $this->office;
+    }
+
+    public function getPaymentDate() {
+	return $this->paymentDate;
+    }
+
+    public function getPaymentHour() {
+	return $this->paymentHour;
+    }
+
+    public function getType() {
+	return $this->type;
+    }
+
     public function getName() {
 	return $this->name;
     }
@@ -263,6 +360,34 @@ class Payment
 
     public function setStatusMessage($statusMessage) {
 	$this->statusMessage = $statusMessage;
+    }
+
+    public function setNrc($nrc) {
+	$this->nrc = $nrc;
+    }
+
+    public function setOperationNumber($operationNumber) {
+	$this->operationNumber = $operationNumber;
+    }
+
+    public function setOffice($office) {
+	$this->office = $office;
+    }
+
+    public function setPaymentDate($paymentDate) {
+	$this->paymentDate = $paymentDate;
+    }
+
+    public function setPaymentHour($paymentHour) {
+	$this->paymentHour = $paymentHour;
+    }
+
+    public function setEntity($entity) {
+	$this->entity = $entity;
+    }
+
+    public function setType($type) {
+	$this->type = $type;
     }
 
     public function setName($name) {

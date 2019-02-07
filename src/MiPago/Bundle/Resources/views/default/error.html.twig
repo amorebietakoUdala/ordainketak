@@ -1,1 +1,6 @@
-{{ exception.message }}
+{% extends "@MiPago/default/layout.html.twig" %}
+{% trans_default_domain "mipago" %}
+
+{% block error %}
+    {{ exception.message | trans }}
+{% endblock %}

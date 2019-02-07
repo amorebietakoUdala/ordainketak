@@ -1,0 +1,26 @@
+{
+  "name": "web",
+  "homepage": "https://github.com/amorebietakoUdala/ordainketak",
+  "authors": [
+    "Amorebietako Udala <informatika@amorebieta.eus>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^4.2.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.7",
+    "bootstrap-table": "^1.13.3",
+    "tableexport.jquery.plugin": "^1.10.1",
+    "jquery-ui": "^1.12.1",
+    "fontawesome": "^5.7.0"
+  }
+}

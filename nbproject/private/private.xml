@@ -3,8 +3,43 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="Local">
-            <file>file:/C:/Netbeans/mipago/src/MiPago/TestBundle/MiPagoTestBundle.php</file>
+            <file>file:/C:/Netbeans/mipago/src/MiPago/Bundle/Resources/views/default/thanks.html.twig</file>
+            <file>file:/C:/Netbeans/mipago/app/config/parameters.yml</file>
+            <file>file:/C:/Netbeans/mipago/src/MiPago/Bundle/Entity/Payment.php</file>
+            <file>file:/C:/Netbeans/mipago/app/config/routing.yml</file>
+            <file>file:/C:/Netbeans/mipago/src/MiPago/Bundle/DependencyInjection/Configuration.php</file>
+            <file>file:/C:/Netbeans/mipago/src/MiPago/Bundle/MiPagoBundle.php</file>
+            <file>file:/C:/Netbeans/mipago/src/MiPago/Bundle/Resources/views/default/confirmation.html.twig</file>
+            <file>file:/C:/Netbeans/mipago/app/Resources/translations/messages.es.yml</file>
+            <file>file:/C:/Netbeans/mipago/app/Resources/views/common/menu.html.twig</file>
+            <file>file:/C:/Netbeans/mipago/app/Resources/views/receipt/_form.html.twig</file>
+            <file>file:/C:/Netbeans/mipago/composer.json</file>
+            <file>file:/C:/Netbeans/mipago/app/Resources/views/common/header.html.twig</file>
+            <file>file:/C:/Netbeans/mipago/testClient.php</file>
             <file>file:/C:/Netbeans/mipago/app/AppKernel.php</file>
+            <file>file:/C:/Netbeans/mipago/src/AppBundle/Controller/ReceiptController.php</file>
+            <file>file:/C:/Netbeans/mipago/app/config/security.yml</file>
+            <file>file:/C:/Netbeans/mipago/src/AppBundle/Resources/fixtures/receipts.yml</file>
+            <file>file:/C:/Netbeans/mipago/app/Resources/translations/FOSUserBundle.eu.yml</file>
+            <file>file:/C:/Netbeans/mipago/app/Resources/views/receipt/list.html.twig</file>
+            <file>file:/C:/Netbeans/mipago/src/MiPago/Bundle/Resources/config/routing.yml</file>
+            <file>file:/C:/Netbeans/mipago/src/AppBundle/Forms/ReceiptBilatzaileaForm.php</file>
+            <file>file:/C:/Netbeans/mipago/src/MiPago/Bundle/Resources/views/default/request.html.twig</file>
+            <file>file:/C:/Netbeans/mipago/app/Resources/views/base.html.twig</file>
+            <file>file:/C:/Netbeans/mipago/app/config/parameters.yml.dist</file>
+            <file>file:/C:/Netbeans/mipago/app/Resources/FOSUserBundle/views/Security/login_content.html.twig</file>
+            <file>file:/C:/Netbeans/mipago/src/MiPago/Bundle/Services/MiPagoService.php</file>
+            <file>file:/C:/Netbeans/mipago/app/config/config.yml</file>
+            <file>file:/C:/Netbeans/mipago/src/AppBundle/Controller/AdminController.php</file>
+            <file>file:/C:/Netbeans/mipago/src/MiPago/Bundle/DependencyInjection/MiPagoExtension.php</file>
+            <file>file:/C:/Netbeans/mipago/src/AppBundle/Entity/Receipt.php</file>
+            <file>file:/C:/Netbeans/mipago/app/Resources/translations/messages.eu.yml</file>
+            <file>file:/C:/Netbeans/mipago/src/AppBundle/Repository/ReceiptRepository.php</file>
+            <file>file:/C:/Netbeans/mipago/app/Resources/translations/FOSUserBundle.es.yml</file>
+            <file>file:/C:/Netbeans/mipago/src/MiPago/Bundle/Controller/PaymentController.php</file>
+            <file>file:/C:/Netbeans/mipago/src/MiPago/Bundle/Resources/config/services.yml</file>
+            <file>file:/C:/Netbeans/mipago/src/MiPago/Bundle/Resources/views/default/error.html.twig</file>
+            <file>file:/C:/Netbeans/mipago/app/config/config_dev.yml</file>
         </group>
     </open-files>
 </project-private>

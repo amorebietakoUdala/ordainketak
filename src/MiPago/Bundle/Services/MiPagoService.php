@@ -11,6 +11,7 @@ namespace MiPago\Bundle\Services;
 use Symfony\Component\DomCrawler\Crawler;
 use Doctrine\ORM\EntityManager;
 use MiPago\Bundle\Entity\Payment;
+use GuzzleHttp\Client;
 use Exception;
 /**
  * Description of MiPagoConstants
@@ -148,8 +149,21 @@ XML;
     private $test_environment= null;
     private $logger = null;
     
+    /**
+     * @param EntityManager $em
+     * @param string $cpr
+     * @param string $sender
+     * @param string $format
+     * @param array $suffixes
+     * @param string $language
+     * @param string $return_url
+     * @param string $confirmation_url
+     * @param boolean $test_environment
+     * @param LoggerInterface $logger
+     */
     
-    public function __construct(EntityManager $em, $cpr, $sender, $format, $suffixes, $language, $return_url, $test_environment, $logger) {
+    
+    public function __construct(EntityManager $em, $cpr, $sender, $format, $suffixes, $language, $return_url, $confirmation_url, $test_environment, $logger) {
 	$this->em  = $em;
 	$this->cpr = $cpr;
 	$this->sender = $sender;
@@ -157,11 +171,11 @@ XML;
 	$this->suffixes = $suffixes;
 	$this->language = $language;
 	$this->return_url = $return_url;
+	$this->confirmation_url = $confirmation_url;
 	$this->payment_modes= ['001','002'];
 	$this->test_environment= $test_environment;
 	$this->logger= $logger;
 	$this->template = file_get_contents(__DIR__.'/../Resources/config/template.xml');
-//	dump($this);die;
     }
 
     /**
@@ -204,13 +218,14 @@ XML;
 	    $reference_number, $payment_limit_date, $suffix, $quantity, $extra) {
 	$em = $this->em;
 	$cpr = $this->cpr;
-	$sender = $this->sender;
+//	$sender = $this->sender;
 	$format = $this->format;
 	$language = $this->language;
 	$return_url = $this->return_url;
+//	$confirmation_url = $this->confirmation_url;
 	$payment_modes = $this->payment_modes;
 	$test_environment = $this->test_environment;
-	$suffixes[]= $this->suffixes;
+	$suffixes= $this->suffixes;
 //	
 	if ($test_environment) {
 	    $INITIALIZATION_URL = $this::TEST_ENVIRON_INITIALIZATION_URL;
@@ -228,8 +243,8 @@ XML;
 	    throw new Exception ('We only accept payments with Format 521');
 	}
 
-	if (!in_array($suffix, $suffixes)) {
-	    throw new Exception ('Suffix, not allowed. The allowed suffixes are: '.$suffixes);
+	if ( count($suffixes) > 0 && !in_array($suffix, $suffixes)) {
+	    throw new Exception ('Suffix, not allowed. The allowed suffixes are: '.implode(",", $suffixes));
 	}
 	
 	$result = $this->__initialize_payment($reference_number, $payment_limit_date, $suffix, $quantity, $extra);
@@ -243,7 +258,8 @@ XML;
 		$payment = $em->getRepository(Payment::class)->findOneBy([ 'registered_payment_id' =>$result_fields['payment_id']]);
 		$result_fields['payment'] = $payment;
 	    }
-	    return $result_fields;
+//	    return $result_fields;
+	    throw new Exception ("Already payd");
 	}
 	
 	$registered_payment_id = $result_fields['payment_id'];
@@ -288,7 +304,8 @@ XML;
 		'p12OidsPago' => $registered_payment_id, 
 		'p12iPresentationRequestData' => $presentation_request_data,
 		'p12iProtocolData' => $protocol_data,
-		'registered_payment_id' => $registered_payment_id
+		'registered_payment_id' => $registered_payment_id,
+		'serviceURL' => $SERVICE_URL
 	    ];
 	    return $result;
 	}
@@ -487,7 +504,7 @@ XML;
      private function __calculate_reference_number_with_control_digits_notebook_60 (
 	     $sender, $reference_number, $payment_identification, $quantity) {
 	if ( strlen($reference_number) != 10 ) {
-	    throw new InvalidReferenceNumber();
+	    throw new Exception("Invalid Reference Number");
 	}
 	$total = intval($sender)*76;
 	$total += intval($reference_number)*9;
@@ -527,6 +544,15 @@ XML;
 	];
 	return str_replace(array_keys($params), $params, $payment_code);
     }
+
+     /**
+      * Parses payment initialization response XML and converts it an asociative array.
+      * Set the status to PAY_STATUS_NOK ok when a validation message exists.
+      * If no error it returns PAY_STATUS_INITIALIZED
+      * 
+      * @param string $xmlresponse
+      * @return array
+      */
     
     private function __parse_initialization_response($xmlresponse) {
 	$root = new Crawler($xmlresponse);
@@ -548,7 +574,13 @@ XML;
 	}
 	return $fields;
     }
-    
+
+     /**
+      * Parses payment confirmation response XML and converts it an asociative array of the relevant values.
+      * 
+      * @param string $xmlresponse
+      * @return array
+      */
     private function __parse_confirmation_response($xmlresponse) {
 	$root = new Crawler($xmlresponse);
 	$text_message = $root->filterXPath('.//estado/mensajes/mensaje/texto')->extract('_text');
@@ -558,19 +590,18 @@ XML;
 	    $text_message = null;
 	}
 	$fields = [
-	    'payment_id' => $root->filterXPath('.//paymentid')->text(),
-	    'codigo' => $root->filterXPath('.//estado/codigo')->text(),
-	    'quantity' => $root->filterXPath('.//importe')->text(),
-	    'operationNumber' => $root->filterXPath('.//numerooperacion')->text(),
-	    'nrc' => $root->filterXPath('.//nrc')->text(),
-	    'fechaPago' => $root->filterXPath('.//fechapago')->text(),
-	    'horaPago' => $root->filterXPath('.//horapago')->text(),
-	    'timestamp' => $root->filterXPath('.//timestamp')->text(),
-	    'tipo' => $root->filterXPath('.//tipo')->text(),
-	    'entidad' => $root->filterXPath('.//entidad')->text(),
-	    'oficina' => $root->filterXPath('.//oficina')->text(),
+	    'payment_id' => ($root->filterXPath('.//paymentid')->count() > 0) ? $root->filterXPath('.//paymentid')->text() : null,
+	    'codigo' => ($root->filterXPath('.//estado/codigo')->count() > 0) ? $root->filterXPath('.//estado/codigo')->text() : null,
+	    'quantity' => ($root->filterXPath('.//importe')->count() > 0) ? $root->filterXPath('.//importe')->text() : null,
+	    'operationNumber' => ($root->filterXPath('.//numerooperacion')->count() > 0) ? $root->filterXPath('.//numerooperacion')->text() : null,
+	    'nrc' => ($root->filterXPath('.//nrc')->count() > 0) ? $root->filterXPath('.//nrc')->text() : null,
+	    'paymentDate' => ($root->filterXPath('.//fechapago')->count() > 0) ? $root->filterXPath('.//fechapago')->text() : null,
+	    'paymentHour' => ($root->filterXPath('.//horapago')->count() > 0) ? $root->filterXPath('.//horapago')->text() : null,
+	    'timestamp' => ($root->filterXPath('.//timestamp')->count() > 0) ? $root->filterXPath('.//timestamp')->text() : null,
+	    'type' => ($root->filterXPath('.//tipo')->count() > 0) ? $root->filterXPath('.//tipo')->text() : null,
+	    'entity' => ($root->filterXPath('.//entidad')->count() > 0) ? $root->filterXPath('.//entidad')->text() : null,
+	    'office' => ($root->filterXPath('.//oficina')->count() > 0) ? $root->filterXPath('.//oficina')->text() : null,
 	    'message' => $text_message,
-	    'payment_status' => MiPagoService::PAYMENT_STATUS_OK,
 	];
 	return $fields;
     }
@@ -578,17 +609,52 @@ XML;
     public function process_payment_confirmation ($confirmation_payload) {
 	parse_str($confirmation_payload, $params);
 	$fields = $this->__parse_confirmation_response($params['param1']);
-//	$root = new Crawler($params['param1']);
-	if ( $params['function'] == 'onPayONLineOK' || $params['function'] == 'onPayONLineNOK') {
-	    $payment = $this->em->getRepository(Payment::class)->findOneBy([ 
-		'registered_payment_id' => $fields['payment_id']
-	    ]);
-	    $payment->setStatus($fields['codigo']);
-	    $payment->setStatusMessage($fields['message']);
-	    $payment->setMipagoResponse($params['param1']);
-	    $this->em->persist($payment);
-	    $this->em->flush();
-	}
+	$payment = $this->em->getRepository(Payment::class)->findOneBy([ 
+	    'registered_payment_id' => $fields['payment_id']
+	]);
+	$payment->setStatus($fields['codigo']);
+	$date  = new \DateTime();
+	$payment->setTimestamp($date->setTimestamp ( $fields['timestamp'] ));
+	$payment->setStatusMessage($fields['message']);
+	$payment->setOperationNumber($fields['operationNumber']);
+	$payment->setNrc($fields['nrc']);
+	$payment->setPaymentDate($fields['paymentDate']);
+	$payment->setPaymentHour($fields['paymentHour']);
+	$payment->setType($fields['type']);
+	$payment->setEntity($fields['entity']);
+	$payment->setOffice($fields['office']);
+	$payment->setMipagoResponse($params['param1']);
+	$this->em->persist($payment);
+	$this->em->flush();
+	
+//	$url = $this->confirmation_url;
+//	$client = new Client([
+//	    // You can set any number of default request options.
+//	    'timeout'  => 3.0,
+//	]);
+//	
+//	$promise = $client->request('POST',$url, [
+//	    'form_params' => [
+//		'reference_number' => trim($payment->getReference_number()),
+//		'status' => trim($payment->getStatus()),
+//		'payment_id' => trim($payment->getId())
+//	    ]
+//	]);
+//	if ( $url != null && $url != '') {
+//	    $content = "reference_number=" . trim($payment->getReference_number()) .
+//				  "&status=" . trim($payment->getStatus()) .
+//				  "&payment_id=" . trim($payment->getId());
+//	    $options = array (
+//	    'http' => array (
+//		    'method' => 'POST',
+//		    'header'=> "Content-type: application/x-www-form-urlencoded\r\n"
+//			    . "Content-Length: " . strlen(trim($content)) . "\r\n",
+//		    'content' => $content
+//		    )
+//	    );
+//	    $context = stream_context_create($options);
+//	    $result = file_get_contents($url, false, $context);
+//	}
 	return $payment;
     }
 }

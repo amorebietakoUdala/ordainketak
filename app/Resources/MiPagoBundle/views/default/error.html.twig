@@ -1,0 +1,16 @@
+{% extends "@MiPago/default/layout.html.twig" %}
+{% trans_default_domain "mipago" %}
+
+{% block error %}
+    <div class="container-fluid">
+	<div class="alert alert-danger margin-top-13 center">
+	    {{ exception.message | trans }}
+	</div>
+    </div>
+    <div class="container-fluid row d-flex justify-content-center">
+	{% set receipt = app.request.attributes.get('_forwarded').get('receipt') %}
+	<div class="col-lg-2 col-md-2 align-self-center">
+	    <a href="/{{app.request.locale}}/receipts?numeroReferencia={{receipt.numeroReferencia}}&dni={{receipt.dni}}"btn-home" class="btn btn-primary">{% trans from "messages" into app.request.locale %}messages.home{% endtrans %}</a>
+	</div>
+    </div>
+{% endblock %}

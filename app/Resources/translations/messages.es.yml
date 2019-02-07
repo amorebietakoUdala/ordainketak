@@ -1,0 +1,28 @@
+messages.appTitle: "ORDAIN"
+search.title: "Busqueda"
+
+receipt.numeroReferencia: "Referencia"
+receipt.concepto: "Concepto"
+receipt.nombre: "Nombre"
+receipt.apellido1: "Primer Apellido"
+receipt.apellido2: "Segundo Apellido"
+receipt.dni: "DNI"
+receipt.email: "Email"
+receipt.search: "Buscar"
+receipt.importe: "Importe"
+receipt.ultimoDiaPago: "Limite Pago"
+receipt.payd: "Pagado"
+receipt.options: "Opciones"
+
+messages.home: "Volver"
+messages.payd: "Sí"
+messages.unpayd: "No"
+messages.results0: "No se han encontrado resultados"
+messages.thanks: "Gracias por utilizar la plataforma de pago online del ayuntamiento de Amorebieta-Etxano"
+
+
+link.logout: "Salir"
+navitem.receipts: "Recibos"
+navitem.payments: "Pagos"
+
+'El dni y el número de inscripción son obligatorios': 'El dni y el número de inscripción son obligatorios'

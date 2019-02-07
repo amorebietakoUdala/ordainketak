@@ -17,3 +17,16 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    mipago.sender: 486666
+    mipago.suffix: 666
+    mipago.return_url: http://domain.eus/mipago/thanks
+    mipago.confirmation_url: 'http://domain.eus/receiptConfirmation'
+    mipago.forwardController: 'AppBundle:Receipt:receiptConfirmation'
+    mipago.test_environment: FALSE
+
+    ldap_host: ldap.company.com
+    ldap_user: ldap_user
+    ldap_password: ldap_password
+    ldap_users_dn: OU=Users,DC=name,DC=com
+    ldap_accountDomainName: domain_name

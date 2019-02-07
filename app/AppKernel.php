@@ -16,7 +16,10 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+	    new JMS\SerializerBundle\JMSSerializerBundle(),
             new MiPago\Bundle\MiPagoBundle(),
+	    new FOS\UserBundle\FOSUserBundle(),
+            new FR3D\LdapBundle\FR3DLdapBundle(),
             new AppBundle\AppBundle(),
         ];
 
@@ -24,8 +27,11 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-
-            if ('dev' === $this->getEnvironment()) {
+	    $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
+	    $bundles[] = new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle();
+	    $bundles[] = new Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle();
+	    $bundles[] = new Hautelook\AliceBundle\HautelookAliceBundle();
+	    if ('dev' === $this->getEnvironment()) {
                 $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
                 $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
             }

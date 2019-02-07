@@ -29,10 +29,11 @@ class MiPagoExtension extends Extension
 	$definition->replaceArgument(1, $config['cpr']);
 	$definition->replaceArgument(2, $config['sender']);
 	$definition->replaceArgument(3, $config['format']);
-	$definition->replaceArgument(4, $config['suffix']);
+	$definition->replaceArgument(4, $config['suffixes']);
 	$definition->replaceArgument(5, $config['language']);
 	$definition->replaceArgument(6, $config['return_url']);
-	$definition->replaceArgument(7, $config['test_environment']);
+	$definition->replaceArgument(7, $config['confirmation_url']);
+	$definition->replaceArgument(8, $config['test_environment']);
 //	$definition->replaceArgument(1, $config['payment_mode']);
     }
 }
