@@ -24,7 +24,7 @@ class DefaultController extends Controller {
      * @Route("/", name="home", methods={"GET"})
      */
     public function homeAction(Request $request, LoggerInterface $logger) {
-	return $this->forward("AppBundle:Receipt:Home",[
+	return $this->redirectToRoute('receipt_home',[
 	    'request' => $request,
 	    'logger' => $logger,
 	]);

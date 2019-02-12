@@ -8,12 +8,12 @@
 	{{ form_errors(form) }}
 	
 	<div class="container-fluid row mb-1 d-flex flex-row justify-content-left align-content-center"> 
-	    <div class="col-lg-2 col-md-2">
+	    <div class="col-lg-2 col-md-2 col-sm-6">
 		{{ form_label(form.numeroReferencia) }}
 		{{ form_widget(form.numeroReferencia, { 'id': 'input-numeroReferencia', 'attr': { 'class' : '' } }) }}
 		{{ form_errors(form.numeroReferencia) }}
 	    </div>
-	    <div class="col-lg-2 col-md-2">
+	    <div class="col-lg-2 col-md-2 col-sm-6">
 		{{ form_label(form.dni) }}
 		{{ form_widget(form.dni, { 'attr': { 'id': 'input-dni', 'class' : '' } }) }}
 		{{ form_errors(form.dni) }}

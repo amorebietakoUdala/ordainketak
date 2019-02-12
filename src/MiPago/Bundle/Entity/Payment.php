@@ -19,10 +19,10 @@ class Payment
     
     const PAYMENT_STATUS_NOK = '05';
 
-    const PAYMENT_STATUS_MESSAGES = [
-	Payment::PAYMENT_STATUS_INITIALIZED => 'Payment initialized. Sended to MiPago.',
-	Payment::PAYMENT_STATUS_OK => 'Payment paid succesfully.',
-	Payment::PAYMENT_STATUS_NOK => 'The was an error during payment.',
+    const PAYMENT_STATUS_DESCRIPTION = [
+	Payment::PAYMENT_STATUS_INITIALIZED => 'status.initialized',
+	Payment::PAYMENT_STATUS_OK => 'status.paid',
+	Payment::PAYMENT_STATUS_NOK => 'status.unpaid',
     ];
 
     /**
@@ -462,5 +462,31 @@ class Payment
 	    'mipagoResponse' => $this->mipagoResponse,
 	]);
     }
+    
+    public function toArray() {
+	return [
+	    'id' => $this->id,
+	    'timestamp' => $this->timestamp,
+	    'reference_number' => $this->reference_number,
+	    'suffix' => $this->suffix,
+	    'quantity' => $this->quantity,
+	    'registered_payment_id' => $this->registered_payment_id,
+	    'status' => $this->status,
+	    'statusMessage' => $this->statusMessage,
+	    'name' => $this->name,
+	    'surname_1' => $this->surname_1,
+	    'surname_2' => $this->surname_2,
+	    'city' => $this->city,
+	    'nif' => $this->nif,
+	    'address' => $this->address,
+	    'postalCode' => $this->postalCode,
+	    'territory' => $this->territory,
+	    'country' => $this->country,
+	    'phone' => $this->phone,
+	    'email' => $this->email,
+	    'mipagoResponse' => $this->mipagoResponse,
+	];
+    }
+
 }
 

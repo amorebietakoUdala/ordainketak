@@ -15,18 +15,22 @@ use AppBundle\Forms\ReceiptTypeForm;
 
 /**
  * @Route("/{_locale}", requirements={
- *	    "_locale": "es|eu"
+ *	    "_locale": "es|eu|en"
  * })
  */
 class ReceiptController extends Controller
 {
     
     /**
-     * @Route("/", name="receipt_home", methods={"GET"})
+     * @Route("/", name="receipt_home", methods={"GET","POST"})
      */
     public function homeAction(Request $request, LoggerInterface $logger) {
-	$logger->debug('-->homeAction: Start');
-	$logger->debug('-->homeAction: End');
+	$locale = $request->attributes->get('_locale');
+	if ( $locale !== null ) {
+	    $request->getSession()->set('_locale', $locale);
+	} else {
+	    $request->setLocale($request->getSession()->get('_locale'));
+	}
 	return $this->findReceiptsAction($request, $logger);
     }
 
@@ -62,8 +66,18 @@ class ReceiptController extends Controller
 		]);
 	    }
 	}
-	// Aldatu hau errezibo guztiak agertzen dira, kriteriorik sartu ez denean.
-	$results = $em->getRepository(Receipt::class)->findReceiptByExample($receipt);
+	if ( $user === "anon." &&  ( $dni === null || $numeroReferencia === null ) ) {
+	    $results = [];
+	} else {
+	    $receipt = new Receipt();
+	    $receipt->setDni($dni);
+	    $receipt->setNumeroReferencia($numeroReferencia);
+	    $results = $em->getRepository(Receipt::class)->findReceiptByExample($receipt);
+	    return $this->render('receipt/list.html.twig', [
+		'form' => $form->createView(),
+		'receipts' => $results,
+	    ]);
+	}
 	$logger->debug('<--findReceiptsAction: Results: '. count($results));
 	$logger->debug('<--findReceiptsAction: End OK');
 	return $this->render('receipt/list.html.twig', [

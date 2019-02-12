@@ -4,7 +4,7 @@
 {% block error %}
     <div class="container-fluid">
 	<div class="alert alert-danger margin-top-13 center">
-	    {{ exception.message | trans }}
+	    {{ exception.message | trans({'%suffixes%' : suffixes},"mipago", app.request.locale) }}
 	</div>
     </div>
     <div class="container-fluid row d-flex justify-content-center">

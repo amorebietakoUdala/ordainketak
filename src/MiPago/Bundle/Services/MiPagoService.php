@@ -215,12 +215,12 @@ XML;
 //	    $cpr, $sender, $format, $suffix, $reference_number, $payment_limit_date, $quantity, 
 //	    $language, $return_url, $payment_modes, $test_environment=FALSE, $extra) {
     public function make_payment_request (
-	    $reference_number, $payment_limit_date, $suffix, $quantity, $extra) {
+	    $reference_number, $payment_limit_date, $suffix, $quantity, $language, $extra) {
 	$em = $this->em;
 	$cpr = $this->cpr;
 //	$sender = $this->sender;
 	$format = $this->format;
-	$language = $this->language;
+//	$language = $this->language;
 	$return_url = $this->return_url;
 //	$confirmation_url = $this->confirmation_url;
 	$payment_modes = $this->payment_modes;
@@ -244,7 +244,7 @@ XML;
 	}
 
 	if ( count($suffixes) > 0 && !in_array($suffix, $suffixes)) {
-	    throw new Exception ('Suffix, not allowed. The allowed suffixes are: '.implode(",", $suffixes));
+	    throw new Exception ('Suffix, not allowed. The allowed suffixes are: %suffixes%');
 	}
 	
 	$result = $this->__initialize_payment($reference_number, $payment_limit_date, $suffix, $quantity, $extra);
@@ -258,7 +258,6 @@ XML;
 		$payment = $em->getRepository(Payment::class)->findOneBy([ 'registered_payment_id' =>$result_fields['payment_id']]);
 		$result_fields['payment'] = $payment;
 	    }
-//	    return $result_fields;
 	    throw new Exception ("Already payd");
 	}
 	
@@ -590,6 +589,7 @@ XML;
 	    $text_message = null;
 	}
 	$fields = [
+	    'id' => ($root->filterXPath('.//id')->count() > 0) ? $root->filterXPath('.//id')->text() : null,
 	    'payment_id' => ($root->filterXPath('.//paymentid')->count() > 0) ? $root->filterXPath('.//paymentid')->text() : null,
 	    'codigo' => ($root->filterXPath('.//estado/codigo')->count() > 0) ? $root->filterXPath('.//estado/codigo')->text() : null,
 	    'quantity' => ($root->filterXPath('.//importe')->count() > 0) ? $root->filterXPath('.//importe')->text() : null,
@@ -603,15 +603,24 @@ XML;
 	    'office' => ($root->filterXPath('.//oficina')->count() > 0) ? $root->filterXPath('.//oficina')->text() : null,
 	    'message' => $text_message,
 	];
+//	dump($fields);die;
 	return $fields;
     }
 
+     /**
+      * Stores the payment confirmation in the database and return the Payment object.
+      * 
+      * @param string $confirmation_payload
+      * @return Payment
+      */
     public function process_payment_confirmation ($confirmation_payload) {
 	parse_str($confirmation_payload, $params);
+//	dump($params['param1']);die;
 	$fields = $this->__parse_confirmation_response($params['param1']);
 	$payment = $this->em->getRepository(Payment::class)->findOneBy([ 
-	    'registered_payment_id' => $fields['payment_id']
+	    'registered_payment_id' => $fields['id']
 	]);
+//	dump($payment);die;
 	$payment->setStatus($fields['codigo']);
 	$date  = new \DateTime();
 	$payment->setTimestamp($date->setTimestamp ( $fields['timestamp'] ));
@@ -626,35 +635,6 @@ XML;
 	$payment->setMipagoResponse($params['param1']);
 	$this->em->persist($payment);
 	$this->em->flush();
-	
-//	$url = $this->confirmation_url;
-//	$client = new Client([
-//	    // You can set any number of default request options.
-//	    'timeout'  => 3.0,
-//	]);
-//	
-//	$promise = $client->request('POST',$url, [
-//	    'form_params' => [
-//		'reference_number' => trim($payment->getReference_number()),
-//		'status' => trim($payment->getStatus()),
-//		'payment_id' => trim($payment->getId())
-//	    ]
-//	]);
-//	if ( $url != null && $url != '') {
-//	    $content = "reference_number=" . trim($payment->getReference_number()) .
-//				  "&status=" . trim($payment->getStatus()) .
-//				  "&payment_id=" . trim($payment->getId());
-//	    $options = array (
-//	    'http' => array (
-//		    'method' => 'POST',
-//		    'header'=> "Content-type: application/x-www-form-urlencoded\r\n"
-//			    . "Content-Length: " . strlen(trim($content)) . "\r\n",
-//		    'content' => $content
-//		    )
-//	    );
-//	    $context = stream_context_create($options);
-//	    $result = file_get_contents($url, false, $context);
-//	}
 	return $payment;
     }
 }
