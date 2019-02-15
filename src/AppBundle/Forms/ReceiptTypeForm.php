@@ -33,99 +33,59 @@ class ReceiptTypeForm extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
 //	$locale = $options['data']['locale'];
 	$roles = $options['roles'];
-	$builder
-            ->add('numeroReferencia',TextType::class,[
-	    "label"=>"receipt.numeroReferencia",
+	$search = $options['search'];
+	$readonly = $options['readonly'];
+	$newReceipt = $options['newReceipt'];
+	if (!$newReceipt ) {
+	    $builder->add('numeroReferencia',TextType::class,[
+		'label'=>'receipt.numeroReferencia',
 	    ]);
-//	    ->add('idCurso')
+	}
 	$builder->add('dni',null,[
-	    "label"=>"receipt.dni",
+	    'label'=>'receipt.dni',
 	    ]);
 	if (in_array('ROLE_ADMIN', $roles) ) {
-	    $builder->add('concepto',null,[
-		    "label"=>"receipt.concepto",
+	    if ( !$newReceipt ) {
+		$builder->add('concepto',null,[
+			'label'=>'receipt.concepto',
+			'disabled' => $readonly,
 		])
-		->add('nombre',null,[
-		    "label"=>"receipt.nombre",
+		->add('numeroReferenciaGTWIN',TextType::class,[
+		    'label'=>'receipt.numeroReferenciaGTWIN',
+		]);
+	    }
+	    $builder->add('nombre',null,[
+		    'label'=>'receipt.nombre',
+		    'disabled' => $readonly,
 		])
 		->add('apellido1',null,[
-		    "label"=>"receipt.apellido1",
+		    'label'=>'receipt.apellido1',
+		    'disabled' => $readonly,
 		])
 		->add('apellido2',null,[
-		    "label"=>"receipt.apellido2",
+		    'label'=>'receipt.apellido2',
+		    'disabled' => $readonly,
 		])
 		->add('email',null,[
-		    "label"=>"receipt.email",
+		    'label'=>'receipt.email',
+		    'disabled' => $readonly,
+		])
+		->add('telefono',null,[
+		    'label'=>'receipt.telefono',
+		    'disabled' => $readonly,
 		]);
 	}
-	$builder->add('search', SubmitType::class,[
-	    "label"=>"receipt.search"
-	])
-//	    ->add('telefono')
-//	    ->add('importe')
-//	    ->add('noiztik', DateTimeType::class, [
-//		'widget' => 'single_text',
-//		'html5' => 'false',
-//		'format' => 'yyyy-MM-dd HH:mm',
-//		'attr' => [ 'class' => 'js-datepicker'],
-//	    ])
-//	    ->add('nora', DateTimeType::class, [
-//		'widget' => 'single_text',
-//		'html5' => 'false',
-//		'format' => 'yyyy-MM-dd HH:mm',
-//		'attr' => [ 'class' => 'js-datepicker'],
-//	    ])
-//	    ->add('egoera', EntityType::class,[
-//		'placeholder'=> 'messages.hautatu_egoera',
-//		'class' => Egoera::class,
-//		'choice_label' => function ($egoera) use ($locale) {
-//		    if ($locale === 'es') {
-//			return $egoera->getDeskripzioaEs();
-//		    } else {
-//			return $egoera->getDeskripzioaEu();
-//		    }
-//		},
-//	    ])
-//	    ->add('kalea', TextType::class,[
-//	    ]);
-//	    if (in_array('ROLE_ADMIN', $options['data']['role']) || in_array('ROLE_INFORMATZAILEA', $options['data']['role']) || in_array('ROLE_ARDURADUNA', $options['data']['role'])) {
-//		$builder->add('enpresa', EntityType::class,[
-//		    'placeholder'=> 'messages.hautatu_enpresa',
-//		    'class' => Enpresa::class,
-//		    'query_builder' => function (EnpresaRepository $repo) {
-//			    return $repo->createOrderedQueryBuilder();
-//			}
-//		    ])
-//		    ->add('zerbitzua', EntityType::class,[
-//		    'placeholder'=> 'messages.hautatu_zerbitzua',
-//		    'class' => Zerbitzua::class,
-//		    'group_by' => 'enpresa',
-//		    'choice_label' => function ($zerbitzua) use ($locale) {
-//		    if ($locale === 'es') {
-//			return $zerbitzua->getIzenaEs();
-//		    } else {
-//			return $zerbitzua->getIzenaEu();
-//		    }
-//		    },
-//		    'query_builder' => function (ZerbitzuaRepository $repo) {
-//			    return $repo->createOrderedQueryBuilder();
-//		    }
-//		])
-//		;
-//	    } else {
-//		$builder->add('zerbitzua', EntityType::class,[
-//		    'placeholder'=> 'messages.hautatu_zerbitzua',
-//		    'class' => Zerbitzua::class,
-//		    'query_builder' => function (ZerbitzuaRepository $repo) use ($options) {
-//			$enpresa = null;
-//			if (array_key_exists('enpresa', $options['data'])) {
-//			    $enpresa = $options['data']['enpresa'];
-//			}
-//			return $repo->createZerbitzuakQueryBuilder($enpresa);
-//		}
-//		])
+	if ( $search ) {
+	    $builder->add('search', SubmitType::class,[
+		'label'=>'receipt.search',
+	    ]);
+	} else {
+	    $builder->add('save', SubmitType::class,[
+		'label'=>'receipt.save',
+
+	    ]);
+	}
 	;
-//	    }
     }
 
     public function configureOptions(OptionsResolver $resolver) {
@@ -134,6 +94,9 @@ class ReceiptTypeForm extends AbstractType {
 	    'data_class' => Receipt::class, 
 	    'locale' => null,
 	    'roles' => null,
+	    'search' => false,
+	    'readonly' => false,
+	    'newReceipt' => false,
 	]);
     }
 }

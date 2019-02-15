@@ -19,7 +19,7 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
 
     mipago.sender: 486666
-    mipago.suffix: 666
+    mipago.suffixes: ['001','002']
     mipago.return_url: http://domain.eus/mipago/thanks
     mipago.confirmation_url: 'http://domain.eus/receiptConfirmation'
     mipago.forwardController: 'AppBundle:Receipt:receiptConfirmation'

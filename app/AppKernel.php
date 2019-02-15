@@ -19,6 +19,7 @@ class AppKernel extends Kernel
 	    new JMS\SerializerBundle\JMSSerializerBundle(),
             new MiPago\Bundle\MiPagoBundle(),
 	    new FOS\UserBundle\FOSUserBundle(),
+	    new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new FR3D\LdapBundle\FR3DLdapBundle(),
             new AppBundle\AppBundle(),
         ];

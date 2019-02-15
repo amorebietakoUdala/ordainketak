@@ -149,3 +149,7 @@ main {
 #event-details pre {
     overflow-y: hidden;
 }
+
+.btn-rounded {
+    border-radius: 1.5rem 1.5rem 1.5rem 1.5rem;
+}

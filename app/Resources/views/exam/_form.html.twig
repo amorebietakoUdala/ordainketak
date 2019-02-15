@@ -1,0 +1,54 @@
+{{ form_start(form, {'attr': {'class': 'container-fluid form-group',
+						 'novalidate': 'novalidate'
+						} 
+}) }}
+{{ form_errors(form) }}
+    <div class="form-row align-items-center mb-1"> 
+	<div class="col-lg-2 col-md-2 col-sm-6">
+	    {{ form_label(form.inscription.dni) }}
+	    {{ form_widget(form.inscription.dni, { 'id': '', 'attr': { 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.inscription.dni) }}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-6">
+	    {{ form_label(form.inscription.nombre) }}
+	    {{ form_widget(form.inscription.nombre, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.inscription.nombre) }}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-6">
+	    {{ form_label(form.inscription.apellido1) }}
+	    {{ form_widget(form.inscription.apellido1, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.inscription.apellido1) }}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-6">
+	    {{ form_label(form.inscription.apellido2) }}
+	    {{ form_widget(form.inscription.apellido2, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.inscription.apellido2) }}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-6">
+	    {{ form_label(form.inscription.email) }}
+	    {{ form_widget(form.inscription.email, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.inscription.email) }}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-6">
+	    {{ form_label(form.inscription.telefono) }}
+	    {{ form_widget(form.inscription.telefono, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.inscription.telefono) }}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-6">
+	    {{ form_label(form.category) }}
+	    {{ form_widget(form.category, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.category) }}
+	</div>
+	
+    {% if readonly == false %}
+	{{ form_widget(form.save, { 'attr': { 'class' : 'btn btn-primary ml-1' } }) }}
+    {% else %}
+	{% set url = path('receipt_list') %}
+	{{ form_widget(form.back, { 'attr': { 'class' : 'js-back btn btn-primary ml-1' ,
+					     'data-url' : url },
+				  }) }}
+    {% endif %}
+    </div>
+{{ form_end(form, {'attr': {'class': '',
+			       } 
+}) }}

@@ -2,27 +2,55 @@ messages.appTitle: "ORDAIN"
 search.title: "Busqueda"
 
 receipt.numeroReferencia: "Referencia"
+receipt.numeroReferenciaGTWIN: "Referencia GTWIN"
 receipt.concepto: "Concepto"
 receipt.nombre: "Nombre"
 receipt.apellido1: "Primer Apellido"
 receipt.apellido2: "Segundo Apellido"
 receipt.dni: "DNI"
 receipt.email: "Email"
+receipt.telefono: "Telefono"
 receipt.search: "Buscar"
 receipt.importe: "Importe"
 receipt.ultimoDiaPago: "Limite Pago"
 receipt.payd: "Pagado"
-receipt.options: "Opciones"
+options: "Opciones"
 
+concept.id: "Id"
+concept.name: "Nombre"
+concept.suffix: "Sufijo"
+concept.unitaryPrice: "Precio unitario"
+
+messages.confirmacion: "Confirmación"
 messages.home: "Volver"
 messages.payd: "Sí"
 messages.unpayd: "No"
 messages.results0: "No se han encontrado resultados"
 messages.thanks: "Gracias por utilizar la plataforma de pago online del ayuntamiento de Amorebieta-Etxano"
+messages.si: "Sí"
+messages.no: "No"
 
 
 link.logout: "Salir"
+navitem.paymentTypes: "Tipos de pagos"
+navitem.taxes: "Pago de tasas"
+navitem.exams: "Examen A1"
+navitem.administration: "Administración"
+navitem.concepts: "Conceptos"
 navitem.receipts: "Recibos"
 navitem.payments: "Pagos"
 
+exam.category: "Categoría"
+
+confirmation.title: "Datos del pago"
+confirmation.pay: "Pagar"
+confirmation.cancel: "Cancelar"
+
+btn.new: "Nuevo"
+btn.save: "Guardar"
+btn.back: "Volver"
+
 'El dni y el número de inscripción son obligatorios': 'El dni y el número de inscripción son obligatorios'
+'El concepto se ha eliminado correctamente.': 'El concepto se ha eliminado correctamente.'
+'¿Esta seguro de que desea eliminar el registro?': '¿Esta seguro de que desea eliminar el registro?'
+'Recibo no encontrado': 'Recibo no encontrado'

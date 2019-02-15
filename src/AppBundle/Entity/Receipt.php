@@ -27,14 +27,21 @@ class Receipt
     /**
      * @var int
      *
-     * @ORM\Column(name="numero_referencia", type="integer")
+     * @ORM\Column(name="numero_referencia", type="integer", nullable=true)
      */
     private $numeroReferencia;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="numero_referencia_gtwin", type="integer", nullable=true)
+     */
+    private $numeroReferenciaGTWIN;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="concepto", type="string", length=255)
+     * @ORM\Column(name="concepto", type="string", length=255, nullable=true)
      */
     private $concepto;
 
@@ -85,7 +92,7 @@ class Receipt
      /**
      * @var float
      *
-     * @ORM\Column(name="importe", type="decimal", precision=6, scale=2 )
+     * @ORM\Column(name="importe", type="decimal", precision=6, scale=2, nullable=true )
      */
     private $importe;
 
@@ -109,12 +116,29 @@ class Receipt
      */
     private $payment;
     
+//    public function __construct($inscription = null) {
+//	$instance = new self();
+//	if ( $inscription != null ) {
+//	    $instance->setDni($inscription->getDni());
+//	    $instance->setNombre($inscription->getNombre());
+//	    $instance->setApellido1($inscription->setApellido1());
+//	    $instance->setApellido2($inscription->setApellido2());
+//	    $instance->setEmail($inscription->setEmail());
+//	    $instance->setTelefono($inscription->setTelefono());
+//	}
+//	return $instance;
+//    }
+    
     public function getId() {
 	return $this->id;
     }
 
     public function getNumeroReferencia() {
 	return $this->numeroReferencia;
+    }
+
+    public function getNumeroReferenciaGTWIN() {
+	return $this->numeroReferenciaGTWIN;
     }
 
     public function getConcepto() {
@@ -163,6 +187,10 @@ class Receipt
 
     public function setNumeroReferencia($numeroReferencia) {
 	$this->numeroReferencia = $numeroReferencia;
+    }
+
+    public function setNumeroReferenciaGTWIN($numeroReferenciaGTWIN) {
+	$this->numeroReferenciaGTWIN = $numeroReferenciaGTWIN;
     }
 
     public function setConcepto($concepto) {

@@ -13,11 +13,9 @@
 	{% block header %}
 	    {{ include('common/header.html.twig') }}
 	{% endblock %}
-	{% if is_granted('ROLE_USER') %}	
-	    {% block menu %}
-		{{ include('common/menu.html.twig') }}
-	    {% endblock %}
-	{% endif %}
+	{% block menu %}
+	    {{ include('common/menu.html.twig') }}
+	{% endblock %}
 	{% block message %}{% endblock %}
         {% block body %}{% endblock %}
         {% block javascripts %}

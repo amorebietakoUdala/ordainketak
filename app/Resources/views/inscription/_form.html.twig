@@ -1,0 +1,45 @@
+{{ form_start(form, {'attr': {'class': 'container-fluid form-group',
+						 'novalidate': 'novalidate'
+						} 
+}) }}
+{{ form_errors(form) }}
+    <div class="form-row align-items-center mb-1"> 
+	<div class="col-lg-2 col-md-2 col-sm-6">
+{#		{{ form_label(form.numeroReferencia, null, { 'label_attr': {'class':'col-form-label-sm' } }) }}#}
+	    {{ form_label(form.dni) }}
+	    {{ form_widget(form.dni, { 'id': '', 'attr': { 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.dni) }}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-6">
+	    {{ form_label(form.nombre) }}
+	    {{ form_widget(form.nombre, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.nombre) }}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-6">
+	    {{ form_label(form.apellido1) }}
+	    {{ form_widget(form.apellido1, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.apellido1) }}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-6">
+	    {{ form_label(form.apellido2) }}
+	    {{ form_widget(form.apellido2, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.apellido2) }}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-6">
+	    {{ form_label(form.email) }}
+	    {{ form_widget(form.email, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.email) }}
+	</div>
+    </div>
+    {% if readonly == false %}
+	{{ form_widget(form.save, { 'attr': { 'class' : 'btn btn-primary ml-1' } }) }}
+    {% else %}
+	{% set url = path('receipt_list') %}
+	{{ form_widget(form.back, { 'attr': { 'class' : 'js-back btn btn-primary ml-1' ,
+					     'data-url' : url },
+				  }) }}
+    {% endif %}
+    </div>
+{{ form_end(form, {'attr': {'class': '',
+			       } 
+}) }}
