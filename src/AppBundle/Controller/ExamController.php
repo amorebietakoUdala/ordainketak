@@ -33,6 +33,7 @@ class ExamController extends Controller
 	    $receipt = $this->createReceiptFromInscriptionData($exam);
 	    $receipt->setImporte($concept->getUnitaryPrice());
 	    $receipt->setConcepto($concept->getName());
+	    $receipt->setEntidad($concept->getEntity());
 	    $receipt->setSufijo($concept->getSuffix());
 	    $date = new \DateTime();
 	    $receipt->setUltimoDiaPago($date);

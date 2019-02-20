@@ -38,6 +38,13 @@ class Concept
     /**
      * @var string
      *
+     * @ORM\Column(name="entity", type="string", length=6, nullable=false)
+     */
+    private $entity;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="suffix", type="string", length=3, nullable=false)
      */
     private $suffix;
@@ -109,6 +116,19 @@ class Concept
 	return $this;
     }
 
+    public function getEntity() {
+	return $this->entity;
+    }
+
+    public function setEntity($entity) {
+	$this->entity = $entity;
+	return $this;
+    }
+
+    public function __toString() {
+	return $this->name;
+    }
+    
 
 }
 

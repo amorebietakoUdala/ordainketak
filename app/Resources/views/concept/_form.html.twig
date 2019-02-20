@@ -6,6 +6,18 @@
     <div class="form-row align-items-center mb-1"> 
 	<div class="col-lg-2 col-md-2 col-sm-6">
 {#		{{ form_label(form.numeroReferencia, null, { 'label_attr': {'class':'col-form-label-sm' } }) }}#}
+	    {{ form_label(form.entity) }}
+	    {{ form_widget(form.entity, { 'attr': { 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.entity) }}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-6">
+{#		{{ form_label(form.numeroReferencia, null, { 'label_attr': {'class':'col-form-label-sm' } }) }}#}
+	    {{ form_label(form.suffix) }}
+	    {{ form_widget(form.suffix, { 'attr': { 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.suffix) }}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-6">
+{#		{{ form_label(form.numeroReferencia, null, { 'label_attr': {'class':'col-form-label-sm' } }) }}#}
 	    {{ form_label(form.name) }}
 	    {{ form_widget(form.name, { 'id': 'input-numeroReferencia', 'attr': { 'class' : 'form-control-sm' } }) }}
 	    {{ form_errors(form.name) }}

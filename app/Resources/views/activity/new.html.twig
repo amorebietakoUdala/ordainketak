@@ -25,7 +25,8 @@
 {% block body %}
     <main>
 	<div class="container-fluid mt-2">
-	{{ include('receipt/_form.html.twig',{
+	{{ include('activity/_form.html.twig',{
+	    'readonly': false,
 			    }) }}
 	</div>
     </main>

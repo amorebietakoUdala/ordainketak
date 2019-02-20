@@ -100,6 +100,13 @@ class Receipt
      * @ORM\Column(name="ultimo_dia_pago", type="datetime", nullable=true)
     */
     private $ultimoDiaPago;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="entidad", type="string", length=6, nullable=true)
+     */
+    private $entidad;
     
     /**
      * @var string
@@ -107,7 +114,15 @@ class Receipt
      * @ORM\Column(name="sufijo", type="string", length=3, nullable=true)
      */
     private $sufijo;
-    
+
+    /**
+     * @var string
+     *
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Activity")
+     * @ORM\JoinColumn(name="activity_id", referencedColumnName="id", nullable=true)
+     */
+    private $actividad;
+
     /**
      * @var string
      *
@@ -173,7 +188,11 @@ class Receipt
 	return $this->ultimoDiaPago;
     }
 
-        public function getSufijo() {
+    public function getEntidad() {
+	return $this->entidad;
+    }
+
+    public function getSufijo() {
 	return $this->sufijo;
     }
 
@@ -183,6 +202,10 @@ class Receipt
 
     public function getPayment() {
 	return $this->payment;
+    }
+
+    public function getActividad() {
+	return $this->actividad;
     }
 
     public function setNumeroReferencia($numeroReferencia) {
@@ -225,6 +248,11 @@ class Receipt
 	$this->ultimoDiaPago = $ultimoDiaPago;
     }
 
+    public function setEntidad($entidad) {
+	$this->entidad = $entidad;
+	return $this;
+    }
+
     public function setSufijo($sufijo) {
 	$this->sufijo = $sufijo;
     }
@@ -235,6 +263,11 @@ class Receipt
 
     public function setPayment($payment) {
 	$this->payment = $payment;
+    }
+
+    public function setActividad($actividad) {
+	$this->actividad = $actividad;
+	return $this;
     }
 
     public function __toString() {

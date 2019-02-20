@@ -28,14 +28,19 @@
 	    {{ form_label(form.inscription.telefono) }}
 	    {{ form_widget(form.inscription.telefono, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
 	</div>
+	<div class="col-lg-4 col-md-4 col-sm-6">
+	    {{ form_label(form.activity) }}
+	    {{ form_widget(form.activity, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.activity) }}
+	</div>
 	<div class="col-lg-2 col-md-2 col-sm-6">
-	    {{ form_label(form.category) }}
-	    {{ form_widget(form.category, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
-	    {{ form_errors(form.category) }}
+	    {{ form_label(form.quantity) }}
+	    {{ form_widget(form.quantity, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.quantity) }}
 	</div>
 	
     {% if readonly == false %}
-	{{ form_widget(form.pay, { 'attr': { 'class' : 'btn btn-primary ml-1' } }) }}
+	{{ form_widget(form.buy, { 'attr': { 'class' : 'btn btn-primary ml-1' } }) }}
     {% endif %}
     {% set url = path('receipt_find') %}
     {{ form_widget(form.back, { 'attr': { 'class' : 'js-back btn btn-primary ml-1' ,

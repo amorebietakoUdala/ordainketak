@@ -30,3 +30,5 @@ parameters:
     ldap_password: ldap_password
     ldap_users_dn: OU=Users,DC=name,DC=com
     ldap_accountDomainName: domain_name
+
+    uploads_directory: %kernel.project_dir%/web/uploads

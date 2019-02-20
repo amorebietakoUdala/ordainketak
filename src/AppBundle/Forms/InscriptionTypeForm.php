@@ -12,6 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -27,25 +28,39 @@ class InscriptionTypeForm extends AbstractType {
 //	$readonly = $options['readonly'];
 	$builder->add('dni', TextType::class,[
 	    'label'=>'receipt.dni',
-	    'constraints' => [new Regex([
-		'pattern' => '/^\d{7,8}[a-z]$/i',
-		'message' => 'El DNI no es correcto'
-	    ]),]	    
+	    'constraints' => [
+		new NotBlank(),
+	    ]
 	])
 	->add('nombre',TextType::class,[
 		'label'=>'receipt.nombre',
+		'constraints' => [
+		    new NotBlank()
+		],
+	    
 	])
 	->add('apellido1',TextType::class,[
 		'label'=>'receipt.apellido1',
+		'constraints' => [
+		    new NotBlank()
+		],
 	])
 	->add('apellido2',TextType::class,[
 		'label'=>'receipt.apellido2',
+		'constraints' => [
+		    new NotBlank()
+		],
 	])
 	->add('email',TextType::class,[
 		'label'=>'receipt.email',
+		'constraints' => [
+		    new NotBlank(),
+		],
 	])
 	->add('telefono',TextType::class,[
 		'label'=>'receipt.telefono',
+		'constraints' => [
+		],
 	]);
     }
 

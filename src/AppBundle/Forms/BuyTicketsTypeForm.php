@@ -8,35 +8,51 @@
 
 namespace AppBundle\Forms;
 
-use AppBundle\Entity\Category;
-use AppBundle\Entity\Exam;
+use AppBundle\Entity\Activity;
+use AppBundle\Entity\BuyTickets;
 use AppBundle\Forms\InscriptionTypeForm;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Description of InscriptionTypeForm
  *
  * @author ibilbao
  */
-class ExamTypeForm extends AbstractType {
+class BuyTicketsTypeForm extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
 	$readonly = $options['readonly'];
 	$builder->add('inscription', InscriptionTypeForm::class,[
-	    'data_class' => Exam::class,
+	    'data_class' => BuyTickets::class,
 	])
-	->add('category',EntityType::class,[
-	    'class' => Category::class,
-	    'label'=>'exam.category',
+	->add('activity',EntityType::class,[
+	    'class' => Activity::class,
+	    'disabled' => true,
+	    'label'=>'label.activity',
+	])
+	->add('quantity',null,[
+	    'label'=>'buyTickets.quantity',
+	    'constraints' => [
+		new NotBlank(),
+	    ],
+	    'data' => 1,
+//	    'choices' => [
+//		'1' => 1,
+//		'2' => 2,
+//		'3' => 3,
+//		'4' => 4,
+//	    ],
 	]);
+
 	if (!$readonly) {
-	    $builder->add('pay', SubmitType::class,[
-		'label'=>'btn.pay',
+	    $builder->add('buy', SubmitType::class,[
+		'label'=>'btn.buy',
 	    ]);
 	}
 	$builder->add('back', ButtonType::class,[
@@ -47,7 +63,7 @@ class ExamTypeForm extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
 	$resolver->setDefaults([
 	    'csrf_protection' => true,
-	    'data_class' => Exam::class, 
+	    'data_class' => BuyTickets::class, 
 	    'readonly' => false,
 //	    'search' => false,
 	]);

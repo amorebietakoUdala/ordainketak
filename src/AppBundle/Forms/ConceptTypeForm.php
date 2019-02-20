@@ -33,6 +33,10 @@ class ConceptTypeForm extends AbstractType {
 		'label'=>'concept.unitaryPrice',
 		'disabled' => $readonly,
 	])
+	->add('entity',null,[
+		'label'=>'concept.entity',
+		'disabled' => $readonly,
+	])
 	->add('suffix',null,[
 		'label'=>'concept.suffix',
 		'disabled' => $readonly,

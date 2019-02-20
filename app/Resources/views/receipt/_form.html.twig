@@ -53,6 +53,11 @@
 			{{ form_widget(form.email, { 'attr': { 'class' : 'form-control-sm' } }) }}
 			{{ form_errors(form.email) }}
 		    </div>
+		    <div class="col-lg-2 col-md-2">
+			{{ form_label(form.telefono) }}
+			{{ form_widget(form.telefono, { 'attr': { 'class' : 'form-control-sm' } }) }}
+			{{ form_errors(form.telefono) }}
+		    </div>
 		{% endif %}
 		{{ form_widget(form.search, { 'attr': { 'class' : 'btn btn-primary' } }) }}
 	    </div>
@@ -84,6 +89,10 @@
 		    {{ form_errors(form.email) }}
 		</div>
 	    {{ form_widget(form.save, { 'attr': { 'class' : 'btn btn-primary ml-1' } }) }}
+	    {% set url = path('receipt_find') %}
+	    {{ form_widget(form.back, { 'attr': { 'class' : 'js-back btn btn-primary ml-1' ,
+				     'data-url' : url },
+			  }) }}
 	    </div>
 	{% endif %}
 	     {{ form_end(form, {'attr': {'class': '',

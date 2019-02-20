@@ -15,8 +15,9 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarTaxes">
           <a class="dropdown-item" href="{{ path('exam_new') }}">{{"navitem.exams" | trans | capitalize}}</a>
+	  <a class="dropdown-item" href="{{ path('buyTickets_activity',{'activity': 1 }) }}">{{"navitem.ibiliak" | trans | capitalize}}</a>
         </div>
-      </li>	
+      </li>
 {#      <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarPaymentTypes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ 'navitem.paymentTypes' | trans | capitalize }}
@@ -32,11 +33,13 @@
           {{ 'navitem.administration' | trans | capitalize }}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarAdministration">
+	  <a class='dropdown-item' href="{{ path('admin_receipt_upload') }}">{{"navitem.uploadReceipts" | trans | capitalize}}</a>
 	  <a class="dropdown-item" href="{{ path('concept_list') }}">{{"navitem.concepts" | trans | capitalize}}</a>
           <a class="dropdown-item" href="{{ path('receipt_home') }}">{{"navitem.receipts" | trans | capitalize}}</a>
+	  <a class="dropdown-item" href="{{ path('activity_new') }}">{{"navitem.ibiliak" | trans | capitalize}}</a>
           <a class="dropdown-item" href="{{ path('mipago_list_payments') }}">{{"navitem.payments" | trans | capitalize}}</a>
         </div>
-      </li>	
+      </li>
     {% endif %}	
     </ul>
   </div>

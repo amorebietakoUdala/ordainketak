@@ -106,6 +106,7 @@ class ReceiptController extends Controller
 	    return $this->forward("MiPagoBundle:Payment:sendRequest",[
 		'reference_number' => $referencia, 
 		'payment_limit_date' => $receipt->getUltimoDiaPago()->format('Ymd'),
+		'sender' =>  $receipt->getEntidad(),
 		'suffix' =>  $receipt->getSufijo(),
 		'quantity' => $receipt->getImporte(),
 		'extra' => [ 
@@ -158,6 +159,7 @@ class ReceiptController extends Controller
 		return $this->forward("MiPagoBundle:Payment:sendRequest",[
 		    'reference_number' => $receipt->getId(), 
 		    'payment_limit_date' => $receipt->getUltimoDiaPago()->format('Ymd'),
+		    'sender' =>  $receipt->getEntidad(),
 		    'suffix' =>  $receipt->getSufijo(),
 		    'quantity' => $receipt->getImporte(),
 		    'extra' => [ 

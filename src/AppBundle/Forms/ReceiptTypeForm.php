@@ -22,6 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use AppBundle\Entity\Receipt;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 /**
  * Description of ReceiptBilatzaileaForm
@@ -83,6 +84,9 @@ class ReceiptTypeForm extends AbstractType {
 	    $builder->add('save', SubmitType::class,[
 		'label'=>'receipt.save',
 
+	    ]);
+	    $builder->add('back', ButtonType::class,[
+		'label'=>'receipt.back',
 	    ]);
 	}
 	;

@@ -8,35 +8,40 @@
 
 namespace AppBundle\Forms;
 
-use AppBundle\Entity\Category;
-use AppBundle\Entity\Exam;
+use AppBundle\Entity\Activity;
+use AppBundle\Entity\Concept;
 use AppBundle\Forms\InscriptionTypeForm;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 
 /**
  * Description of InscriptionTypeForm
  *
  * @author ibilbao
  */
-class ExamTypeForm extends AbstractType {
+class ActivityTypeForm extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
 	$readonly = $options['readonly'];
-	$builder->add('inscription', InscriptionTypeForm::class,[
-	    'data_class' => Exam::class,
+	$builder->add('name', null,[
+	    'label' => 'activity.name',
+	    'disabled' => $readonly,
 	])
-	->add('category',EntityType::class,[
-	    'class' => Category::class,
-	    'label'=>'exam.category',
+	->add('concept', EntityType::class, [
+	    'class' => Concept::class,
+	    'disabled' => $readonly,
+	])
+	->add('totalTickets', null, [
+	    'label' => 'activity.totalTickets',
+	    'disabled' => $readonly,
 	]);
 	if (!$readonly) {
-	    $builder->add('pay', SubmitType::class,[
-		'label'=>'btn.pay',
+	    $builder->add('save', SubmitType::class,[
+		'label'=>'btn.save',
 	    ]);
 	}
 	$builder->add('back', ButtonType::class,[
@@ -47,7 +52,7 @@ class ExamTypeForm extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
 	$resolver->setDefaults([
 	    'csrf_protection' => true,
-	    'data_class' => Exam::class, 
+	    'data_class' => Activity::class, 
 	    'readonly' => false,
 //	    'search' => false,
 	]);

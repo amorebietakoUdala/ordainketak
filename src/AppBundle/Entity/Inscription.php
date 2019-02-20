@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class Inscription {
@@ -32,6 +33,10 @@ class Inscription {
      * @var string
      *
      * @ORM\Column(name="dni", type="string", length=15, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/^\d{7,8}[a-z]$/i",
+     *     message="El DNI no es correcto",
+     * )
      */
     
     private $dni;
@@ -40,7 +45,11 @@ class Inscription {
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
-     */
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/",
+     *     message="El email introducido no es válido",
+     * )
+    */
     
     private $email;
 
