@@ -3,8 +3,8 @@
     "description" : "A bundle to make payment through Basque Goverment's MiPago platform in symfony projects",
     "type" : "symfony-bundle",
     "authors" : [{
-        "name" : "demo",
-        "email" : "demo@company.com"
+        "name" : "Amorebietako Udala",
+        "email" : "informatika@amorebieta.eus"
     }],
     "keywords" : [
         "Payments MiPago Basque Governmet"
