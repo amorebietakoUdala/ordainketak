@@ -27,6 +27,7 @@ class ActivityTypeForm extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
 	$readonly = $options['readonly'];
+	$new = $options['new'];
 	$builder->add('name', null,[
 	    'label' => 'activity.name',
 	    'disabled' => $readonly,
@@ -39,6 +40,12 @@ class ActivityTypeForm extends AbstractType {
 	    'label' => 'activity.totalTickets',
 	    'disabled' => $readonly,
 	]);
+	if (!$new) {
+	    $builder->add('remainingTickets', null,[
+		'label'=>'activity.ticketsRemaining',
+		'disabled' => $readonly,
+	    ]);
+	}
 	if (!$readonly) {
 	    $builder->add('save', SubmitType::class,[
 		'label'=>'btn.save',
@@ -54,6 +61,7 @@ class ActivityTypeForm extends AbstractType {
 	    'csrf_protection' => true,
 	    'data_class' => Activity::class, 
 	    'readonly' => false,
+	    'new' => false,
 //	    'search' => false,
 	]);
     }

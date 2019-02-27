@@ -8,18 +8,44 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Entity\Activity;
+
 /**
- * Description of Exam
+ * BuyTickets
  *
- * @author ibilbao
+ * @ORM\Table(name="buyTickets")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BuyTicketsRepository")
  */
+
 class BuyTickets extends Inscription {
-    
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Activity")
+     * @ORM\JoinColumn(name="activity_id", referencedColumnName="id", nullable=true)
+     */
     private $activity;
     
+    /**
+     * @var string
+     * @Assert\GreaterThan(0)
+     * @ORM\Column(name="quantity", type="integer", nullable=true)
+     */
     private $quantity;
 
-    public function getActivity() {
+    public function getActivity(): Activity {
 	return $this->activity;
     }
 
@@ -37,4 +63,7 @@ class BuyTickets extends Inscription {
 	return $this;
     }
 
+    public function __toString() {
+	return "{ Id: ". $this->id. ", actividad: " . $this->activity->getName() . ", quantity: ". $this->quantity. "}";
+    }
 }

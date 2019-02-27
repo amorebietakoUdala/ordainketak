@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use MiPago\Bundle\Entity\Payment;
+use AppBundle\Entity\Activity;
 
 
 /**
@@ -118,10 +119,10 @@ class Receipt
     /**
      * @var string
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Activity")
-     * @ORM\JoinColumn(name="activity_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BuyTickets", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="tickets_id", referencedColumnName="id", nullable=true)
      */
-    private $actividad;
+    private $tickets;
 
     /**
      * @var string
@@ -204,8 +205,12 @@ class Receipt
 	return $this->payment;
     }
 
-    public function getActividad() {
-	return $this->actividad;
+    public function getTickets() {
+	return $this->tickets;
+    }
+
+    public function setId($id) {
+	$this->id = $id;
     }
 
     public function setNumeroReferencia($numeroReferencia) {
@@ -265,8 +270,8 @@ class Receipt
 	$this->payment = $payment;
     }
 
-    public function setActividad($actividad) {
-	$this->actividad = $actividad;
+    public function setTickets($tickets) {
+	$this->tickets = $tickets;
 	return $this;
     }
 
@@ -278,14 +283,16 @@ class Receipt
 	return [
 	    'id' => $this->id,
 	    'numeroReferencia' => $this->numeroReferencia,
+	    'numeroReferenciaGTWIN' => $this->numeroReferenciaGTWIN,
 	    'concepto' => $this->concepto,
 	    'nombre' => $this->nombre,
 	    'apellido1' => $this->apellido1,
 	    'apellido2' => $this->apellido2,
 	    'dni' => $this->dni,
-	    'nombre' => $this->nombre,
+	    'email' => $this->email,
 	    'telefono' => $this->telefono,
 	    'importe' => $this->importe,
+	    'entidad' => $this->entidad,
 	    'sufijo' => $this->sufijo,
 	    'ultimoDiaPago' => $this->ultimoDiaPago,
 	];

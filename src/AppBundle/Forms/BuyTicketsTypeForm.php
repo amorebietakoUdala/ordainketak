@@ -15,9 +15,11 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 /**
  * Description of InscriptionTypeForm
@@ -28,6 +30,7 @@ class BuyTicketsTypeForm extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
 	$readonly = $options['readonly'];
+	$quantityLimit = $options['quantity_limit'];
 	$builder->add('inscription', InscriptionTypeForm::class,[
 	    'data_class' => BuyTickets::class,
 	])
@@ -35,21 +38,36 @@ class BuyTicketsTypeForm extends AbstractType {
 	    'class' => Activity::class,
 	    'disabled' => true,
 	    'label'=>'label.activity',
-	])
-	->add('quantity',null,[
-	    'label'=>'buyTickets.quantity',
-	    'constraints' => [
-		new NotBlank(),
-	    ],
-	    'data' => 1,
-//	    'choices' => [
-//		'1' => 1,
-//		'2' => 2,
-//		'3' => 3,
-//		'4' => 4,
-//	    ],
 	]);
-
+	if ($quantityLimit === null ) {
+	    $builder->add('quantity',null,[
+		'label'=>'buyTickets.quantity',
+		'constraints' => [
+		    new NotBlank(),
+		],
+		'data' => 1,
+	    ]);
+	} else {
+	    if  ( $quantityLimit === 1 ) {
+		$builder->add('quantity', null,[
+		    'label'=>'buyTickets.quantity',
+		    'disabled' => true,
+		    'constraints' => [
+			new NotBlank(),
+		    ],
+		    'data' => $quantityLimit,
+		]);
+	    } else {
+		$builder->add('quantity', null,[
+		    'label'=>'buyTickets.quantity',
+		    'disabled' => false,
+		    'constraints' => [
+			new NotBlank(),
+			new LessThanOrEqual($quantityLimit),
+		    ],
+		]);
+	    }
+	}
 	if (!$readonly) {
 	    $builder->add('buy', SubmitType::class,[
 		'label'=>'btn.buy',
@@ -65,6 +83,7 @@ class BuyTicketsTypeForm extends AbstractType {
 	    'csrf_protection' => true,
 	    'data_class' => BuyTickets::class, 
 	    'readonly' => false,
+	    'quantity_limit' => null,
 //	    'search' => false,
 	]);
     }

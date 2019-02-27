@@ -11,7 +11,9 @@ use Psr\Log\LoggerInterface;
 use Exception;
 use AppBundle\Entity\Receipt;
 use MiPago\Bundle\Entity\Payment;
+use AppBundle\Entity\Activity;
 use AppBundle\Forms\ReceiptTypeForm;
+use Swift_Message;
 
 /**
  * @Route("/{_locale}", requirements={
@@ -44,10 +46,11 @@ class ReceiptController extends Controller
 	$roles = ($user === "anon.") ? ["IS_AUTHENTICATED_ANONYMOUSLY"] : $user->getRoles();
 	$em = $this->getDoctrine()->getManager();
 	$receipt = new Receipt();
-	$numeroReferencia = $request->get('numeroReferencia');
+	/* It uses id as referenceNumber */
+	$id = $request->get('idRecibo');
 	$dni = $request->get('dni');
 	$receipt->setDni($dni);
-	$receipt->setNumeroReferencia($numeroReferencia);
+	$receipt->setId($id);
 	$form = $this->createForm(ReceiptTypeForm::class, $receipt, [
 //	    'editatzen' => false,
 	    'roles' => $roles,
@@ -59,9 +62,10 @@ class ReceiptController extends Controller
 	$form->handleRequest($request);
 	if ( $form->isSubmitted() && $form->isValid() ) {
 	    $data = $form->getData();
-	    if ( $user === "anon." &&  ( $data->getDni() === null || $data->getNumeroReferencia() === null ) ) {
-		$this->addFlash('error','El dni y el número de inscripción son obligatorios');
-	    } else {	    
+	    if ( $user === "anon." &&  ( $data->getDni() === null || $data->getId() === null ) ) {
+		$this->addFlash('error','El dni y el número de referencia son obligatorios');
+	    } else {
+//		$results = $em->getRepository(Receipt::class)->findReceiptByExample($data, Payment::PAYMENT_STATUS_OK);
 		$results = $em->getRepository(Receipt::class)->findReceiptByExample($data);
 		return $this->render('receipt/list.html.twig', [
 		    'form' => $form->createView(),
@@ -71,12 +75,12 @@ class ReceiptController extends Controller
 		]);
 	    }
 	}
-	if ( $user === "anon." &&  ( $dni === null || $numeroReferencia === null ) ) {
+	if ( $user === "anon." &&  ( $dni === null || $id === null ) ) {
 	    $results = [];
 	} else {
 	    $receipt = new Receipt();
 	    $receipt->setDni($dni);
-	    $receipt->setNumeroReferencia($numeroReferencia);
+	    $receipt->setId($id);
 	    $results = $em->getRepository(Receipt::class)->findReceiptByExample($receipt);
 	    return $this->render('receipt/list.html.twig', [
 		'form' => $form->createView(),
@@ -197,8 +201,35 @@ class ReceiptController extends Controller
 	$receipt->setPayment($payment);
 	$em->persist($receipt);
 	$em->flush();
+	$this->__updateRemainingTickets($receipt, $logger);
+	$this->__sendConfirmationEmails($receipt);
 	$logger->debug('<--ReceiptConfirmationAction: End OK');
 	return new JsonResponse("OK");
+    }
+    
+    private function __updateRemainingTickets (Receipt $receipt, LoggerInterface $logger ) {
+	$tickets = $receipt->getTickets();
+	$logger->debug($tickets);
+	$payment = $receipt->getPayment();
+	if ($tickets !== null) {
+	    $activity = $tickets->getActivity();
+	    $logger->debug($activity);
+	    $em = $this->getDoctrine()->getManager();
+//	    $activity = $em->getRepository(Activity::class)->find($activity->getId());
+//	    $payment = $em->getRepository(Payment::class)->find($payment->getId());
+	    $remainingTickets = $activity->getRemainingTickets();
+	    $logger->debug('Remaining Tickets:'. $remainingTickets);
+	    if ( $remainingTickets !== null ) {
+		/* If payment was not OK we add to remaining tickets, because we substracted previously before the payment */
+		$logger->debug('Payment status: '.$payment->getStatus());
+		if ( $payment->getStatus() === Payment::PAYMENT_STATUS_NOK) {
+		    $activity->setRemainingTickets($remainingTickets+$tickets->getQuantity());
+		    $em->persist($activity);
+		    $em->flush();
+		}
+	    }
+	}
+	return;
     }
     
     /**
@@ -247,5 +278,30 @@ class ReceiptController extends Controller
 	return new JsonResponse("OK");
     }
 
-}
+    private function __sendConfirmationEmails ($receipt) {
+	if ( $this->getParameter("mailer_sendConfirmation") === true ) {
+	    $emails = [$receipt->getEmail()];
+	    $this->__sendMessage("Confirmación del Pago / Ordainketaren konfirmazioa", $receipt, $emails);
+	}
+	if ( $this->getParameter("mailer_sendBCC") === true ) {
+	    $bccs = $this->getParameter('mailer_BCC_email');
+	    $this->__sendMessage("Confirmación del Pago / Ordainketaren konfirmazioa", $receipt, $bccs);
+	}
+    }
+    
+    private function __sendMessage ($subject, $receipt, $emails) {
+	$from = $this->getParameter('mailer_from');
+	$mailer = $this->get('mailer');
+	$message = new Swift_Message($subject);
+	$message->setFrom($from);
+	$message->setTo($emails);
+	$message->setBody(
+	    $this->renderView('/receipt/mail.html.twig', [
+		    'receipt' => $receipt
+		])
+	);
+	$message->setContentType('text/html');
 
+	$mailer->send($message);
+    }
+}

@@ -38,8 +38,8 @@ class ReceiptTypeForm extends AbstractType {
 	$readonly = $options['readonly'];
 	$newReceipt = $options['newReceipt'];
 	if (!$newReceipt ) {
-	    $builder->add('numeroReferencia',TextType::class,[
-		'label'=>'receipt.numeroReferencia',
+	    $builder->add('id',TextType::class,[
+		'label'=>'receipt.id',
 	    ]);
 	}
 	$builder->add('dni',null,[
@@ -50,6 +50,9 @@ class ReceiptTypeForm extends AbstractType {
 		$builder->add('concepto',null,[
 			'label'=>'receipt.concepto',
 			'disabled' => $readonly,
+		])
+		->add('numeroReferencia',TextType::class,[
+		    'label'=>'receipt.numeroReferenciaExterna',
 		])
 		->add('numeroReferenciaGTWIN',TextType::class,[
 		    'label'=>'receipt.numeroReferenciaGTWIN',

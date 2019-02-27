@@ -23,3 +23,10 @@ AppBundle\Entity\Category:
     category_{1..10}:
         name: A<current()>
         concept: '@concept_*'
+
+AppBundle\Entity\Activity:
+    activity_{1..10}:
+        name: activity_<current()>
+        concept: '@concept_*'
+        totalTickets: 50
+        remainingTickets: 2

@@ -19,10 +19,17 @@
 	    {{ form_widget(form.totalTickets, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
 	    {{ form_errors(form.totalTickets) }}
 	</div>
+    {% if not new %}
+	<div class="col-lg-2 col-md-2 col-sm-6">
+	    {{ form_label(form.remainingTickets) }}
+	    {{ form_widget(form.remainingTickets, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.remainingTickets) }}
+	</div>
+    {% endif %}
     {% if readonly == false %}
 	{{ form_widget(form.save, { 'attr': { 'class' : 'btn btn-primary ml-1' } }) }}
     {% endif %}
-    {% set url = path('receipt_find') %}
+    {% set url = path('activity_list') %}
     {{ form_widget(form.back, { 'attr': { 'class' : 'js-back btn btn-primary ml-1' ,
 					 'data-url' : url },
 			      }) }}

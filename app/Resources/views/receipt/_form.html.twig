@@ -9,10 +9,9 @@
 	{% if search %}
 	    <div class="form-row align-items-center mb-1"> 
 		<div class="col-lg-2 col-md-2 col-sm-6">
-    {#		{{ form_label(form.numeroReferencia, null, { 'label_attr': {'class':'col-form-label-sm' } }) }}#}
-		    {{ form_label(form.numeroReferencia) }}
-		    {{ form_widget(form.numeroReferencia, { 'id': 'input-numeroReferencia', 'attr': { 'class' : 'form-control-sm' } }) }}
-		    {{ form_errors(form.numeroReferencia) }}
+		    {{ form_label(form.id) }}
+		    {{ form_widget(form.id, { 'id': 'input-id', 'attr': { 'class' : 'form-control-sm' } }) }}
+		    {{ form_errors(form.id) }}
 		</div>
 		<div class="col-lg-2 col-md-2 col-sm-6">
 		    {{ form_label(form.dni) }}
@@ -22,6 +21,11 @@
 	    </div>
 	    <div class="form-row align-items-center mb-1">
 		{% if is_granted('ROLE_ADMIN') %}
+		    <div class="col-lg-2 col-md-2 col-sm-6">
+			{{ form_label(form.numeroReferencia) }}
+			{{ form_widget(form.numeroReferencia, { 'id': 'input-numeroReferencia', 'attr': { 'class' : 'form-control-sm' } }) }}
+			{{ form_errors(form.numeroReferencia) }}
+		    </div>
 		    <div class="col-lg-2 col-md-2 col-sm-6">
 	{#		{{ form_label(form.numeroReferencia, null, { 'label_attr': {'class':'col-form-label-sm' } }) }}#}
 			{{ form_label(form.numeroReferenciaGTWIN) }}

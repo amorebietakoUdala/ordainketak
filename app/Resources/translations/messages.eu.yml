@@ -1,4 +1,79 @@
 messages.appTitle: "ORDAIN"
 search.title: "Bilaketa"
 
-receipt.numeroReferencia: "Erreferentzia"
+receipt.id: "Errezibo zb."
+receipt.numeroReferenciaExterna: "Kanpoko erreferentzia"
+receipt.numeroReferenciaGTWIN: "GTWIN Erreferentzia"
+receipt.concepto: "Kontzeptua"
+receipt.nombre: "Izena"
+receipt.apellido1: "Lehen abizena"
+receipt.apellido2: "Bigarren abizena"
+receipt.dni: "NAN"
+receipt.email: "Emaila"
+receipt.telefono: "Telefonoa"
+receipt.search: "Bilatu"
+receipt.importe: "Zenbatekoa"
+receipt.ultimoDiaPago: "Ordaintzeko azken eguna"
+receipt.payd: "Ordaindua"
+options: "Aukerak"
+
+concept.id: "Id"
+concept.name: "Izena"
+concept.entity: "Entitatea"
+concept.suffix: "Atzizkia"
+concept.unitaryPrice: "Unitateko prezioa"
+
+messages.confirmacion: "Konfirmazioa"
+messages.home: "Itzuli"
+messages.payd: "Bai"
+messages.unpayd: "Ez"
+messages.results0: "Ez da elementurik aurkitu"
+messages.thanks: "Eskerrik asko Amorebieta-Etxanoko on-line ordainketa zerbitzua erabiltzeagatik"
+messages.si: "Bai"
+messages.no: "Ez"
+message.file_successfully_processed: "Fitxategia behar den moduan prozesatu izan da"
+"there was an error procesing file %message%": "Arazo bat egon da fitxategia prozesatzerakoan. %message%"
+message.activity_created: "Jarduera sortu egin da"
+message.activity_modified: "Jarduera ondo gorde da"
+
+link.logout: "Irten"
+navitem.paymentTypes: "Ordainketa motak"
+navitem.taxes: "Tasa ordainketa"
+navitem.exams: "Azterketak"
+navitem.ibiliak: "Ibiliak Ezagutuz"
+navitem.administration: "Administrazioa"
+navitem.concepts: "Kontzeptuak"
+navitem.receipts: "Erreziboak"
+navitem.payments: "Ordainketak"
+navitem.activity: "Jarduerak"
+navitem.cine: "Zinea"
+navitem.uploadReceipts: "Erreziboak kargatu"
+
+exam.category: "Kategoria"
+buyTickets.quantity: "Zenbat"
+ibiliak.number: "Zenbat"
+
+label.activity: "Jarduera" 
+activity.id: "Id"
+activity.name: "Izena"
+activity.concept: "Kontzeptua"
+activity.totalTickets: "Zenbat ticket guztira"
+activity.ticketsRemaining: "Gerantzen diren tiketak"
+
+confirmation.title: "Ordainketaren datuak"
+confirmation.pay: "Ordaindu"
+confirmation.cancel: "Utzi"
+
+btn.new: "Berria"
+btn.save: "Gorde"
+btn.send: "Bidali"
+btn.pay: "Ordaindu"
+btn.buy: "Erosi"
+btn.back: "Itzuli"
+
+'El dni y el número de referencia son obligatorios': 'NANa eta errezibo zenbakia nahitaezkoak dira'
+'El concepto se ha eliminado correctamente.': 'Kontzeptua behar bezala ezabatu da.'
+'¿Esta seguro de que desea eliminar el registro?': 'Ziur al zaude errejistroa ezabatu nahi duzula?'
+'Recibo no encontrado': 'Erreziboa ez da aurkitu'
+'Payment was successfull': 'Ordainketa behar den moduan gauzatu da.'
+'Payment was NOT successfull': 'Arazoa bat egon da ordainketa egiterakoan. EZ da ordainketarik egin.'

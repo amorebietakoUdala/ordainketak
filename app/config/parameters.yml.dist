@@ -32,3 +32,6 @@ parameters:
     ldap_accountDomainName: domain_name
 
     uploads_directory: %kernel.project_dir%/web/uploads
+    mailer_sendConfirmation: false
+    mailer_sendBCC: false
+    mailer_BCC_email: ['email_for_the_copy@domain.com']

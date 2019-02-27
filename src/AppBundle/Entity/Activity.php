@@ -54,6 +54,17 @@ class Activity {
      */
     private $remainingTickets;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="maxTickets", type="integer", nullable=true)
+     */
+    private $maxTickets;
+
+    public function getId() {
+	return $this->id;
+    }
+
     public function getConcept() {
 	return $this->concept;
     }
@@ -71,6 +82,10 @@ class Activity {
 	return $this->totalTickets;
     }
 
+    public function getMaxTickets() {
+	return $this->maxTickets;
+    }
+    
     public function setName($name) {
 	$this->name = $name;
 	return $this;
@@ -90,6 +105,15 @@ class Activity {
 	return $this;
     }
     
+    public function setMaxTickets($maxTickets) {
+	$this->maxTickets = $maxTickets;
+	return $this;
+    }
+
+    public function __toDebug() {
+	return "{id: ".$this->id. ", name: ". $this->name. ", TotalTickets: ".$this->totalTickets. ", remainingTickets: ". $this->remainingTickets. "}";
+    }
+
     public function __toString() {
 	return $this->name;
     }

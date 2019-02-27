@@ -1,7 +1,8 @@
 messages.appTitle: "ORDAIN"
 search.title: "Busqueda"
 
-receipt.numeroReferencia: "Referencia"
+receipt.id: "Nº de recibo"
+receipt.numeroReferenciaExterna: "Referencia Externa"
 receipt.numeroReferenciaGTWIN: "Referencia GTWIN"
 receipt.concepto: "Concepto"
 receipt.nombre: "Nombre"
@@ -16,7 +17,7 @@ receipt.ultimoDiaPago: "Limite Pago"
 receipt.payd: "Pagado"
 options: "Opciones"
 
-oncept.id: "Id"
+concept.id: "Id"
 concept.name: "Nombre"
 concept.entity: "Entidad"
 concept.suffix: "Sufijo"
@@ -32,7 +33,8 @@ messages.si: "Sí"
 messages.no: "No"
 message.file_successfully_processed: "El fichero se ha procesado correctamente."
 "there was an error procesing file %message%": "Se produjo un error al procesar el fichero. %message%"
-message.activity_created: "La actividad se ha guardado correctamente"
+message.activity_created: "La actividad se ha creado correctamente"
+message.activity_modified: "La actividad se ha guardado correctamente"
 
 link.logout: "Salir"
 navitem.paymentTypes: "Tipos de pagos"
@@ -43,6 +45,8 @@ navitem.administration: "Administración"
 navitem.concepts: "Conceptos"
 navitem.receipts: "Recibos"
 navitem.payments: "Pagos"
+navitem.activity: "Actividad"
+navitem.cine: "Cine"
 navitem.uploadReceipts: "Cargar Recibos"
 
 exam.category: "Categoría"
@@ -50,9 +54,11 @@ buyTickets.quantity: "Cantidad"
 ibiliak.number: "Cantidad"
 
 label.activity: "Actividad" 
+activity.id: "Id"
 activity.name: "Nombre"
 activity.concept: "Concepto"
 activity.totalTickets: "Tickets Totales"
+activity.ticketsRemaining: "Tickets restantes"
 
 confirmation.title: "Datos del pago"
 confirmation.pay: "Pagar"
@@ -65,7 +71,9 @@ btn.pay: "Pagar"
 btn.buy: "Comprar"
 btn.back: "Volver"
 
-'El dni y el número de inscripción son obligatorios': 'El dni y el número de inscripción son obligatorios'
+'El dni y el número de referencia son obligatorios': 'El dni y el número de referencia son obligatorios'
 'El concepto se ha eliminado correctamente.': 'El concepto se ha eliminado correctamente.'
 '¿Esta seguro de que desea eliminar el registro?': '¿Esta seguro de que desea eliminar el registro?'
 'Recibo no encontrado': 'Recibo no encontrado'
+'Payment was successfull': 'El pago se ha realizado correctamente.'
+'Payment was NOT successfull': 'Ha ocurrido un error al realizar el pago. NO se ha realizado correctamente.'

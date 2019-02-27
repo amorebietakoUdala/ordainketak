@@ -34,7 +34,8 @@
 	    <table id="taula" class="table bootstrap-table mt-3">
 		<thead>
 		    <tr class="row">
-			<th data-sortable="true">{{"receipt.numeroReferencia" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"receipt.id" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"receipt.numeroReferenciaExterna" | trans | capitalize}}</th>
 			<th data-sortable="true" data-width="15%">{{"receipt.concepto" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"receipt.dni" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"receipt.nombre" | trans | capitalize}}</th>
@@ -50,6 +51,7 @@
 		    {% if receipts is defined and receipts|length > 0 %}
 			{% for receipt in receipts %}
 			<tr>
+			    <td>{{receipt.id }}</td>
 			    <td>{{receipt.numeroReferencia }}</td>
 			    <td data-width="15%">{{receipt.concepto }}</td>
 			    <td>{{receipt.dni}}</td>
@@ -148,10 +150,10 @@
 		    exportDataType: $(this).val(),
 		});
 	    });
-	{% if not is_granted('ROLE_ADMIN') and receipts is defined and receipts|length > 0 %}
+	{% if not is_granted('ROLE_USER') and receipts is defined and receipts|length > 0 %}
 	{% set receipt = receipts[0] %}
 	    var html = "Referencia: {{ receipt.numeroReferencia }}<br/>Concepto: {{ receipt.concepto }}<br/>DNI: {{ receipt.dni }}<br/>Nombre: {{ receipt.nombre }}<br/>Apellidos: {{ receipt.apellido1 }} {{ receipt.apellido2 }}<br/>Límite de pago: {{ receipt.ultimoDiaPago|date("Y/m/d") }}<br/>";
-	    fireAlert('{{ "Datos del pago" | trans | capitalize }}',html,'{{ "confirmation.pay" | trans | capitalize }}','{{ "confirmation.cancel" | trans | capitalize }}','{{ receipt.numeroReferencia }}','{{ receipt.dni }}');
+	    fireAlert('{{ "confirmation.title" | trans | capitalize }}',html,'{{ "confirmation.pay" | trans | capitalize }}','{{ "confirmation.cancel" | trans | capitalize }}','{{ receipt.numeroReferencia }}','{{ receipt.dni }}');
 	{% endif %}
 	});
     });

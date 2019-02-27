@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Receipt;
+use MiPago\Bundle\Entity\Payment;
 
 /**
  * PaymentRepository
@@ -12,12 +13,24 @@ use AppBundle\Entity\Receipt;
  */
 class ReceiptRepository extends \Doctrine\ORM\EntityRepository
 {
-     /**
+    /**
+     * 
+     * @param Receipt $receipt
+     * @param type $payment_status
      * @return Array
      */
-    public function findReceiptByExample (Receipt $receipt) {
+    public function findReceiptByExample (Receipt $receipt, $payment_status = null ) {
 	$criteria = $this->__remove_blank_filters($receipt->toArray());
-	return $this->findBy($criteria);
+	if ( $payment_status === null ) {
+	    return $this->findBy($criteria);
+	} else {
+	    $qb = $this->createQueryBuilder('r')
+		    ->select()
+		    ->leftJoin('MiPagoBundle:Payment', 'p', 'WITH', 'r.payment = p.id' );
+	    $qb->andWhere('p.status = :status')
+	    ->setParameter('status', $payment_status);
+	    return $qb->getQuery()->getResult();
+	}
     }
     
     private function __remove_blank_filters ($criteria) {
