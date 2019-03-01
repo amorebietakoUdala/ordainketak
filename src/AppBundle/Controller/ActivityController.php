@@ -39,6 +39,7 @@ class ActivityController extends Controller
         return $this->render('/activity/new.html.twig', [
 	    'form' => $form->createView(),
 	    'readonly' => false,
+	    'new' => true
 	]);
     }
 

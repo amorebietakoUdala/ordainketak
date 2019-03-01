@@ -11,34 +11,29 @@ namespace AppBundle\Forms;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Concept;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * Description of ConceptTypeForm
  *
  * @author ibilbao
  */
-class ConceptTypeForm extends AbstractType {
+class CategoryTypeForm extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
 //	$roles = $options['roles'];
 	$readonly = $options['readonly'];
 	$builder->add('name',null,[
-		'label'=>'concept.name',
+		'label'=>'activity.name',
 		'disabled' => $readonly,
 	])
-	->add('unitaryPrice',null,[
-		'label'=>'concept.unitaryPrice',
-		'disabled' => $readonly,
-	])
-	->add('entity',null,[
-		'label'=>'concept.entity',
-		'disabled' => $readonly,
-	])
-	->add('suffix',null,[
-		'label'=>'concept.suffix',
+	->add('concept', EntityType::class,[
+		'class' => Concept::class,
+		'label'=>'activity.concept',
 		'disabled' => $readonly,
 	]);
 	if (!$readonly ) {
@@ -47,14 +42,14 @@ class ConceptTypeForm extends AbstractType {
 	    ]);
 	}
 	$builder->add('back', ButtonType::class,[
-		    'label'=>'btn.back',
-	    ]);
+	    'label'=>'btn.back',
+	]);
     }
 
     public function configureOptions(OptionsResolver $resolver) {
 	$resolver->setDefaults([
 	    'csrf_protection' => true,
-	    'data_class' => Concept::class, 
+	    'data_class' => Category::class, 
 //	    'roles' => null,
 	    'readonly' => false,
 	]);

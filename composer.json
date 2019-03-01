@@ -5,17 +5,18 @@
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
         "psr-4": {
-            "AppBundle\\": "src/AppBundle",
-	    "MiPago\\": "src/MiPago"
+            "AppBundle\\": "src/AppBundle"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
+    "minimum-stability": "dev",
     "autoload-dev": {
         "psr-4": { "Tests\\": "tests/" },
         "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
     },
     "require": {
         "php": ">=7.1.0",
+        "amorebietakoudala/mipago-bundle": "dev-master-dev",
         "doctrine/orm": "^2.5",
         "fr3d/ldap-bundle": "^3.0",
         "friendsofsymfony/jsrouting-bundle": "^2.3",

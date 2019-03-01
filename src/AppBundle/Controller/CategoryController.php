@@ -6,37 +6,37 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Psr\Log\LoggerInterface;
-use AppBundle\Entity\Concept;
-use AppBundle\Forms\ConceptTypeForm;
+use AppBundle\Entity\Category;
+use AppBundle\Forms\CategoryTypeForm;
 
 /**
  * @Route("/{_locale}/admin", requirements={
  *	    "_locale": "es|eu"
  * })
  */
-class ConceptController extends Controller {
+class CategoryController extends Controller {
 
     /**
-     * @Route("/concept/new", name="concept_new", methods={"GET","POST"})
+     * @Route("/category/new", name="category_new", methods={"GET","POST"})
      */
     public function newAction(Request $request, LoggerInterface $logger) {
 	$logger->debug('-->newAction: Start');
 	$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 	$user = $this->get('security.token_storage')->getToken()->getUser();
 	$em = $this->getDoctrine()->getManager();
-	$form = $this->createForm(ConceptTypeForm::class, new Concept(), [
+	$form = $this->createForm(CategoryTypeForm::class, new Category(), [
 	    'readonly' => false,
 	]);
 	$form->handleRequest($request);
 	if ( $form->isSubmitted() && $form->isValid() ) {
-	    $concept = $form->getData();
-	    $em->persist($concept);
+	    $category = $form->getData();
+	    $em->persist($category);
 	    $em->flush();
-	    $this->addFlash('success','El nuevo concepto se ha guardado correctamente.');
-	    return $this->redirectToRoute('concept_list');
+	    $this->addFlash('success','La nueva categoría se ha guardado correctamente.');
+	    return $this->redirectToRoute('category_list');
 	}
 	$logger->debug('<--newAction: End OK');
-	return $this->render('/concept/new.html.twig', [
+	return $this->render('/category/new.html.twig', [
 	    'form' => $form->createView(),
 	    'readonly' => false,
 	]);
@@ -44,28 +44,28 @@ class ConceptController extends Controller {
     }
 
     /**
-     * @Route("/concept", name="concept_list", methods={"GET"})
+     * @Route("/category", name="category_list", methods={"GET"})
      */
     public function listAction(Request $request, LoggerInterface $logger) {
 	$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 	$em = $this->getDoctrine()->getManager();
-	$concepts = $em->getRepository(Concept::class)->findAll();
-	return $this->render('/concept/list.html.twig', [
-		'concepts' => $concepts,
+	$categorys = $em->getRepository(Category::class)->findAll();
+	return $this->render('/category/list.html.twig', [
+		'categorys' => $categorys,
 	    ]);
     }
 
     /**
-     * @Route("/concept/{id}", name="concept_show", methods={"GET"})
+     * @Route("/category/{id}", name="category_show", methods={"GET"})
      */
-    public function showAction(Request $request, Concept $id, LoggerInterface $logger) {
+    public function showAction(Request $request, Category $id, LoggerInterface $logger) {
 	$logger->debug('-->showAction: Start');
 	$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
-	$form = $this->createForm(ConceptTypeForm::class, $id, [
+	$form = $this->createForm(CategoryTypeForm::class, $id, [
 	    'readonly' => true,
 	]);	
 	$logger->debug('<--showAction: End OK');
-	return $this->render('/concept/show.html.twig', [
+	return $this->render('/category/show.html.twig', [
 	    'form' => $form->createView(),
 	    'readonly' => true,
 	]);
@@ -73,24 +73,24 @@ class ConceptController extends Controller {
     }
     
     /**
-     * @Route("/concept/{id}/edit", name="concept_edit", methods={"GET","POST"})
+     * @Route("/category/{id}/edit", name="category_edit", methods={"GET","POST"})
      */
-    public function editAction(Request $request, Concept $id, LoggerInterface $logger) {
-	$logger->debug('-->ConceptEditAction: Start');
+    public function editAction(Request $request, Category $id, LoggerInterface $logger) {
+	$logger->debug('-->CategoryEditAction: Start');
 	$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
-	$form = $this->createForm(ConceptTypeForm::class, $id, [
+	$form = $this->createForm(CategoryTypeForm::class, $id, [
 	    'readonly' => false,
 	]);
 	$form->handleRequest($request);
 	if ( $form->isSubmitted() && $form->isValid() ) {
-	    $concept = $form->getData();
+	    $category = $form->getData();
 	    $em = $this->getDoctrine()->getManager();
-	    $em->persist($concept);
+	    $em->persist($category);
 	    $em->flush();
-	    $this->addFlash('success', 'message.concept_saved');
+	    $this->addFlash('success', 'message.category_saved');
 	}
-	$logger->debug('<--ConceptEditAction: End OK');
-	return $this->render('/concept/edit.html.twig', [
+	$logger->debug('<--CategoryEditAction: End OK');
+	return $this->render('/category/edit.html.twig', [
 	    'form' => $form->createView(),
 	    'readonly' => false,
 	    'new' => false,
@@ -100,17 +100,17 @@ class ConceptController extends Controller {
 
     
      /**
-     * @Route("/concept/{id}/delete", name="concept_delete", methods={"GET"})
+     * @Route("/category/{id}/delete", name="category_delete", methods={"GET"})
      */
-    public function deleteAction(Request $request, Concept $id, LoggerInterface $logger) {
+    public function deleteAction(Request $request, Category $id, LoggerInterface $logger) {
 	$logger->debug('-->deleteAction: Start');
 	$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 	$em = $this->getDoctrine()->getManager();
 	$em->remove($id);
 	$em->flush();
-	$this->addFlash('success','El concepto se ha eliminado correctamente.');
+	$this->addFlash('success','La categoría se ha eliminado correctamente.');
 	$logger->debug('<--deleteAction: End OK');
-	return $this->redirectToRoute('concept_list');
+	return $this->redirectToRoute('category_list');
     }
 
 }

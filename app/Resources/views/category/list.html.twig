@@ -29,27 +29,23 @@
 	    <table id="taula" class="table bootstrap-table mt-3">
 		<thead>
 		    <tr class="row">
-			<th data-sortable="true">{{"concept.id" | trans | capitalize}}</th>
-			<th data-sortable="true">{{"concept.entity" | trans | capitalize}}</th>
-			<th data-sortable="true">{{"concept.suffix" | trans | capitalize}}</th>
-			<th data-sortable="true">{{"concept.name" | trans | capitalize}}</th>
-			<th data-sortable="true">{{"concept.unitaryPrice" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"category.id" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"category.name" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"category.concept" | trans | capitalize}}</th>
 			<th data-sortable="true" data-field="options">{{"options" | trans | capitalize}}</th>
 		    </tr>
 		</thead>
 		<tbody>
-		    {% if concepts is defined and concepts|length > 0 %}
-			{% for concept in concepts %}
+		    {% if categorys is defined and categorys|length > 0 %}
+			{% for category in categorys %}
 			<tr>
-			    <td>{{concept.id}}</td>
-			    <td>{{concept.entity}}</td>
-			    <td>{{concept.suffix}}</td>
-			    <td>{{concept.name}}</td>
-			    <td>{{concept.unitaryPrice}}</td>
+			    <td>{{category.id}}</td>
+			    <td>{{category.name}}</td>
+			    <td>{{category.concept}}</td>
 			    <td>
-				<a href="{{ path ("concept_show",{'id': concept.id })}}"><i class="fas fa-eye"></i></a>
-				&nbsp;<a href="{{ path ("concept_edit",{'id': concept.id })}}"><i class="fas fa-edit"></i></a>
-				&nbsp;<a class="js-delete" href="#" data-url='{{ path ("concept_delete",{'id': concept.id })}}'><i class="fas fa-trash"></i></a>
+				<a href="{{ path ("category_show",{'id': category.id })}}"><i class="fas fa-eye"></i></a>
+				&nbsp;<a href="{{ path ("category_edit",{'id': category.id })}}"><i class="fas fa-edit"></i></a>
+				&nbsp;<a class="js-delete" href="#" data-url='{{ path ("category_delete",{'id': category.id })}}'><i class="fas fa-trash"></i></a>
 			    </td>
 			</tr>
 			{% endfor %}
@@ -58,7 +54,7 @@
 		    {% endif %}
 		</tbody>
 	    </table>
-	    <span class="pull-right"><a href="{{ path ('concept_new') }}" class="btn btn-primary btn-rounded fixed-bottom-right"><i class="fa fa-plus" title='{{ "btn.new" | trans | capitalize }}'></i></a></span>
+	    <span class="pull-right"><a href="{{ path ('category_new') }}" class="btn btn-primary btn-rounded fixed-bottom-right"><i class="fa fa-plus" title='{{ "btn.new" | trans | capitalize }}'></i></a></span>
 	</div>
     </main>
 {% endblock %}
@@ -98,7 +94,7 @@
 		exportTypes: ['excel'],
 		exportDataType: 'all',
 		exportOptions: {
-		    fileName: "concepts",
+		    fileName: "categories",
 		    ignoreColumn: ['options']
 		},
 		showColumns: false,
