@@ -35,8 +35,8 @@
 		<thead>
 		    <tr class="row">
 			<th data-sortable="true">{{"receipt.id" | trans | capitalize}}</th>
-			<th data-sortable="true">{{"receipt.numeroReferenciaExterna" | trans | capitalize}}</th>
-			<th data-sortable="true" data-width="15%">{{"receipt.concepto" | trans | capitalize}}</th>
+{#			<th data-sortable="true">{{"receipt.numeroReferenciaExterna" | trans | capitalize}}</th>
+#}			<th data-sortable="true" data-width="15%">{{"receipt.concepto" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"receipt.dni" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"receipt.nombre" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"receipt.apellido1" | trans | capitalize}}</th>
@@ -52,8 +52,8 @@
 			{% for receipt in receipts %}
 			<tr>
 			    <td>{{receipt.id }}</td>
-			    <td>{{receipt.numeroReferencia }}</td>
-			    <td data-width="15%">{{receipt.concepto }}</td>
+{#			    <td>{{receipt.numeroReferencia }}</td>
+#}			    <td data-width="15%">{{receipt.concepto }}</td>
 			    <td>{{receipt.dni}}</td>
 			    <td>{{receipt.nombre}}</td>
 			    <td>{{receipt.apellido1}}</td>
@@ -79,7 +79,7 @@
 			</tr>
 			{% endfor %}
 		    {% else %}
-			<tr><td colspan="9">{{"messages.results0" | trans }}</td></tr>
+			<tr><td colspan="8">{{"messages.results0" | trans }}</td></tr>
 		    {% endif %}
 		</tbody>
 	    </table>
