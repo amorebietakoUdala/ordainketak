@@ -26,13 +26,24 @@
 	    {{ form_errors(form.remainingTickets) }}
 	</div>
     {% endif %}
-    {% if readonly == false %}
-	{{ form_widget(form.save, { 'attr': { 'class' : 'btn btn-primary ml-1' } }) }}
-    {% endif %}
-    {% set url = path('activity_list') %}
-    {{ form_widget(form.back, { 'attr': { 'class' : 'js-back btn btn-primary ml-1' ,
-					 'data-url' : url },
-			      }) }}
+	<div class="col-lg-2 col-md-2 col-sm-6">
+	    {{ form_label(form.maxTickets) }}
+	    {{ form_widget(form.maxTickets, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.maxTickets) }}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-6">
+	    {{ form_label(form.enabled) }}
+	    {{ form_widget(form.enabled, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
+	</div>
+    </div>
+    <div class="form-row align-items-center mb-1"> 	
+	{% if readonly == false %}
+	    {{ form_widget(form.save, { 'attr': { 'class' : 'btn btn-primary ml-1' } }) }}
+	{% endif %}
+	{% set url = path('activity_list') %}
+	{{ form_widget(form.back, { 'attr': { 'class' : 'js-back btn btn-primary ml-1' ,
+					     'data-url' : url },
+				  }) }}
     </div>
 {{ form_end(form, {'attr': {'class': '',
 			       } 

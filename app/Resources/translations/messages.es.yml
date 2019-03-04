@@ -68,6 +68,12 @@ activity.name: "Nombre"
 activity.concept: "Concepto"
 activity.totalTickets: "Tickets Totales"
 activity.ticketsRemaining: "Tickets restantes"
+activity.maxTickets: "Nº máximo tickets"
+activity.enabled: "Activa"
+Sí: "Sí"
+No: "No"
+
+
 
 confirmation.title: "Datos del pago"
 confirmation.pay: "Pagar"

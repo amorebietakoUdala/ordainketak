@@ -33,14 +33,15 @@
 	    {{ form_widget(form.category, { 'attr': { 'id': '', 'class' : 'form-control-sm' } }) }}
 	    {{ form_errors(form.category) }}
 	</div>
-	
-    {% if readonly == false %}
-	{{ form_widget(form.pay, { 'attr': { 'class' : 'btn btn-primary ml-1' } }) }}
-    {% endif %}
-    {% set url = path('receipt_find') %}
-    {{ form_widget(form.back, { 'attr': { 'class' : 'js-back btn btn-primary ml-1' ,
-					 'data-url' : url },
-			      }) }}
+    </div>
+    <div class="form-row align-items-center mb-1">
+	{% if readonly == false %}
+	    {{ form_widget(form.pay, { 'attr': { 'class' : 'btn btn-primary ml-1' } }) }}
+	{% endif %}
+	{% set url = path('receipt_find') %}
+	{{ form_widget(form.back, { 'attr': { 'class' : 'js-back btn btn-primary ml-1' ,
+					     'data-url' : url },
+				  }) }}
     </div>
 {{ form_end(form, {'attr': {'class': '',
 			       } 

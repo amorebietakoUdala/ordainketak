@@ -69,6 +69,12 @@ activity.name: "Izena"
 activity.concept: "Kontzeptua"
 activity.totalTickets: "Zenbat ticket guztira"
 activity.ticketsRemaining: "Gerantzen diren tiketak"
+activity.maxTickets: Gehienezko ticketak"
+activity.enabled: "Aktiboa"
+Sí: "Bai"
+No: "Ez"
+
+
 
 confirmation.title: "Ordainketaren datuak"
 confirmation.pay: "Ordaindu"

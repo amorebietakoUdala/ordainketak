@@ -34,6 +34,8 @@
 			<th data-sortable="true">{{"activity.concept" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"activity.totalTickets" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"activity.ticketsRemaining" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"activity.maxTickets" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"activity.enabled" | trans | capitalize}}</th>
 			<th data-sortable="true" data-field="options">{{"options" | trans | capitalize}}</th>
 		    </tr>
 		</thead>
@@ -46,6 +48,12 @@
 			    <td>{{activity.concept}}</td>
 			    <td>{{activity.totalTickets}}</td>
 			    <td>{{activity.remainingTickets}}</td>
+			    <td>{{activity.maxTickets}}</td>
+			    {% if activity %}
+				<td>{{ "Sí" | trans | capitalize }}</td>
+			    {% else %}
+				<td>{{ "No" | trans | capitalize }}</td>
+			    {% endif %}
 			    <td>
 				<a href="{{ path ("activity_show",{'id': activity.id })}}"><i class="fas fa-eye"></i></a>
 				&nbsp;<a href="{{ path ("activity_edit",{'id': activity.id })}}"><i class="fas fa-edit"></i></a>
