@@ -24,12 +24,12 @@
 
 
 {% block body %}
-    <main>
-	<div class="container-fluid mt-2">
+    <main class="container-fluid">
+	<div class="mt-2">
 	{{ include('receipt/_form.html.twig',{
 			    }) }}
 	</div>
-	<div class="container">
+	<div class="container-fluid">
 	{% if is_granted('ROLE_ADMIN')%}
 	    <table id="taula" class="table bootstrap-table mt-3">
 		<thead>
@@ -116,7 +116,7 @@
 	      confirmButtonColor: '#3085d6',
 	      cancelButtonColor: '#d33',
 	      confirmButtonText: confirmationButtonText,
-	    }).then((result) => {
+	    }).then( function (result) {
 		if (result.value) {
 		    console.log(Routing.generate('receipt_pay', { id: numeroRecibo, dni: dni } ));
 		    document.location.href=Routing.generate('receipt_pay', { id: numeroRecibo, dni: dni } );

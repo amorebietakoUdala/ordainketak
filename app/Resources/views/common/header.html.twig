@@ -1,8 +1,8 @@
-<header class="mb-2">
+<header class="d-flex mb-2 justify-content-between">
     <div><img class="logo" alt="Udaletxearen logoa" src="{{ asset('images/udala-ametx.jpg') }}"></div>
-    <div><h1>{{ "messages.appTitle" | trans }}</h1></div>
+    <div class="ml-auto"><h1>{{ "messages.appTitle" | trans }}</h1></div>
 	{% if is_granted('ROLE_USER') %}
-	<div id="span-erabiltzailea">
+	<div id="span-erabiltzailea" class="ml-auto mr-2">
 	    <div class="dropdown">
 		<a class="dropdown-toggle" id="perfil_menua" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="user">{{ app.user.username }}</span>
@@ -18,5 +18,5 @@
                        app.request.attributes.get('_route_params')) %}
     <div id="hizkuntza" class="text-black padding-top-18 margin-left-08"><a id="js-locale-es" href="{{currentPath | replace ({'/eu/': '/es/'}) }}">es</a> / <a id="js-locale-eu" href="{{currentPath | replace ({'/es/': '/eu/'}) }}">eu</a></div>
 #}
-    <div id="hizkuntza" class="text-black padding-top-18 margin-left-08"><a id="js-locale-es" href="#">es</a> / <a id="js-locale-eu" href="#">eu</a></div>
+    <div id="hizkuntza" class="text-black padding-top-18 margin-left-08 mr-1"><a id="js-locale-es" href="#">es</a> / <a id="js-locale-eu" href="#">eu</a></div>
 </header>
