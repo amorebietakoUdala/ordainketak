@@ -17,6 +17,8 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 	    new JMS\SerializerBundle\JMSSerializerBundle(),
+	    new FOS\RestBundle\FOSRestBundle(),
+	    new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new MiPago\Bundle\MiPagoBundle(),
 	    new FOS\UserBundle\FOSUserBundle(),
 	    new FOS\JsRoutingBundle\FOSJsRoutingBundle(),

@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class ConceptRepository extends \Doctrine\ORM\EntityRepository
 {
+    
+    /**
+     * @return \Doctrine\DBAL\Query\QueryBuilder
+     */
+    
+    public function createOrderedQueryBuilder()
+    {
+        return $this->createQueryBuilder('concept')
+            ->orderBy('concept.id', 'DESC');
+    }
 }

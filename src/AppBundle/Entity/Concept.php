@@ -31,6 +31,14 @@ class Concept
     /**
      * @var string
      *
+     * @ORM\Column(name="name_eu", type="string", length=255, nullable=true)
+     */
+    private $nameEu;
+
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="unitaryPrice", type="decimal", precision=6, scale=2)
      */
     private $unitaryPrice;
@@ -81,6 +89,15 @@ class Concept
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getNameEu() {
+	return $this->nameEu;
+    }
+
+    public function setNameEu($nameEu) {
+	$this->nameEu = $nameEu;
+	return $this;
     }
 
     /**

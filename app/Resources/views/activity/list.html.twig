@@ -30,7 +30,7 @@
 		<thead>
 		    <tr class="row">
 			<th data-sortable="true">{{"activity.id" | trans | capitalize}}</th>
-			<th data-sortable="true">{{"activity.name" | trans | capitalize}}</th>
+		        <th data-sortable="true">{{"activity.name" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"activity.concept" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"activity.totalTickets" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"activity.ticketsRemaining" | trans | capitalize}}</th>
@@ -44,12 +44,16 @@
 			{% for activity in activities %}
 			<tr>
 			    <td>{{activity.id}}</td>
-			    <td>{{activity.name}}</td>
+			    {% if app.request.locale == 'es'%}
+				<td>{{activity.name}}</td>
+			    {% else %}
+				<td>{{activity.nameEu}}</td>
+			    {% endif %}
 			    <td>{{activity.concept}}</td>
 			    <td>{{activity.totalTickets}}</td>
 			    <td>{{activity.remainingTickets}}</td>
 			    <td>{{activity.maxTickets}}</td>
-			    {% if activity %}
+			    {% if activity.enabled == true %}
 				<td>{{ "Sí" | trans | capitalize }}</td>
 			    {% else %}
 				<td>{{ "No" | trans | capitalize }}</td>

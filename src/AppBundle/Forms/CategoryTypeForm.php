@@ -31,6 +31,10 @@ class CategoryTypeForm extends AbstractType {
 		'label'=>'activity.name',
 		'disabled' => $readonly,
 	])
+	->add('nameEu',null,[
+		'label'=>'activity.name_eu',
+		'disabled' => $readonly,
+	])
 	->add('concept', EntityType::class,[
 		'class' => Concept::class,
 		'label'=>'activity.concept',

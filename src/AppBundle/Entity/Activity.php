@@ -34,6 +34,14 @@ class Activity {
      */
     private $name;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name_eu", type="string", length=255, nullable=false)
+     */
+    private $nameEu;
+
     /**
      * @ORM\ManyToOne(targetEntity="Concept")
      * @ORM\JoinColumn(name="concept_id", referencedColumnName="id")
@@ -61,6 +69,13 @@ class Activity {
      */
     private $maxTickets;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enabled", type="boolean", nullable=true)
+     */
+    private $enabled;
+
     public function getId() {
 	return $this->id;
     }
@@ -78,6 +93,10 @@ class Activity {
 	return $this->name;
     }
 
+    public function getNameEu() {
+	return $this->nameEu;
+    }
+
     public function getTotalTickets() {
 	return $this->totalTickets;
     }
@@ -86,8 +105,17 @@ class Activity {
 	return $this->maxTickets;
     }
     
+    public function getEnabled() {
+	return $this->enabled;
+    }
+
     public function setName($name) {
 	$this->name = $name;
+	return $this;
+    }
+
+    public function setNameEu($nameEu) {
+	$this->nameEu = $nameEu;
 	return $this;
     }
 
@@ -109,9 +137,14 @@ class Activity {
 	$this->maxTickets = $maxTickets;
 	return $this;
     }
+    
+    public function setEnabled($enabled) {
+	$this->enabled = $enabled;
+	return $this;
+    }
 
     public function __toDebug() {
-	return "{id: ".$this->id. ", name: ". $this->name. ", TotalTickets: ".$this->totalTickets. ", remainingTickets: ". $this->remainingTickets. "}";
+	return "{id: ".$this->id. ", name: ". $this->name. ", TotalTickets: ".$this->totalTickets. ", remainingTickets: ". $this->remainingTickets. ", maxTickets: ". $this->maxTickets. ", enabled: ". $this->enabled. "}";
     }
 
     public function __toString() {

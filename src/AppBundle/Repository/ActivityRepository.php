@@ -10,4 +10,11 @@ namespace AppBundle\Repository;
  */
 class ActivityRepository extends \Doctrine\ORM\EntityRepository
 {
+    
+    public function getEnabledActivities() {
+	$criteria = [
+	    'enabled' => true,
+	    ];
+	return $this->findBy($criteria);
+    }
 }

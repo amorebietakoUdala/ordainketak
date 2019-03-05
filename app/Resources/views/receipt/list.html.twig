@@ -71,7 +71,7 @@
 			    </td>
 			    <td>
 				{% if receipt.payment == null or receipt.payment.status == constant('MiPago\\Bundle\\Entity\\Payment::PAYMENT_STATUS_NOK') %}
-				    <a class="js-btnPay" href="javascript:fireAlert('{{ "confirmation.title" | trans | capitalize }}','Referencia: {{ receipt.numeroReferencia }}<br/>Concepto: {{ receipt.concepto }}<br/>DNI: {{ receipt.dni }}<br/>Nombre: {{ receipt.nombre }}<br/>Apellidos: {{ receipt.apellido1 }} {{ receipt.apellido2 }}<br/>Límite de pago: {{ receipt.ultimoDiaPago|date("Y/m/d") }}<br/>','{{ "confirmation.pay" | trans | capitalize }}','{{ "confirmation.cancel" | trans | capitalize }}','{{ receipt.numeroReferencia }}','{{ receipt.dni }}');">
+				    <a class="js-btnPay" href="javascript:fireAlert('{{ "confirmation.title" | trans | capitalize }}','{{ "receipt.id" | trans | capitalize }}: {{ receipt.id }}<br/>{{ "receipt.concepto" | trans | capitalize }}: {{ receipt.concepto }}<br/>{{ "receipt.dni" | trans | capitalize }}: {{ receipt.dni }}<br/>{{ "receipt.nombre" | trans | capitalize }}: {{ receipt.nombre }}<br/>{{ "receipt.apellidos" | trans | capitalize }}: {{ receipt.apellido1 }} {{ receipt.apellido2 }}<br/>{{ "receipt.ultimoDiaPago" | trans | capitalize }}: {{ receipt.ultimoDiaPago|date("Y/m/d") }}<br/>','{{ "confirmation.pay" | trans | capitalize }}','{{ "confirmation.cancel" | trans | capitalize }}','{{ receipt.id }}','{{ receipt.dni }}');">
 					<i class="fas fa-credit-card"></i>
 				    </a>
 				{% endif %}
@@ -106,7 +106,7 @@
     <!-- Include a polyfill for ES6 Promises (optional) for IE11 and UC Browser support -->
     <script type="text/javascript" src="{{ asset('bower_components/promise-polyfill/dist/polyfill.js') }}"></script>
     <script type="text/javascript">
-	function fireAlert (title,html,confirmationButtonText, cancelButtonText,numeroReferencia, dni) {
+	function fireAlert (title,html,confirmationButtonText, cancelButtonText,numeroRecibo, dni) {
 	    Swal.fire({
 	      title: title,
 	      html: html,
@@ -118,8 +118,8 @@
 	      confirmButtonText: confirmationButtonText,
 	    }).then((result) => {
 		if (result.value) {
-		    console.log(Routing.generate('receipt_pay', { numeroReferencia: numeroReferencia, dni: dni } ));
-		    document.location.href=Routing.generate('receipt_pay', { numeroReferencia: numeroReferencia, dni: dni } );
+		    console.log(Routing.generate('receipt_pay', { id: numeroRecibo, dni: dni } ));
+		    document.location.href=Routing.generate('receipt_pay', { id: numeroRecibo, dni: dni } );
 		}
 	    });
 	}
@@ -152,8 +152,8 @@
 	    });
 	{% if not is_granted('ROLE_USER') and receipts is defined and receipts|length > 0 %}
 	{% set receipt = receipts[0] %}
-	    var html = "Referencia: {{ receipt.numeroReferencia }}<br/>Concepto: {{ receipt.concepto }}<br/>DNI: {{ receipt.dni }}<br/>Nombre: {{ receipt.nombre }}<br/>Apellidos: {{ receipt.apellido1 }} {{ receipt.apellido2 }}<br/>Límite de pago: {{ receipt.ultimoDiaPago|date("Y/m/d") }}<br/>";
-	    fireAlert('{{ "confirmation.title" | trans | capitalize }}',html,'{{ "confirmation.pay" | trans | capitalize }}','{{ "confirmation.cancel" | trans | capitalize }}','{{ receipt.numeroReferencia }}','{{ receipt.dni }}');
+	    var html = "{{ "receipt.id" | trans | capitalize }}: {{ receipt.id }}<br/>{{ "receipt.concepto" | trans | capitalize }}: {{ receipt.concepto }}<br/>{{ "receipt.dni" | trans | capitalize }}: {{ receipt.dni }}<br/>{{ "receipt.nombre" | trans | capitalize }}: {{ receipt.nombre }}<br/>{{ "receipt.apellidos" | trans | capitalize }}: {{ receipt.apellido1 }} {{ receipt.apellido2 }}<br/>{{ "receipt.ultimoDiaPago" | trans | capitalize }}: {{ receipt.ultimoDiaPago|date("Y/m/d") }}<br/>";
+	    fireAlert('{{ "confirmation.title" | trans | capitalize }}',html,'{{ "confirmation.pay" | trans | capitalize }}','{{ "confirmation.cancel" | trans | capitalize }}','{{ receipt.id }}','{{ receipt.dni }}');
 	{% endif %}
 	});
     });

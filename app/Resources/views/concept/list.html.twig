@@ -44,7 +44,11 @@
 			    <td>{{concept.id}}</td>
 			    <td>{{concept.entity}}</td>
 			    <td>{{concept.suffix}}</td>
-			    <td>{{concept.name}}</td>
+			    {% if app.request.locale == 'es' %}
+				<td>{{concept.name}}</td>
+			    {% else %}
+				<td>{{concept.nameEu}}</td>
+			    {%endif%}
 			    <td>{{concept.unitaryPrice}}</td>
 			    <td>
 				<a href="{{ path ("concept_show",{'id': concept.id })}}"><i class="fas fa-eye"></i></a>

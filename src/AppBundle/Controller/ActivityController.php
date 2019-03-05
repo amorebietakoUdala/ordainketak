@@ -27,6 +27,7 @@ class ActivityController extends Controller
 	$form = $this->createForm(ActivityTypeForm::class, new Activity(), [
 	    'readonly' => false,
 	    'new' => true,
+	    'locale' => $request->getLocale(),
 	]);
 	$form->handleRequest($request);
 	if ( $form->isSubmitted() && $form->isValid() ) {
@@ -63,6 +64,7 @@ class ActivityController extends Controller
 	$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 	$form = $this->createForm(ActivityTypeForm::class, $id, [
 	    'readonly' => true,
+    	    'locale' => $request->getLocale(),
 	]);	
 	$logger->debug('<--showAction: End OK');
 	return $this->render('/activity/show.html.twig', [
@@ -79,6 +81,7 @@ class ActivityController extends Controller
 	$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 	$form = $this->createForm(ActivityTypeForm::class, $id, [
 	    'readonly' => false,
+	    'locale' => $request->getLocale(),
 	    'new' => false,
 	]);
 	$form->handleRequest($request);
@@ -92,7 +95,7 @@ class ActivityController extends Controller
 	$logger->debug('<--editAction: End OK');
 	return $this->render('/activity/edit.html.twig', [
 	    'form' => $form->createView(),
-	    'readonly' => true,
+	    'readonly' => false,
 	    'new' => false,
 	]);
     }

@@ -29,6 +29,13 @@ class Category
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="name_eu", type="string", length=255, nullable=true)
+     */
+    private $nameEu;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Concept")
      * @ORM\JoinColumn(name="concept_id", referencedColumnName="id")
      */
@@ -61,6 +68,15 @@ class Category
     public function getName()
     {
         return $this->name;
+    }
+    
+    public function getNameEu() {
+	return $this->nameEu;
+    }
+
+    public function setNameEu($nameEu) {
+	$this->nameEu = $nameEu;
+	return $this;
     }
 
     public function getConcept() {

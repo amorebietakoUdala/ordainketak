@@ -32,7 +32,7 @@ class ConceptController extends Controller {
 	    $concept = $form->getData();
 	    $em->persist($concept);
 	    $em->flush();
-	    $this->addFlash('success','El nuevo concepto se ha guardado correctamente.');
+	    $this->addFlash('success','message.concept_created');
 	    return $this->redirectToRoute('concept_list');
 	}
 	$logger->debug('<--newAction: End OK');

@@ -13,11 +13,11 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarTaxes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ 'navitem.taxes' | trans | capitalize }}
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarTaxes">
+        <div id="js-menu-pagos" class="dropdown-menu" aria-labelledby="navbarTaxes">
           <a class="dropdown-item" href="{{ path('exam_new') }}">{{"navitem.exams" | trans | capitalize}}</a>
-	  <a class="dropdown-item" href="{{ path('buyTickets_activity',{'activity': 1 }) }}">{{"navitem.cine" | trans | capitalize}}</a>
+{#	  <a class="dropdown-item" href="{{ path('buyTickets_activity',{'activity': 1 }) }}">{{"navitem.cine" | trans | capitalize}}</a>
 	  <a class="dropdown-item" href="{{ path('buyTickets_activity',{'activity': 2 }) }}">{{"navitem.ibiliak" | trans | capitalize}}</a>
-        </div>
+#}        </div>
       </li>
 {#      <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarPaymentTypes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,7 +38,7 @@
 	  <a class="dropdown-item" href="{{ path('concept_list') }}">{{"navitem.concepts" | trans | capitalize}}</a>
 	  <a class="dropdown-item" href="{{ path('category_list') }}">{{"navitem.categories" | trans | capitalize}}</a>
           <a class="dropdown-item" href="{{ path('receipt_home') }}">{{"navitem.receipts" | trans | capitalize}}</a>
-	  <a class="dropdown-item" href="{{ path('activity_list') }}">{{"navitem.activity" | trans | capitalize}}</a>
+	  <a class="dropdown-item" href="{{ path('activity_list') }}">{{"navitem.activities" | trans | capitalize}}</a>
           <a class="dropdown-item" href="{{ path('mipago_list_payments') }}">{{"navitem.payments" | trans | capitalize}}</a>
         </div>
       </li>

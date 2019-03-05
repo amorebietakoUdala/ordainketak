@@ -63,7 +63,7 @@ class ReceiptController extends Controller
 	if ( $form->isSubmitted() && $form->isValid() ) {
 	    $data = $form->getData();
 	    if ( $user === "anon." &&  ( $data->getDni() === null || $data->getId() === null ) ) {
-		$this->addFlash('error','El dni y el número de referencia son obligatorios');
+		$this->addFlash('error','El dni y el número de recibo son obligatorios');
 	    } else {
 //		$results = $em->getRepository(Receipt::class)->findReceiptByExample($data, Payment::PAYMENT_STATUS_OK);
 		$results = $em->getRepository(Receipt::class)->findReceiptByExample($data);
@@ -135,19 +135,20 @@ class ReceiptController extends Controller
     }
     
     /**
-     * @Route("/pay/{numeroReferencia}/{dni}", name="receipt_pay", methods={"GET","POST"})
+     * @Route("/pay/{id}/{dni}", name="receipt_pay", methods={"GET","POST"})
      */
-    public function payReceiptAction(Request $request, $numeroReferencia, $dni, LoggerInterface $logger)
+    public function payReceiptAction(Request $request, $id, $dni, LoggerInterface $logger)
     {	$logger->debug('-->payReceiptAction: Start');
 	$user = $this->get('security.token_storage')->getToken()->getUser();
 	$roles = ($user === "anon.") ? ["IS_AUTHENTICATED_ANONYMOUSLY"] : $user->getRoles();
 	$form = $this->createForm(ReceiptTypeForm::class, new Receipt(), [
 	    'roles' => $roles,
     	    'locale' => $request->getLocale(),
+	    'search' => true,
 	]);
-	if ( $user === "anon." &&  ( $dni === null || $numeroReferencia === null ) ) {
-	    $this->addFlash('error','El dni y el número de inscripción son obligatorios');
-	    $logger->debug('<--payReceiptAction: End El dni y el número de inscripción son obligatorios');
+	if ( $user === "anon." &&  ( $dni === null || $id === null ) ) {
+	    $this->addFlash('error','El dni y el número de recibo son obligatorios');
+	    $logger->debug('<--payReceiptAction: End El dni y el número de recibo son obligatorios');
 	    return $this->render('receipt/list.html.twig', [
 		'form' => $form->createView(),
 		'receipts' => $results,
@@ -156,7 +157,7 @@ class ReceiptController extends Controller
 	    $em = $this->getDoctrine()->getManager();
 	    $receipt = $em->getRepository(Receipt::class)->findOneBy([
 		'dni' => $dni,
-		'numeroReferencia' => $numeroReferencia,
+		'id' => $id,
 	    ]);
 	    if ( $receipt != null ) {
 		$logger->debug('<--payReceiptAction: End Forwarded to sendRequest');

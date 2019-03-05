@@ -8,6 +8,7 @@ receipt.concepto: "Kontzeptua"
 receipt.nombre: "Izena"
 receipt.apellido1: "1. abizena"
 receipt.apellido2: "2. abizena"
+receipt.apellidos: "Abizenak"
 receipt.dni: "NAN"
 receipt.email: "Emaila"
 receipt.telefono: "Telefonoa"
@@ -19,6 +20,7 @@ options: "Aukerak"
 
 concept.id: "Id"
 concept.name: "Izena"
+category.name_eu: "Izena (Euskaraz)"
 concept.entity: "Entitatea"
 concept.suffix: "Atzizkia"
 concept.unitaryPrice: "Unitateko prezioa"
@@ -55,7 +57,7 @@ navitem.concepts: "Kontzeptuak"
 navitem.categories: "Kategoriak"
 navitem.receipts: "Erreziboak"
 navitem.payments: "Ordainketak"
-navitem.activity: "Jarduerak"
+navitem.activities: "Jarduerak"
 navitem.cine: "Zinea"
 navitem.uploadReceipts: "Erreziboak kargatu"
 
@@ -65,11 +67,12 @@ ibiliak.number: "Zenbat"
 
 label.activity: "Jarduera" 
 activity.id: "Id"
-activity.name: "Izena"
+activity.name: "Izena (Erdaraz)"
+activity.name_eu: "Izena (Euskaraz)"
 activity.concept: "Kontzeptua"
 activity.totalTickets: "Zenbat ticket guztira"
 activity.ticketsRemaining: "Gerantzen diren tiketak"
-activity.maxTickets: Gehienezko ticketak"
+activity.maxTickets: "Gehienezko ticketak"
 activity.enabled: "Aktiboa"
 Sí: "Bai"
 No: "Ez"
@@ -87,7 +90,7 @@ btn.pay: "Ordaindu"
 btn.buy: "Erosi"
 btn.back: "Itzuli"
 
-'El dni y el número de referencia son obligatorios': 'NANa eta errezibo zenbakia nahitaezkoak dira'
+'El dni y el número de recibo son obligatorios': 'NANa eta errezibo zenbakia nahitaezkoak dira'
 'El concepto se ha eliminado correctamente.': 'Kontzeptua behar bezala ezabatu da.'
 '¿Esta seguro de que desea eliminar el registro?': 'Ziur al zaude errejistroa ezabatu nahi duzula?'
 'Recibo no encontrado': 'Erreziboa ez da aurkitu'
