@@ -23,9 +23,15 @@ $(document).ready(function(){
 	url: "http://garapenak/ordainketak/app_dev.php/api/activity/",
 	context: document.body
     }).done(function(data){
+	var current_locale = $('html').attr("lang");
 	for (i=0; i<data.length; i++) {
 	    var path = Routing.generate('buyTickets_activity', { activity: data[i].id } );
-	    var item = data[i].name;
+	    var item = null;
+	    if ( current_locale === 'es') {
+		item = data[i].name;
+	    } else {
+		item = data[i].name_eu;
+	    }
 	    $("#js-menu-pagos").append('<a class="dropdown-item" href="'+path+'">'+item+'</a>');
 	}
     });

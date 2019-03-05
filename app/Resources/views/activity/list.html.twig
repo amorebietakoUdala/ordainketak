@@ -30,7 +30,11 @@
 		<thead>
 		    <tr class="row">
 			<th data-sortable="true">{{"activity.id" | trans | capitalize}}</th>
-		        <th data-sortable="true">{{"activity.name" | trans | capitalize}}</th>
+			{% if app.request.locale == 'es'%}
+			    <th data-sortable="true">{{"activity.name" | trans | capitalize}}</th>
+			{% else %}
+			    <th data-sortable="true">{{"activity.name_eu" | trans | capitalize}}</th>
+			{% endif %}
 			<th data-sortable="true">{{"activity.concept" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"activity.totalTickets" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"activity.ticketsRemaining" | trans | capitalize}}</th>
