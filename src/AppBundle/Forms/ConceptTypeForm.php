@@ -29,6 +29,10 @@ class ConceptTypeForm extends AbstractType {
 		'label'=>'concept.name',
 		'disabled' => $readonly,
 	])
+	->add('nameEu',null,[
+		'label'=>'concept.name_eu',
+		'disabled' => $readonly,
+	])
 	->add('unitaryPrice',null,[
 		'label'=>'concept.unitaryPrice',
 		'disabled' => $readonly,

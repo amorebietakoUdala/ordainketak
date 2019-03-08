@@ -20,6 +20,7 @@ options: "Opciones"
 
 concept.id: "Id"
 concept.name: "Nombre"
+concept.name_eu: "Nombre (Euskera)"
 concept.entity: "Entidad"
 concept.suffix: "Sufijo"
 concept.unitaryPrice: "Precio unitario"

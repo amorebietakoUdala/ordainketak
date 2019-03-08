@@ -20,7 +20,7 @@ options: "Aukerak"
 
 concept.id: "Id"
 concept.name: "Izena"
-category.name_eu: "Izena (Euskaraz)"
+concept.name_eu: "Izena (Euskaraz)"
 concept.entity: "Entitatea"
 concept.suffix: "Atzizkia"
 concept.unitaryPrice: "Unitateko prezioa"
