@@ -25,6 +25,7 @@ class ExamController extends Controller
 	$em = $this->getDoctrine()->getManager();
 	$form = $this->createForm(ExamTypeForm::class, new Exam(), [
 	    'readonly' => false,
+	    'locale' => $request->getLocale(),
 	]);
 	$form->handleRequest($request);
 	if ( $form->isSubmitted() && $form->isValid() ) {

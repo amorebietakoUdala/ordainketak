@@ -27,12 +27,20 @@ class ExamTypeForm extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
 	$readonly = $options['readonly'];
+	$locale = $options['locale'];
 	$builder->add('inscription', InscriptionTypeForm::class,[
 	    'data_class' => Exam::class,
 	])
 	->add('category',EntityType::class,[
 	    'class' => Category::class,
 	    'label'=>'exam.category',
+	    'choice_label' => function ($category) use ($locale) {
+		if ($locale === 'es') {
+		    return $category->getName();
+		} else {
+		    return $category->getNameEu();
+		}
+	    }
 	]);
 	if (!$readonly) {
 	    $builder->add('pay', SubmitType::class,[
@@ -49,6 +57,7 @@ class ExamTypeForm extends AbstractType {
 	    'csrf_protection' => true,
 	    'data_class' => Exam::class, 
 	    'readonly' => false,
+	    'locale' => 'es'
 //	    'search' => false,
 	]);
     }
