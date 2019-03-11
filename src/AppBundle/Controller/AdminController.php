@@ -58,7 +58,11 @@ class AdminController extends Controller
 		    $receipt = new Receipt();
 		    $receipt->setNumeroReferencia($record['ID.INSCRIPCIÓN']);
 //		    $receipt->setConcepto($record['CONCEPTO']);
-		    $receipt->setConcepto($record['NOM.CURSO']." P:".$record['NUM.PERIODO']);
+		    if (!array_key_exists('CONCEPTO', $record) ) {
+			$receipt->setConcepto($record['NOM.CURSO']." P:".$record['NUM.PERIODO']);
+		    } else {
+			$receipt->setConcepto($record['CONCEPTO']);
+		    }
 		    $receipt->setNombre($record['NOMBRE']);
 		    $receipt->setApellido1($record['APELLIDO1']);
 		    $receipt->setApellido2($record['APELLIDO2']);
