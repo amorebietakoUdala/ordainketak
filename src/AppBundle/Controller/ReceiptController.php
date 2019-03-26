@@ -204,6 +204,7 @@ class ReceiptController extends Controller
 	$em->flush();
 	$this->__updateRemainingTickets($receipt, $logger);
 	$this->__sendConfirmationEmails($receipt);
+	$this->__updateGTWINPayment($receipt, $logger);
 	$logger->debug('<--ReceiptConfirmationAction: End OK');
 	return new JsonResponse("OK");
     }
@@ -302,7 +303,91 @@ class ReceiptController extends Controller
 		])
 	);
 	$message->setContentType('text/html');
-
 	$mailer->send($message);
     }
+    
+    /**
+     * @Route("/oracle", name="receipt_oracle", methods={"GET","POST"})
+     */
+    public function oracleAction(Request $request, LoggerInterface $logger) {
+//	// No need to update
+//	if ($receipt->getNumeroReferenciaGTWIN() === null ) {
+//	    return;
+//	}
+//	if ($receipt->getPayment() === null ) {
+//	    return;
+//	}
+	
+	$em = $this->getDoctrine()->getManager();
+	$receipt = $em->getRepository(Receipt::class)->find(100000098);
+	// Update record in GTWIN
+	$insert_template = "INSERT INTO EXTCALL (DBOID, ACTIONCODE, INPUTPARS, OUTPUTPARS, OUTPARSMEMO, CALLTYPE, NUMRETRIES, QUEUE, PRIORITY, CALLSTATUS, CALLTIME, PROCTIME, CONFTIME, ORIGINOBJ, DESTOBJ, USERBW, MSGERROR, URLOK, URLOKPARAM, CONFSTATUS) VALUES ".
+						       "('{DBOID}','OPERACION_PAGO_TAR','<NUMREC>{NUMREC}</NUMREC><NUMFRA>{NUMFRA}</NUMFRA><FECOPE>{FECOPE}</FECOPE><IMPORT>{IMPORT}</IMPORT><RECARG>0.00</RECARG><INTERE>0.00</INTERE><COSTAS>0.00</COSTAS><CAJCOB>9</CAJCOB><NUMAUT>{NUMAUT}</NUMAUT>',null, null,0,1,0,0,2,TO_DATE('{CALLTIME}','YYYY-MM-DD HH24:MI:SS'),TO_DATE('{PROCTIME}','YYYY-MM-DD HH24:MI:SS'),null,null,null,'{USERBW}',null,null,null,0)";
+	$time_start = floatval(microtime(true))*10000;
+	$dboid = str_pad('124'.$time_start, 22, "0", STR_PAD_RIGHT);
+	$payment = $receipt->getPayment();
+	$now = new \DateTime();
+	
+	$params = [
+	    '{DBOID}' => $dboid,
+	    '{NUMREC}'=> $receipt->getNumeroReferenciaGTWIN(),
+	    '{NUMFRA}' => 0,
+	    '{FECOPE}' => $payment->getTimestamp()->format('Y-m-d H:i:s'),
+	    '{IMPORT}' => $receipt->getImporte(),
+	    '{NUMAUT}' => $payment->getRegistered_payment_id(),
+	    '{CALLTIME}' => $now->format('Y-m-d H:i:s'),
+	    '{PROCTIME}' => $now->format('Y-m-d H:i:s'),
+	    '{USERBW}' => 'INT',
+	];
+	$sql = str_replace(array_keys($params), $params, $insert_template);
+	$em2 = $this->getDoctrine()->getManager("oracle");
+	$statement = $em2->getConnection()->prepare( $sql );
+//	$statement->execute();
+	return;
+    }
+
+    private function __updateGTWINPayment(Receipt $receipt, LoggerInterface $logger) {
+	// No need to update
+	if ($receipt->getNumeroReferenciaGTWIN() === null ) {
+	    $logger->debug('No GTWIN reference to update');
+	    return;
+	}
+	if ($receipt->getPayment() === null ) {
+	    $logger->debug('No payment to update status in GTWIN');
+	    return;
+	}
+	if ( !$payment->isPaymentSuccessfull() ) {
+	    $logger->debug('Payment not successfull no need to update payment in GTWIN');
+	    return;
+	}
+	$sql = $this->__createGTWINUpdateStatement($receipt);
+	$em2 = $this->getDoctrine()->getManager("oracle");
+	$statement = $em2->getConnection()->prepare( $sql );
+//	$statement->execute();
+	return;
+    }
+
+    private function __createGTWINUpdateStatement ($receipt){
+	// Update record in GTWIN
+	$insert_template = "INSERT INTO EXTCALL (DBOID, ACTIONCODE, INPUTPARS, OUTPUTPARS, OUTPARSMEMO, CALLTYPE, NUMRETRIES, QUEUE, PRIORITY, CALLSTATUS, CALLTIME, PROCTIME, CONFTIME, ORIGINOBJ, DESTOBJ, USERBW, MSGERROR, URLOK, URLOKPARAM, CONFSTATUS) VALUES ".
+						       "('{DBOID}','OPERACION_PAGO_TAR','<NUMREC>{NUMREC}</NUMREC><NUMFRA>{NUMFRA}</NUMFRA><FECOPE>{FECOPE}</FECOPE><IMPORT>{IMPORT}</IMPORT><RECARG>0.00</RECARG><INTERE>0.00</INTERE><COSTAS>0.00</COSTAS><CAJCOB>9</CAJCOB><NUMAUT>{NUMAUT}</NUMAUT>',null, null,0,1,0,0,2,TO_DATE('{CALLTIME}','YYYY-MM-DD HH24:MI:SS'),TO_DATE('{PROCTIME}','YYYY-MM-DD HH24:MI:SS'),null,null,null,'{USERBW}',null,null,null,0)";
+	$time_start = floatval(microtime(true))*10000;
+	$dboid = str_pad('124'.$time_start, 22, "0", STR_PAD_RIGHT);
+	$now = new \DateTime();
+	$payment = $receipt->getPayment();
+	$params = [
+	    '{DBOID}' => $dboid,
+	    '{NUMREC}'=> $receipt->getNumeroReferenciaGTWIN(),
+	    '{NUMFRA}' => 0,
+	    '{FECOPE}' => $payment->getTimestamp()->format('Y-m-d H:i:s'),
+	    '{IMPORT}' => $receipt->getImporte(),
+	    '{NUMAUT}' => $payment->getRegistered_payment_id(),
+	    '{CALLTIME}' => $now->format('Y-m-d H:i:s'),
+	    '{PROCTIME}' => $now->format('Y-m-d H:i:s'),
+	    '{USERBW}' => 'INT',
+	];
+	$sql = str_replace(array_keys($params), $params, $insert_template);
+	return $sql;
+    }
+    
 }

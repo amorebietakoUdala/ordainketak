@@ -37,3 +37,10 @@ parameters:
     mailer_sendConfirmation: false
     mailer_sendBCC: false
     mailer_BCC_email: ['email_for_the_copy@domain.com']
+
+    gtwin_database_host: gtwindb
+    gtwin_database_driver: oci8
+    gtwin_database_port: 1521
+    gtwin_database_name: ORCL_SID
+    gtwin_database_user: gtwin_user
+    gtwin_database_password: gtwin_password

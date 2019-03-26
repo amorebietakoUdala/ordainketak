@@ -58,6 +58,13 @@ class Concept
     private $suffix;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="acc_concept", type="string", length=5, nullable=false)
+     */
+    private $accountingConcept;
+
+    /**
      * Get id
      *
      * @return int
@@ -139,6 +146,15 @@ class Concept
 
     public function setEntity($entity) {
 	$this->entity = $entity;
+	return $this;
+    }
+
+    public function getAccountingConcept() {
+	return $this->accountingConcept;
+    }
+
+    public function setAccountingConcept($accountingConcept) {
+	$this->accountingConcept = $accountingConcept;
 	return $this;
     }
 
