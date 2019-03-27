@@ -66,7 +66,33 @@ class ReceiptController extends Controller
 		$this->addFlash('error','El dni y el número de recibo son obligatorios');
 	    } else {
 //		$results = $em->getRepository(Receipt::class)->findReceiptByExample($data, Payment::PAYMENT_STATUS_OK);
-		$results = $em->getRepository(Receipt::class)->findReceiptByExample($data);
+		$results = $em->getRepository(Receipt::class)->findReceiptByNumeroReferenciaGTWIN($data);
+		if ( sizeof($results) === 0 ) {
+		    $em2 = $this->getDoctrine()->getManager("oracle");
+		    $select_template = "SELECT * FROM SP_TRB_RECIBO R, SP_TRB_TIPING T WHERE R.RECCODTIN=T.TINCODTIN AND RECESTADO='P' AND RECSITUAC='V' AND RECNUMREC='{RECNUMREC}' AND RECDNINIF='{RECDNINIF}'";
+		    $params = [
+			'{RECNUMREC}' => $data->getId(),
+			'{RECDNINIF}' => substr(
+					    str_pad($data->getDni(), 10, "0", STR_PAD_LEFT)
+					 , 0,-1),
+		    ];
+		    $sql = str_replace(array_keys($params), $params, $select_template);
+		    $statement = $em2->getConnection()->prepare( $sql );
+		    $statement->execute();
+		    $results = $statement->fetchAll();
+		    $receipts = [];
+//		    dump($paded_dni,$params,$sql,$receipts,$results);die;
+		    if ( sizeof($results) > 0 ) {
+			$receipt = Receipt::createFromGTWINReceipt($results[0]);
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($receipt);
+			$em->flush();
+			$receipts[] = $receipt;
+//			dump($sql,$receipts,$results);die;
+		    }
+//		    dump($receipts);die;
+		    $results = $receipts;
+		}
 		return $this->render('receipt/list.html.twig', [
 		    'form' => $form->createView(),
 		    'receipts' => $results,
@@ -106,7 +132,7 @@ class ReceiptController extends Controller
 	$logger->debug('-->payForwardedReceiptAction: Start');
 	if ( $receipt != null ) {
 	    $logger->debug('<--payForwardedReceiptAction: End Forwarded to MiPagoBundle:Payment:sendRequest');
-	    $referencia = $receipt->getId();
+	    $referencia = $receipt->getNumeroReferenciaGTWIN();
 	    return $this->forward("MiPagoBundle:Payment:sendRequest",[
 		'reference_number' => $referencia, 
 		'payment_limit_date' => $receipt->getUltimoDiaPago()->format('Ymd'),
@@ -135,9 +161,9 @@ class ReceiptController extends Controller
     }
     
     /**
-     * @Route("/pay/{id}/{dni}", name="receipt_pay", methods={"GET","POST"})
+     * @Route("/pay/{numeroReferenciaGTWIN}/{dni}", name="receipt_pay", methods={"GET","POST"})
      */
-    public function payReceiptAction(Request $request, $id, $dni, LoggerInterface $logger)
+    public function payReceiptAction(Request $request, $numeroReferenciaGTWIN, $dni, LoggerInterface $logger)
     {	$logger->debug('-->payReceiptAction: Start');
 	$user = $this->get('security.token_storage')->getToken()->getUser();
 	$roles = ($user === "anon.") ? ["IS_AUTHENTICATED_ANONYMOUSLY"] : $user->getRoles();
@@ -146,7 +172,7 @@ class ReceiptController extends Controller
     	    'locale' => $request->getLocale(),
 	    'search' => true,
 	]);
-	if ( $user === "anon." &&  ( $dni === null || $id === null ) ) {
+	if ( $user === "anon." &&  ( $dni === null || $numeroReferenciaGTWIN === null ) ) {
 	    $this->addFlash('error','El dni y el número de recibo son obligatorios');
 	    $logger->debug('<--payReceiptAction: End El dni y el número de recibo son obligatorios');
 	    return $this->render('receipt/list.html.twig', [
@@ -157,12 +183,12 @@ class ReceiptController extends Controller
 	    $em = $this->getDoctrine()->getManager();
 	    $receipt = $em->getRepository(Receipt::class)->findOneBy([
 		'dni' => $dni,
-		'id' => $id,
+		'numeroReferenciaGTWIN' => $numeroReferenciaGTWIN,
 	    ]);
 	    if ( $receipt != null ) {
 		$logger->debug('<--payReceiptAction: End Forwarded to sendRequest');
 		return $this->forward("MiPagoBundle:Payment:sendRequest",[
-		    'reference_number' => $receipt->getId(), 
+		    'reference_number' => $receipt->getNumeroReferenciaGTWIN(), 
 		    'payment_limit_date' => $receipt->getUltimoDiaPago()->format('Ymd'),
 		    'sender' =>  $receipt->getEntidad(),
 		    'suffix' =>  $receipt->getSufijo(),
@@ -198,7 +224,7 @@ class ReceiptController extends Controller
 	$reference_number = intval($payment->getReference_number());
 	$em = $this->getDoctrine()->getManager();
 	$logger->debug('ReferenceNumber: '.$reference_number.', Status: '.$payment->getStatus().', PaymentId: '.$payment->getId());
-	$receipt = $em->getRepository(Receipt::class)->find(intval($reference_number));
+	$receipt = $em->getRepository(Receipt::class)->findOneBy(['numeroReferenciaGTWIN' => intval($reference_number)]);
 	$receipt->setPayment($payment);
 	$em->persist($receipt);
 	$em->flush();
@@ -281,7 +307,7 @@ class ReceiptController extends Controller
     }
 
     private function __sendConfirmationEmails ($receipt) {
-	if ( $this->getParameter("mailer_sendConfirmation") === true ) {
+	if ( $this->getParameter("mailer_sendConfirmation") === true && !empty($receipt->getEmail())) {
 	    $emails = [$receipt->getEmail()];
 	    $this->__sendMessage("Confirmación del Pago / Ordainketaren konfirmazioa", $receipt, $emails);
 	}
@@ -323,8 +349,8 @@ class ReceiptController extends Controller
 	// Update record in GTWIN
 	$insert_template = "INSERT INTO EXTCALL (DBOID, ACTIONCODE, INPUTPARS, OUTPUTPARS, OUTPARSMEMO, CALLTYPE, NUMRETRIES, QUEUE, PRIORITY, CALLSTATUS, CALLTIME, PROCTIME, CONFTIME, ORIGINOBJ, DESTOBJ, USERBW, MSGERROR, URLOK, URLOKPARAM, CONFSTATUS) VALUES ".
 						       "('{DBOID}','OPERACION_PAGO_TAR','<NUMREC>{NUMREC}</NUMREC><NUMFRA>{NUMFRA}</NUMFRA><FECOPE>{FECOPE}</FECOPE><IMPORT>{IMPORT}</IMPORT><RECARG>0.00</RECARG><INTERE>0.00</INTERE><COSTAS>0.00</COSTAS><CAJCOB>9</CAJCOB><NUMAUT>{NUMAUT}</NUMAUT>',null, null,0,1,0,0,2,TO_DATE('{CALLTIME}','YYYY-MM-DD HH24:MI:SS'),TO_DATE('{PROCTIME}','YYYY-MM-DD HH24:MI:SS'),null,null,null,'{USERBW}',null,null,null,0)";
-	$time_start = floatval(microtime(true))*10000;
-	$dboid = str_pad('124'.$time_start, 22, "0", STR_PAD_RIGHT);
+	$time_start = substr(''.floatval(microtime(true))*10000,0,12);
+	$dboid = str_pad('1235'.$time_start, 21, "0", STR_PAD_RIGHT);
 	$payment = $receipt->getPayment();
 	$now = new \DateTime();
 	
@@ -342,6 +368,7 @@ class ReceiptController extends Controller
 	$sql = str_replace(array_keys($params), $params, $insert_template);
 	$em2 = $this->getDoctrine()->getManager("oracle");
 	$statement = $em2->getConnection()->prepare( $sql );
+	dump($time_start,$dboid,$sql);die;
 //	$statement->execute();
 	return;
     }
@@ -356,6 +383,7 @@ class ReceiptController extends Controller
 	    $logger->debug('No payment to update status in GTWIN');
 	    return;
 	}
+	$payment = $receipt->getPayment();
 	if ( !$payment->isPaymentSuccessfull() ) {
 	    $logger->debug('Payment not successfull no need to update payment in GTWIN');
 	    return;
@@ -363,27 +391,27 @@ class ReceiptController extends Controller
 	$sql = $this->__createGTWINUpdateStatement($receipt);
 	$em2 = $this->getDoctrine()->getManager("oracle");
 	$statement = $em2->getConnection()->prepare( $sql );
-//	$statement->execute();
+	$statement->execute();
 	return;
     }
 
     private function __createGTWINUpdateStatement ($receipt){
 	// Update record in GTWIN
 	$insert_template = "INSERT INTO EXTCALL (DBOID, ACTIONCODE, INPUTPARS, OUTPUTPARS, OUTPARSMEMO, CALLTYPE, NUMRETRIES, QUEUE, PRIORITY, CALLSTATUS, CALLTIME, PROCTIME, CONFTIME, ORIGINOBJ, DESTOBJ, USERBW, MSGERROR, URLOK, URLOKPARAM, CONFSTATUS) VALUES ".
-						       "('{DBOID}','OPERACION_PAGO_TAR','<NUMREC>{NUMREC}</NUMREC><NUMFRA>{NUMFRA}</NUMFRA><FECOPE>{FECOPE}</FECOPE><IMPORT>{IMPORT}</IMPORT><RECARG>0.00</RECARG><INTERE>0.00</INTERE><COSTAS>0.00</COSTAS><CAJCOB>9</CAJCOB><NUMAUT>{NUMAUT}</NUMAUT>',null, null,0,1,0,0,2,TO_DATE('{CALLTIME}','YYYY-MM-DD HH24:MI:SS'),TO_DATE('{PROCTIME}','YYYY-MM-DD HH24:MI:SS'),null,null,null,'{USERBW}',null,null,null,0)";
-	$time_start = floatval(microtime(true))*10000;
-	$dboid = str_pad('124'.$time_start, 22, "0", STR_PAD_RIGHT);
+						       "('{DBOID}','OPERACION_PAGO_TAR','<NUMREC>{NUMREC}</NUMREC><NUMFRA>{NUMFRA}</NUMFRA><FECOPE>{FECOPE}</FECOPE><IMPORT>{IMPORT}</IMPORT><RECARG>0</RECARG><INTERE>0</INTERE><COSTAS>0</COSTAS><CAJCOB>9</CAJCOB><NUMAUT>{NUMAUT}</NUMAUT>',null, null,0,0,0,0,0,TO_DATE('{CALLTIME}','YYYY-MM-DD HH24:MI:SS'),TO_DATE('{PROCTIME}','YYYY-MM-DD HH24:MI:SS'),null,null,null,'{USERBW}',null,null,null,0)";
+	$time_start = substr(''.floatval(microtime(true))*10000,0,12);
+	$dboid = str_pad('1235'.$time_start, 21, "0", STR_PAD_RIGHT);
 	$now = new \DateTime();
 	$payment = $receipt->getPayment();
 	$params = [
 	    '{DBOID}' => $dboid,
 	    '{NUMREC}'=> $receipt->getNumeroReferenciaGTWIN(),
 	    '{NUMFRA}' => 0,
-	    '{FECOPE}' => $payment->getTimestamp()->format('Y-m-d H:i:s'),
+	    '{FECOPE}' => $payment->getTimestamp()->format('d/m/Y H:i:s'),
 	    '{IMPORT}' => $receipt->getImporte(),
 	    '{NUMAUT}' => $payment->getRegistered_payment_id(),
-	    '{CALLTIME}' => $now->format('Y-m-d H:i:s'),
-	    '{PROCTIME}' => $now->format('Y-m-d H:i:s'),
+	    '{CALLTIME}' => $now->format('d/m/Y H:i:s'),
+	    '{PROCTIME}' => $now->format('d/m/Y H:i:s'),
 	    '{USERBW}' => 'INT',
 	];
 	$sql = str_replace(array_keys($params), $params, $insert_template);
