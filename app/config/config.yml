@@ -40,7 +40,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        default_connection: oracle
+        default_connection: mysql
         connections:
             mysql: 
                 driver: pdo_mysql
@@ -57,7 +57,7 @@ doctrine:
                 dbname: '%gtwin_database_name%'
                 user: '%gtwin_database_user%'
                 password: '%gtwin_database_password%'
-#                charset: UTF8
+                charset: WE8MSWIN1252
                 
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
@@ -70,14 +70,15 @@ doctrine:
         auto_generate_proxy_classes: '%kernel.debug%'
         default_entity_manager: mysql
         entity_managers:
-            oracle:
-                connection: oracle
             mysql:
                 connection: mysql
                 mappings:
                     AppBundle:  ~
                     MiPagoBundle: ~
-
+            oracle:
+                connection: oracle
+                mappings:
+                    AppBundle:  ~
 
 # Swiftmailer Configuration
 swiftmailer:

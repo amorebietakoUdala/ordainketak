@@ -66,6 +66,9 @@ class BuyTicketsController extends Controller
 		]);
 	    }
 	    $em->flush();
+	    $receipt->setNumeroReferenciaGTWIN($receipt->getId());
+	    $em->persist($receipt);
+	    $em->flush();
 	    return $this->forward("AppBundle:Receipt:payForwaredeReceipt", [
 		'receipt' => $receipt,
 	    ]);

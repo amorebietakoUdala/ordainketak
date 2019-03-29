@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use MiPago\Bundle\Entity\Payment;
 use AppBundle\Entity\Activity;
+use AppBundle\Entity\GTWIN\ReciboGTWIN;
 
 
 /**
@@ -16,6 +17,10 @@ use AppBundle\Entity\Activity;
  */
 class Receipt
 {
+    const INSTITUCIONES = [
+	'AMOREBIE' => '480034',
+	'AMETX' => '481166',
+    ];
     /**
      * @var int
      *
@@ -24,13 +29,6 @@ class Receipt
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="numero_referencia", type="integer", nullable=true)
-     */
-    private $numeroReferencia;
 
     /**
      * @var int
@@ -149,10 +147,6 @@ class Receipt
 	return $this->id;
     }
 
-    public function getNumeroReferencia() {
-	return $this->numeroReferencia;
-    }
-
     public function getNumeroReferenciaGTWIN() {
 	return $this->numeroReferenciaGTWIN;
     }
@@ -201,7 +195,7 @@ class Receipt
 	return $this->email;
     }
 
-    public function getPayment() {
+    public function getPayment(): ?Payment {
 	return $this->payment;
     }
 
@@ -211,10 +205,6 @@ class Receipt
 
     public function setId($id) {
 	$this->id = $id;
-    }
-
-    public function setNumeroReferencia($numeroReferencia) {
-	$this->numeroReferencia = $numeroReferencia;
     }
 
     public function setNumeroReferenciaGTWIN($numeroReferenciaGTWIN) {
@@ -282,7 +272,6 @@ class Receipt
     public function toArray() {
 	return [
 	    'id' => $this->id,
-	    'numeroReferencia' => $this->numeroReferencia,
 	    'numeroReferenciaGTWIN' => $this->numeroReferenciaGTWIN,
 	    'concepto' => $this->concepto,
 	    'nombre' => $this->nombre,
@@ -297,5 +286,51 @@ class Receipt
 	    'ultimoDiaPago' => $this->ultimoDiaPago,
 	];
     }
+    
+    public static function createFromGTWINReceipt ( ReciboGTWIN $receiptGTWIN) {
+		$receipt = new Receipt();
+		$nombreCompleto = $receiptGTWIN->getNombreCompleto();
+		$trozos = preg_split("/[\*\,]/", $nombreCompleto);
+		$apellido1 = null;
+		$apellido2 = null;
+		if (sizeof($trozos) === 3 ) {
+			$apellido1 = $trozos[0];
+			$apellido2 = $trozos[1];
+			$nombre = $trozos[2];
+		} else {
+			$nombre = $trozos[0];
+		}
+		$receipt->setNumeroReferenciaGTWIN($receiptGTWIN->getNumeroRecibo());
+		$receipt->setConcepto($receiptGTWIN->getTipoIngreso()->getDescripcion().': '.$receiptGTWIN->getNumeroReferenciaExterna());
+		$receipt->setNombre($nombre);
+		$receipt->setApellido1($apellido1);
+		$receipt->setApellido2($apellido2);
+		$receipt->setDni($receiptGTWIN->getDni().$receiptGTWIN->getLetra());
+		$receipt->setTelefono('');
+		$receipt->setImporte($receiptGTWIN->getImporteTotal());
+		$receipt->setUltimoDiaPago($receiptGTWIN->getFechaFinVoluntaria());
+		$receipt->setEntidad(self::INSTITUCIONES[$receiptGTWIN->getCodInstitucion()]);
+//		$receipt->setSufijo($receiptGTWIN->getTipoIngreso()->getConceptoC60());
+//		dump($receiptGTWIN,$receipt);die;
+		return $receipt;
+    }
+	
+//	private static function __splitFullName ($nombreCompleto) {
+//		$trozos = preg_split("/[\*\,]/", $nombreCompleto);
+//		$apellido1 = null;
+//		$apellido2 = null;
+//		if (sizeof($trozos) === 3 ) {
+//			$apellido1 = $trozos[0];
+//			$apellido2 = $trozos[1];
+//			$nombre = $trozos[2];
+//		} else {
+//			$nombre = $trozos[0];
+//		}
+//		return [
+//			'nombre' => $nombre,
+//			'apellido1' => $apellido1,
+//			'apellido2' => $apellido2,
+//		];
+//	}
 }
 

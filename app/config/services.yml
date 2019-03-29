@@ -33,3 +33,9 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    AppBundle\Services\:
+        resource: '../../src/AppBundle/Services'
+        public: true
+#        tags: ['controller.service_arguments']
+        arguments: ['@doctrine.orm.oracle_entity_manager','@monolog.logger']

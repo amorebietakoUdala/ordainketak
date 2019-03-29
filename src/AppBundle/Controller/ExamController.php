@@ -40,6 +40,9 @@ class ExamController extends Controller
 	    $receipt->setUltimoDiaPago($date);
 	    $em->persist($receipt);
 	    $em->flush();
+	    $receipt->setNumeroReferenciaGTWIN($receipt->getId());
+	    $em->persist($receipt);
+	    $em->flush();
 	    return $this->forward("AppBundle:Receipt:payForwaredeReceipt", [
 		'receipt' => $receipt,
 	    ]);

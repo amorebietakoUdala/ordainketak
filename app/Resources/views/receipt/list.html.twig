@@ -118,8 +118,8 @@
 	      confirmButtonText: confirmationButtonText,
 	    }).then( function (result) {
 		if (result.value) {
-		    console.log(Routing.generate('receipt_pay', { id: numeroRecibo, dni: dni } ));
-		    document.location.href=Routing.generate('receipt_pay', { id: numeroRecibo, dni: dni } );
+		    console.log(Routing.generate('receipt_pay', { numeroReferenciaGTWIN: numeroRecibo, dni: dni } ));
+		    document.location.href=Routing.generate('receipt_pay', { numeroReferenciaGTWIN: numeroRecibo, dni: dni } );
 		}
 	    });
 	}
@@ -152,8 +152,8 @@
 	    });
 	{% if not is_granted('ROLE_USER') and receipts is defined and receipts|length > 0 %}
 	{% set receipt = receipts[0] %}
-	    var html = "{{ "receipt.id" | trans | capitalize }}: {{ receipt.id }}<br/>{{ "receipt.concepto" | trans | capitalize }}: {{ receipt.concepto }}<br/>{{ "receipt.dni" | trans | capitalize }}: {{ receipt.dni }}<br/>{{ "receipt.nombre" | trans | capitalize }}: {{ receipt.nombre }}<br/>{{ "receipt.apellidos" | trans | capitalize }}: {{ receipt.apellido1 }} {{ receipt.apellido2 }}<br/>{{ "receipt.ultimoDiaPago" | trans | capitalize }}: {{ receipt.ultimoDiaPago|date("Y/m/d") }}<br/>";
-	    fireAlert('{{ "confirmation.title" | trans | capitalize }}',html,'{{ "confirmation.pay" | trans | capitalize }}','{{ "confirmation.cancel" | trans | capitalize }}','{{ receipt.id }}','{{ receipt.dni }}');
+	    var html = "{{ "receipt.id" | trans | capitalize }}: {{ receipt.numeroReferenciaGTWIN }}<br/>{{ "receipt.concepto" | trans | capitalize }}: {{ receipt.concepto }}<br/>{{ "receipt.dni" | trans | capitalize }}: {{ receipt.dni }}<br/>{{ "receipt.nombre" | trans | capitalize }}: {{ receipt.nombre }}<br/>{{ "receipt.apellidos" | trans | capitalize }}: {{ receipt.apellido1 }} {{ receipt.apellido2 }}<br/>{{ "receipt.ultimoDiaPago" | trans | capitalize }}: {{ receipt.ultimoDiaPago|date("Y/m/d") }}<br/>";
+	    fireAlert('{{ "confirmation.title" | trans | capitalize }}',html,'{{ "confirmation.pay" | trans | capitalize }}','{{ "confirmation.cancel" | trans | capitalize }}','{{ receipt.numeroReferenciaGTWIN }}','{{ receipt.dni }}');
 	{% endif %}
 	});
     });

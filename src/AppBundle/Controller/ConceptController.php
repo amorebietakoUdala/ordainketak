@@ -58,7 +58,7 @@ class ConceptController extends Controller {
     /**
      * @Route("/concept/{id}", name="concept_show", methods={"GET"})
      */
-    public function showAction(Request $request, Concept $id, LoggerInterface $logger) {
+    public function showAction(Concept $id, LoggerInterface $logger) {
 	$logger->debug('-->showAction: Start');
 	$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 	$form = $this->createForm(ConceptTypeForm::class, $id, [
@@ -102,7 +102,7 @@ class ConceptController extends Controller {
      /**
      * @Route("/concept/{id}/delete", name="concept_delete", methods={"GET"})
      */
-    public function deleteAction(Request $request, Concept $id, LoggerInterface $logger) {
+    public function deleteAction(Concept $id, LoggerInterface $logger) {
 	$logger->debug('-->deleteAction: Start');
 	$this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 	$em = $this->getDoctrine()->getManager();

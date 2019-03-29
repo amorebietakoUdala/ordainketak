@@ -32,6 +32,24 @@ class ReceiptRepository extends \Doctrine\ORM\EntityRepository
 	    return $qb->getQuery()->getResult();
 	}
     }
+    public function findReceiptByNumeroReferenciaGTWIN ($numeroReferenciaGTWIN, $payment_status = null ) {
+	$criteria = [
+	    'numeroReferenciaGTWIN' => $numeroReferenciaGTWIN,
+	];
+	if ( $payment_status === null ) {
+	    return $this->findBy($criteria);
+	} else {
+	    $qb = $this->createQueryBuilder('r')
+		    ->select()
+		    ->leftJoin('MiPagoBundle:Payment', 'p', 'WITH', 'r.payment = p.id' );
+	    $qb->andWhere('p.status = :status')
+	    ->andWhere('r.numeroReferenciaGTWIN = :numeroReferenciaGTWIN')
+	    ->setParameter('status', $payment_status)
+	    ->setParameter('numeroReferenciaGTWIN', $numeroReferenciaGTWIN);
+	    return $qb->getQuery()->getResult();
+	}
+    }
+
     
     private function __remove_blank_filters ($criteria) {
 	$new_criteria = [];

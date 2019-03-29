@@ -51,9 +51,6 @@ class ReceiptTypeForm extends AbstractType {
 			'label'=>'receipt.concepto',
 			'disabled' => $readonly,
 		])
-		->add('numeroReferencia',TextType::class,[
-		    'label'=>'receipt.numeroReferenciaExterna',
-		])
 		->add('numeroReferenciaGTWIN',TextType::class,[
 		    'label'=>'receipt.numeroReferenciaGTWIN',
 		]);
