@@ -38,6 +38,13 @@ class Receipt
     private $numeroReferenciaGTWIN;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="fraccion", type="integer", nullable=true)
+     */
+    private $fraccion;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="concepto", type="string", length=255, nullable=true)
@@ -265,6 +272,16 @@ class Receipt
 	return $this;
     }
 
+	public function getFraccion() {
+		return $this->fraccion;
+	}
+
+	public function setFraccion($fraccion = 0 ) {
+		$this->fraccion = $fraccion;
+		return $this;
+	}
+
+		
     public function __toString() {
 	return json_encode($this->toArray());
     }
@@ -273,6 +290,7 @@ class Receipt
 	return [
 	    'id' => $this->id,
 	    'numeroReferenciaGTWIN' => $this->numeroReferenciaGTWIN,
+		'fraccion' => $this->fraccion,
 	    'concepto' => $this->concepto,
 	    'nombre' => $this->nombre,
 	    'apellido1' => $this->apellido1,
@@ -287,7 +305,7 @@ class Receipt
 	];
     }
     
-    public static function createFromGTWINReceipt ( ReciboGTWIN $receiptGTWIN) {
+    public static function createFromGTWINReceipt ( ReciboGTWIN $receiptGTWIN ) {
 		$receipt = new Receipt();
 		$nombreCompleto = $receiptGTWIN->getNombreCompleto();
 		$trozos = preg_split("/[\*\,]/", $nombreCompleto);
@@ -301,6 +319,7 @@ class Receipt
 			$nombre = $trozos[0];
 		}
 		$receipt->setNumeroReferenciaGTWIN($receiptGTWIN->getNumeroRecibo());
+		$receipt->setFraccion($receiptGTWIN->getFraccion());
 		$receipt->setConcepto($receiptGTWIN->getTipoIngreso()->getDescripcion().': '.$receiptGTWIN->getNumeroReferenciaExterna());
 		$receipt->setNombre($nombre);
 		$receipt->setApellido1($apellido1);

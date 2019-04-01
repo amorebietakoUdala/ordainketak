@@ -39,3 +39,11 @@ services:
         public: true
 #        tags: ['controller.service_arguments']
         arguments: ['@doctrine.orm.oracle_entity_manager','@monolog.logger']
+
+    AppBundle\Utils\IgnoreTablesListener:
+        class: AppBundle\Utils\IgnoreTablesListener
+        public: true
+        arguments: 
+            $ignoredEntities: ['AppBundle:GTWIN\ReciboGTWIN','AppBundle:GTWIN\TipoIngreso']
+        tags:
+            - {name: doctrine.event_listener, event: postGenerateSchema }

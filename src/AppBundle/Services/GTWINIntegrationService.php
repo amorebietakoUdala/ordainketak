@@ -43,7 +43,7 @@ class GTWINIntegrationService {
 		return $numero;
 	}
 	
-	public function paidWithCreditCard ($numRecibo, $importe, $timestamp, $registeredPaymentId) {
+	public function paidWithCreditCard ($numRecibo, $fraccion, $importe, $timestamp, $registeredPaymentId) {
 		$insert_template = "INSERT INTO EXTCALL (DBOID, ACTIONCODE, INPUTPARS, OUTPUTPARS, OUTPARSMEMO, CALLTYPE, NUMRETRIES, QUEUE, PRIORITY, CALLSTATUS, CALLTIME, PROCTIME, CONFTIME, ORIGINOBJ, DESTOBJ, USERBW, MSGERROR, URLOK, URLOKPARAM, CONFSTATUS) VALUES ".
 								   "('{DBOID}','OPERACION_PAGO_TAR','<NUMREC>{NUMREC}</NUMREC><NUMFRA>{NUMFRA}</NUMFRA><FECOPE>{FECOPE}</FECOPE><IMPORT>{IMPORT}</IMPORT><RECARG>0</RECARG><INTERE>0</INTERE><COSTAS>0</COSTAS><CAJCOB>9</CAJCOB><NUMAUT>{NUMAUT}</NUMAUT><USERBW>{USERBW}</USERBW>',null, null,0,0,0,0,0,TO_DATE('{CALLTIME}','DD/MM/YYYY HH24:MI:SS'),TO_DATE('{PROCTIME}','DD/MM/YYYY HH24:MI:SS'),null,null,null,'{USERBW}',null,null,null,0)";
 		$time_start = substr(''.floatval(microtime(true))*10000,0,12);
@@ -53,7 +53,7 @@ class GTWINIntegrationService {
 		$params = [
 			'{DBOID}' => $dboid,
 			'{NUMREC}'=> $numRecibo,
-			'{NUMFRA}' => 0,
+			'{NUMFRA}' => $fraccion,
 			'{FECOPE}' => $timestamp->format('d/m/Y H:i:s'),
 			'{IMPORT}' => $importe,
 			'{NUMAUT}' => $registeredPaymentId,
