@@ -20,7 +20,7 @@
 	    {{ msg | trans}}
 	</div>
     {% endfor %}
-{% endblock %}
+{% endblock message %}
 
 {% block body %}
     <main class="container-fluid">
@@ -35,13 +35,13 @@
 
 {% block javascripts %}
     {{  parent() }}
-    <script type="text/javascript">
+	<script type="text/javascript">
 	$(document).ready(function(){
 	    $('.js-back').on('click',function(e){
-		e.preventDefault();
-		var url = e.currentTarget.dataset.url;
-		document.location.href=url;
+			e.preventDefault();
+			var url = e.currentTarget.dataset.url;
+			document.location.href=url;
 	    });
 	});
-    </script>    
-{% endblock %}
+    </script>
+{% endblock javascripts %}
