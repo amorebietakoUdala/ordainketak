@@ -81,6 +81,8 @@ class ReceiptController extends Controller
                             $em->flush();
                             $receipts[] = $receipt;
                         }
+                    } else {
+                        $this->addFlash('error', 'Recibo no encontrado');
                     }
                     $results = $receipts;
                 }

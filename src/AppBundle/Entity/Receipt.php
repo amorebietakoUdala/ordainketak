@@ -329,7 +329,7 @@ class Receipt
 		$receipt->setImporte($receiptGTWIN->getImporteTotal());
 		$receipt->setUltimoDiaPago($receiptGTWIN->getFechaFinVoluntaria());
 		$receipt->setEntidad(self::INSTITUCIONES[$receiptGTWIN->getCodInstitucion()]);
-//		$receipt->setSufijo($receiptGTWIN->getTipoIngreso()->getConceptoC60());
+		$receipt->setSufijo($receiptGTWIN->getTipoIngreso()->getConceptoC60());
 //		dump($receiptGTWIN,$receipt);die;
 		return $receipt;
     }
