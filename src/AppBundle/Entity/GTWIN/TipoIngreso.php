@@ -5,15 +5,16 @@ namespace AppBundle\Entity\GTWIN;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Tipo Ingreso
+ * Tipo Ingreso.
  *
  * @ORM\Table(name="SP_TRB_TIPING")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TipoIngresoRepository",readOnly=true)
  */
 class TipoIngreso
 {
+    private const PLANPAG = 'PLANPAG';
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="TINDBOIDE", type="bigint", nullable=false)
      * @ORM\Id
@@ -69,81 +70,109 @@ class TipoIngreso
      */
     private $conceptoC60;
 
-    public function __toString() {
-	return $this->nombre;
-    }
-    
-    public function getId() {
-	return $this->id;
+    public function __toString()
+    {
+        return $this->nombre;
     }
 
-    public function getNombre() {
-	return $this->nombre;
+    public function getId()
+    {
+        return $this->id;
     }
 
-    public function getDescripcion() {
-	return $this->descripcion;
+    public function getCodigo()
+    {
+        return $this->codigo;
     }
 
-    public function setId($id) {
-	$this->id = $id;
-	return $this;
+    public function getDescripcion()
+    {
+        return $this->descripcion;
     }
 
-    public function setNombre($nombre) {
-	$this->nombre = $nombre;
-	return $this;
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
-    public function setDescripcion($descripcion) {
-	$this->descripcion = $descripcion;
-	return $this;
+    public function setCodigo($codigo)
+    {
+        $this->codigo = $codigo;
+
+        return $this;
     }
 
-    public function getTipoDefecto() {
-	return $this->tipoDefecto;
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
     }
 
-    public function getConceptoC60ID() {
-	return $this->conceptoC60ID;
+    public function getTipoDefecto()
+    {
+        return $this->tipoDefecto;
     }
 
-    public function getConceptoC60AU() {
-	return $this->conceptoC60AU;
+    public function getConceptoC60ID()
+    {
+        return $this->conceptoC60ID;
     }
 
-    public function getConceptoC60SC() {
-	return $this->conceptoC60SC;
+    public function getConceptoC60AU()
+    {
+        return $this->conceptoC60AU;
     }
 
-    public function getConceptoC60() {
-	return $this->conceptoC60;
+    public function getConceptoC60SC()
+    {
+        return $this->conceptoC60SC;
     }
 
-    public function setTipoDefecto($tipoDefecto) {
-	$this->tipoDefecto = $tipoDefecto;
-	return $this;
+    public function getConceptoC60()
+    {
+        return $this->conceptoC60;
     }
 
-    public function setConceptoC60ID($conceptoC60ID) {
-	$this->conceptoC60ID = $conceptoC60ID;
-	return $this;
+    public function setTipoDefecto($tipoDefecto)
+    {
+        $this->tipoDefecto = $tipoDefecto;
+
+        return $this;
     }
 
-    public function setConceptoC60AU($conceptoC60AU) {
-	$this->conceptoC60AU = $conceptoC60AU;
-	return $this;
+    public function setConceptoC60ID($conceptoC60ID)
+    {
+        $this->conceptoC60ID = $conceptoC60ID;
+
+        return $this;
     }
 
-    public function setConceptoC60SC($conceptoC60SC) {
-	$this->conceptoC60SC = $conceptoC60SC;
-	return $this;
+    public function setConceptoC60AU($conceptoC60AU)
+    {
+        $this->conceptoC60AU = $conceptoC60AU;
+
+        return $this;
     }
 
-    public function setConceptoC60($conceptoC60) {
-	$this->conceptoC60 = $conceptoC60;
-	return $this;
+    public function setConceptoC60SC($conceptoC60SC)
+    {
+        $this->conceptoC60SC = $conceptoC60SC;
+
+        return $this;
     }
 
+    public function setConceptoC60($conceptoC60)
+    {
+        $this->conceptoC60 = $conceptoC60;
+
+        return $this;
+    }
+
+    public function esPlanPlago()
+    {
+        return self::PLANPAG === $this->getCodigo();
+    }
 }
-

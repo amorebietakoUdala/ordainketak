@@ -46,7 +46,6 @@ message.concept_saved: "Kontzeptua ondo gorde da"
 message.category_created: "Kategoria sortu egin da"
 message.category_saved: "Kategoria ondo gorde da"
 
-
 link.logout: "Irten"
 navitem.paymentTypes: "Ordainketa motak"
 navitem.taxes: "Tasa ordainketa"
@@ -65,7 +64,7 @@ exam.category: "Kategoria"
 buyTickets.quantity: "Zenbat"
 ibiliak.number: "Zenbat"
 
-label.activity: "Jarduera" 
+label.activity: "Jarduera"
 activity.id: "Id"
 activity.name: "Izena (Erdaraz)"
 activity.name_eu: "Izena (Euskaraz)"
@@ -76,8 +75,6 @@ activity.maxTickets: "Gehienezko ticketak"
 activity.enabled: "Aktiboa"
 Sí: "Bai"
 No: "Ez"
-
-
 
 confirmation.title: "Ordainketaren datuak"
 confirmation.pay: "Ordaindu"
@@ -90,9 +87,14 @@ btn.pay: "Ordaindu"
 btn.buy: "Erosi"
 btn.back: "Itzuli"
 
-'El dni y el número de recibo son obligatorios': 'NANa eta errezibo zenbakia nahitaezkoak dira'
-'El concepto se ha eliminado correctamente.': 'Kontzeptua behar bezala ezabatu da.'
-'¿Esta seguro de que desea eliminar el registro?': 'Ziur al zaude errejistroa ezabatu nahi duzula?'
-'Recibo no encontrado': 'Erreziboa ez da aurkitu'
-'Payment was successfull': 'Ordainketa behar den moduan gauzatu da.'
-'Payment was NOT successfull': 'Arazoa bat egon da ordainketa egiterakoan. EZ da ordainketarik egin.'
+"El dni y el número de recibo son obligatorios": "NANa eta errezibo zenbakia nahitaezkoak dira"
+"El concepto se ha eliminado correctamente.": "Kontzeptua behar bezala ezabatu da."
+"¿Esta seguro de que desea eliminar el registro?": "Ziur al zaude errejistroa ezabatu nahi duzula?"
+"Recibo no encontrado": "Erreziboa ez da aurkitu"
+"Payment was successfull": "Ordainketa behar den moduan gauzatu da."
+"Payment was NOT successfull": "Arazoa bat egon da ordainketa egiterakoan. Ez da ordainketarik egin."
+"El periodo de pago voluntario vencido.": "Borondatezko epea bukatu da. Errezibo hau ezin da era honetan ordaindu."
+"El recibo está paralizado.": "Erreziboa geldiarazita dago, ezin da era honetan ordaindu."
+"El recibo está traspasado.": "Bizkaiko Foru Aldundiko Bilketa Sailera traspasatuta. Errezibo hau ezin da era honetan ordaindu."
+"El recibo está domiciliado.": "Erreziboa helbideratuta dago, ezin da era honetan ordaindu."
+"El recibo es un plan de pago.": "Errezibo mota hauek ezin dira era honetan ordaindu."

@@ -18,6 +18,7 @@ security:
 
     encoders:
       AcmeBundle\Acme\User\LdapUser: plaintext
+      FOS\UserBundle\Model\UserInterface: bcrypt
       
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -32,12 +33,14 @@ security:
             anonymous:    true
 
         main:
+            provider: chain_provider
             fr3d_ldap:  ~
             form_login:
-#                provider: chain_provider
+                provider: chain_provider
                 csrf_token_generator: security.csrf.token_manager
                 always_use_default_target_path: true
                 default_target_path: /%locale%/receipts
+            logout_on_user_change: true
             logout:     true
             anonymous:  true
 

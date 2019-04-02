@@ -6,3 +6,4 @@ security:
     password:
         resetted: 'La contraseña se ha cambiado'
 btn.loginera.itzuli: 'Volver a la página de login'
+'Credenciales no válidas.': 'Credenciales no válidas.'

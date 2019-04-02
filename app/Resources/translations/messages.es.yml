@@ -65,7 +65,7 @@ exam.category: "Categoría"
 buyTickets.quantity: "Cantidad"
 ibiliak.number: "Cantidad"
 
-label.activity: "Actividad" 
+label.activity: "Actividad"
 activity.id: "Id"
 activity.name: "Nombre"
 activity.name_eu: "Nombre (Euskera)"
@@ -76,8 +76,6 @@ activity.maxTickets: "Nº máximo tickets"
 activity.enabled: "Activa"
 Sí: "Sí"
 No: "No"
-
-
 
 confirmation.title: "Datos del pago"
 confirmation.pay: "Pagar"
@@ -90,9 +88,14 @@ btn.pay: "Pagar"
 btn.buy: "Comprar"
 btn.back: "Volver"
 
-'El dni y el número de recibo son obligatorios': 'El dni y el número de recibo son obligatorios'
-'El concepto se ha eliminado correctamente.': 'El concepto se ha eliminado correctamente.'
-'¿Esta seguro de que desea eliminar el registro?': '¿Esta seguro de que desea eliminar el registro?'
-'Recibo no encontrado': 'Recibo no encontrado'
-'Payment was successfull': 'El pago se ha realizado correctamente.'
-'Payment was NOT successfull': 'Ha ocurrido un error al realizar el pago. NO se ha realizado correctamente.'
+"El dni y el número de recibo son obligatorios": "El dni y el número de recibo son obligatorios"
+"El concepto se ha eliminado correctamente.": "El concepto se ha eliminado correctamente."
+"¿Esta seguro de que desea eliminar el registro?": "¿Esta seguro de que desea eliminar el registro?"
+"Recibo no encontrado": "Recibo no encontrado"
+"Payment was successfull": "El pago se ha realizado correctamente."
+"Payment was NOT successfull": "Ha ocurrido un error al realizar el pago. NO se ha realizado correctamente."
+"El periodo de pago voluntario vencido.": "El periodo de pago voluntario ha vencido. El recibo no se puede pagar por este medio."
+"El recibo está paralizado.": "El recibo está paralizado, no puede pagarse por este medio."
+"El recibo está traspasado.": "El recibo está traspasado a la sección de Recaudación de la Diputación Foral de Bizkaia. Tfno: 901502000. No puede pagarse por este medio."
+"El recibo está domiciliado.": "El recibo está domiciliado, no puede pagarse por este medio."
+"El recibo es un plan de pago.": "Este tipo de recibos no pueden pagarse por este medio."

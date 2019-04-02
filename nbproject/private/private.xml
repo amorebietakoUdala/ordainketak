@@ -7,6 +7,7 @@
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Repository/CategoryRepository.php</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Repository/TipoIngresoRepository.php</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Forms/ReceiptTypeForm.php</file>
+            <file>file://garapenak/symfony_projects/ordainketak/app/Resources/translations/FOSUserBundle.eu.yml</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Entity/Exam.php</file>
             <file>file://garapenak/symfony_projects/ordainketak/app/Resources/views/receipt/_form.html.twig</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Repository/ConceptRepository.php</file>
@@ -19,7 +20,7 @@
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Controller/RestController.php</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Controller/ConceptController.php</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Entity/Concept.php</file>
-            <file>file://garapenak/symfony_projects/ordainketak/app/Resources/translations/messages.es.yml</file>
+            <file>file://garapenak/symfony_projects/ordainketak/app/Resources/translations/FOSUserBundle.es.yml</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Controller/ExamController.php</file>
             <file>file://garapenak/symfony_projects/ordainketak/app/config/config.yml</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Repository/ReceiptRepository.php</file>
@@ -30,11 +31,13 @@
             <file>file://garapenak/symfony_projects/ordainketak/app/Resources/views/receipt/list.html.twig</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Entity/GTWIN/TipoIngreso.php</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Forms/ExamTypeForm.php</file>
+            <file>file://garapenak/symfony_projects/ordainketak/app/config/security.yml</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Entity/GTWIN/ReciboGTWIN.php</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Controller/InscriptionController.php</file>
             <file>file://garapenak/symfony_projects/ordainketak/app/Resources/translations/messages.eu.yml</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Forms/ActivityTypeForm.php</file>
             <file>file://garapenak/symfony_projects/ordainketak/app/config/services.yml</file>
+            <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Utils/IgnoreTablesListener.php</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Services/GTWINIntegrationService.php</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Controller/BuyTicketsController.php</file>
             <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Controller/ActivityController.php</file>

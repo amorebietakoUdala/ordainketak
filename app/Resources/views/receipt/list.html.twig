@@ -35,8 +35,8 @@
 		<thead>
 		    <tr class="row">
 			<th data-sortable="true">{{"receipt.id" | trans | capitalize}}</th>
-{#			<th data-sortable="true">{{"receipt.numeroReferenciaExterna" | trans | capitalize}}</th>
-#}			<th data-sortable="true" data-width="15%">{{"receipt.concepto" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"receipt.numeroReferenciaGTWIN" | trans | capitalize}}</th>
+			<th data-sortable="true" data-width="15%">{{"receipt.concepto" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"receipt.dni" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"receipt.nombre" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"receipt.apellido1" | trans | capitalize}}</th>
@@ -52,8 +52,8 @@
 			{% for receipt in receipts %}
 			<tr>
 			    <td>{{receipt.id }}</td>
-{#			    <td>{{receipt.numeroReferencia }}</td>
-#}			    <td data-width="15%">{{receipt.concepto }}</td>
+			    <td>{{receipt.numeroReferenciaGTWIN }}</td>
+			    <td data-width="15%">{{receipt.concepto }}</td>
 			    <td>{{receipt.dni}}</td>
 			    <td>{{receipt.nombre}}</td>
 			    <td>{{receipt.apellido1}}</td>
@@ -62,7 +62,7 @@
 			    <td>{{receipt.ultimoDiaPago|date("Y/m/d")}}</td>
 			    <td>
 				{% if receipt.payment != null %}
-				    {% if receipt.payment.status == constant('MiPago\\Bundle\\Entity\\Payment::PAYMENT_STATUS_OK') %}
+				    {% if receipt.payment.isPaymentSuccessfull %}
 					{{ 'messages.payd' | trans | capitalize }}
 				    {% else %}
 					{{ "messages.unpayd" | trans | capitalize }}
@@ -70,7 +70,7 @@
 				{% endif %}
 			    </td>
 			    <td>
-				{% if receipt.payment == null or receipt.payment.status == constant('MiPago\\Bundle\\Entity\\Payment::PAYMENT_STATUS_NOK') %}
+				{% if receipt.payment == null or not receipt.payment.isPaymentSuccessfull %}
 				    <a class="js-btnPay" href="javascript:fireAlert('{{ "confirmation.title" | trans | capitalize }}','{{ "receipt.id" | trans | capitalize }}: {{ receipt.id }}<br/>{{ "receipt.concepto" | trans | capitalize }}: {{ receipt.concepto }}<br/>{{ "receipt.dni" | trans | capitalize }}: {{ receipt.dni }}<br/>{{ "receipt.nombre" | trans | capitalize }}: {{ receipt.nombre }}<br/>{{ "receipt.apellidos" | trans | capitalize }}: {{ receipt.apellido1 }} {{ receipt.apellido2 }}<br/>{{ "receipt.ultimoDiaPago" | trans | capitalize }}: {{ receipt.ultimoDiaPago|date("Y/m/d") }}<br/>','{{ "confirmation.pay" | trans | capitalize }}','{{ "confirmation.cancel" | trans | capitalize }}','{{ receipt.id }}','{{ receipt.dni }}');">
 					<i class="fas fa-credit-card"></i>
 				    </a>
@@ -124,38 +124,40 @@
 	    });
 	}
     $(document).ready(function(){
-	$('#taula').bootstrapTable({
-	        cache : false,
-		showExport: true,
-		exportTypes: ['excel'],
-		exportDataType: 'all',
-		exportOptions: {
-		    fileName: "receipts",
-		    ignoreColumn: ['options']
-		},
-		showColumns: false,
-		pagination: true,
-		search: true,
-		striped: true,
-		sortStable: true,
-		pageSize: 10,
-		pageList: [10,25,50,100],
-		sortable: true,
-		locale: 'es_{{ app.request.getLocale() | upper }}'
-	});
-	var $table = $('#taula');
-	$(function () {
-	    $('#toolbar').find('select').change(function () {
-		$table.bootstrapTable('destroy').bootstrapTable({
-		    exportDataType: $(this).val(),
+		$('#taula').bootstrapTable({
+			cache : false,
+			showExport: true,
+			exportTypes: ['excel'],
+			exportDataType: 'all',
+			exportOptions: {
+				fileName: "receipts",
+				ignoreColumn: ['options']
+			},
+			showColumns: false,
+			pagination: true,
+			search: true,
+			striped: true,
+			sortStable: true,
+			pageSize: 10,
+			pageList: [10,25,50,100],
+			sortable: true,
+			locale: 'es_{{ app.request.getLocale() | upper }}'
 		});
-	    });
-	{% if not is_granted('ROLE_USER') and receipts is defined and receipts|length > 0 %}
-	{% set receipt = receipts[0] %}
-	    var html = "{{ "receipt.id" | trans | capitalize }}: {{ receipt.numeroReferenciaGTWIN }}<br/>{{ "receipt.concepto" | trans | capitalize }}: {{ receipt.concepto }}<br/>{{ "receipt.dni" | trans | capitalize }}: {{ receipt.dni }}<br/>{{ "receipt.nombre" | trans | capitalize }}: {{ receipt.nombre }}<br/>{{ "receipt.apellidos" | trans | capitalize }}: {{ receipt.apellido1 }} {{ receipt.apellido2 }}<br/>{{ "receipt.ultimoDiaPago" | trans | capitalize }}: {{ receipt.ultimoDiaPago|date("Y/m/d") }}<br/>";
-	    fireAlert('{{ "confirmation.title" | trans | capitalize }}',html,'{{ "confirmation.pay" | trans | capitalize }}','{{ "confirmation.cancel" | trans | capitalize }}','{{ receipt.numeroReferenciaGTWIN }}','{{ receipt.dni }}');
-	{% endif %}
-	});
+		var $table = $('#taula');
+		$(function () {
+			$('#toolbar').find('select').change(function () {
+			$table.bootstrapTable('destroy').bootstrapTable({
+				exportDataType: $(this).val(),
+			});
+			});
+		});
+			{% if not is_granted('ROLE_USER') and receipts is defined and receipts|length > 0 %}
+			{% set receipt = receipts[0] %}
+			if ( $( "div.alert.alert-danger" ).length == 0 ) {
+				var html = "{{ "receipt.id" | trans | capitalize }}: {{ receipt.numeroReferenciaGTWIN }}<br/>{{ "receipt.concepto" | trans | capitalize }}: {{ receipt.concepto }}<br/>{{ "receipt.dni" | trans | capitalize }}: {{ receipt.dni }}<br/>{{ "receipt.nombre" | trans | capitalize }}: {{ receipt.nombre }}<br/>{{ "receipt.apellidos" | trans | capitalize }}: {{ receipt.apellido1 }} {{ receipt.apellido2 }}<br/>{{ "receipt.ultimoDiaPago" | trans | capitalize }}: {{ receipt.ultimoDiaPago|date("Y/m/d") }}<br/>";
+				fireAlert('{{ "confirmation.title" | trans | capitalize }}',html,'{{ "confirmation.pay" | trans | capitalize }}','{{ "confirmation.cancel" | trans | capitalize }}','{{ receipt.numeroReferenciaGTWIN }}','{{ receipt.dni }}');
+			}
+		{% endif %}
     });
     </script>
 {% endblock javascripts %}

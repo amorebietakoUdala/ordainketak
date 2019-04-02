@@ -8,7 +8,7 @@
 
 namespace AppBundle\Controller;
 
-use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
@@ -26,7 +26,7 @@ use AppBundle\Entity\Activity;
 /**
  * @Route("/api")
  */
-class RestController extends FOSRestController {
+class RestController extends AbstractFOSRestController {
 
     
      /**
