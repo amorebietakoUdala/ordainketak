@@ -23,6 +23,7 @@ concept.name: "Izena"
 concept.name_eu: "Izena (Euskaraz)"
 concept.entity: "Entitatea"
 concept.suffix: "Atzizkia"
+concept.accountingConcept: "Errenta kontzeptua"
 concept.unitaryPrice: "Unitateko prezioa"
 
 category.id: "Id"

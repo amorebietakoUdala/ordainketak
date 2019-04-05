@@ -9,7 +9,7 @@ use DateTime;
  * Tipo Ingreso.
  *
  * @ORM\Table(name="SP_TRB_RECIBO")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ReciboGTWINRepository",readOnly=true)
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GTWIN\ReciboGTWINRepository",readOnly=true)
  */
 class ReciboGTWIN
 {
@@ -334,6 +334,11 @@ class ReciboGTWIN
 
     public function setCuerpo($cuerpo)
     {
+        $check = mb_check_encoding($cuerpo, 'UTF-8');
+        if ($check) {
+            $this->cuerpo = mb_convert_encoding($cuerpo, 'ISO-8859-1', 'UTF-8');
+        }
+
         $this->cuerpo = $cuerpo;
 
         return $this;
@@ -524,7 +529,8 @@ class ReciboGTWIN
 
     public function periodoPagoVoluntarioVencido()
     {
-        if ($this->fechaFinVoluntaria->modify('+1 day') < new \DateTime()) {
+        $fechaVencimiento = clone $this->fechaFinVoluntaria;
+        if ($fechaVencimiento->modify('+1 day') < new \DateTime()) {
             return true;
         }
 

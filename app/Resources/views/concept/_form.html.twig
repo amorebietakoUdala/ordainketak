@@ -18,6 +18,12 @@
 	</div>
 	<div class="col-lg-2 col-md-2 col-sm-6">
 {#		{{ form_label(form.numeroReferencia, null, { 'label_attr': {'class':'col-form-label-sm' } }) }}#}
+	    {{ form_label(form.accountingConcept) }}
+	    {{ form_widget(form.accountingConcept, { 'attr': { 'class' : 'form-control-sm' } }) }}
+	    {{ form_errors(form.accountingConcept) }}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-6">
+{#		{{ form_label(form.numeroReferencia, null, { 'label_attr': {'class':'col-form-label-sm' } }) }}#}
 	    {{ form_label(form.name) }}
 	    {{ form_widget(form.name, { 'id': '', 'attr': { 'class' : 'form-control-sm' } }) }}
 	    {{ form_errors(form.name) }}

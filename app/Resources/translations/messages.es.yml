@@ -23,6 +23,7 @@ concept.name: "Nombre"
 concept.name_eu: "Nombre (Euskera)"
 concept.entity: "Entidad"
 concept.suffix: "Sufijo"
+concept.accountingConcept: "Concepto de Renta"
 concept.unitaryPrice: "Precio unitario"
 
 category.id: "Id"

@@ -8,8 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Psr\Log\LoggerInterface;
 use AppBundle\Entity\Receipt;
-use MiPago\Bundle\Entity\Payment;
-use AppBundle\Entity\Activity;
 use AppBundle\Forms\ReceiptTypeForm;
 use AppBundle\Services\GTWINIntegrationService;
 use Swift_Message;
@@ -54,7 +52,7 @@ class ReceiptController extends Controller
         $form = $this->createForm(ReceiptTypeForm::class, $receipt, [
     //	    'editatzen' => false,
             'roles' => $roles,
-                'locale' => $request->getLocale(),
+            'locale' => $request->getLocale(),
             'search' => true,
             'readonly' => false,
         ]);
@@ -67,15 +65,15 @@ class ReceiptController extends Controller
                 //		$results = $em->getRepository(Receipt::class)->findReceiptByExample($data, Payment::PAYMENT_STATUS_OK);
                 $results = $em->getRepository(Receipt::class)->findReceiptByNumeroReferenciaGTWIN($data);
                 if (0 === sizeof($results)) {
-                    $results = $gts->findByNumReciboDni($data->getId(), $data->getDni());
+                    $result = $gts->findByNumReciboDni($data->getId(), $data->getDni());
                     $receipts = [];
-                    if (sizeof($results) > 0) {
-                        $errores = $results[0]->comprobarCondicionesPago();
+                    if (null !== $result) {
+                        $errores = $result->comprobarCondicionesPago();
                         foreach ($errores as $error) {
                             $this->addFlash('error', $error);
                         }
                         if (0 === sizeof($errores)) {
-                            $receipt = Receipt::createFromGTWINReceipt($results[0]);
+                            $receipt = Receipt::createFromGTWINReceipt($result);
                             $em = $this->getDoctrine()->getManager();
                             $em->persist($receipt);
                             $em->flush();
@@ -149,7 +147,6 @@ class ReceiptController extends Controller
         $logger->debug('-->payForwardedReceiptAction: Start');
         if (null != $receipt) {
             $logger->debug('<--payForwardedReceiptAction: End Forwarded to MiPagoBundle:Payment:sendRequest');
-            $referencia = $receipt->getNumeroReferenciaGTWIN();
 
             return $this->forward('MiPagoBundle:Payment:sendRequest', $this->__createMiPagoParametersArray($receipt));
         } else {
@@ -174,7 +171,7 @@ class ReceiptController extends Controller
         $roles = ('anon.' === $user) ? ['IS_AUTHENTICATED_ANONYMOUSLY'] : $user->getRoles();
         $form = $this->createForm(ReceiptTypeForm::class, new Receipt(), [
             'roles' => $roles,
-                'locale' => $request->getLocale(),
+            'locale' => $request->getLocale(),
             'search' => true,
         ]);
         if ('anon.' === $user && (null === $dni || null === $numeroReferenciaGTWIN)) {
@@ -183,6 +180,7 @@ class ReceiptController extends Controller
 
             return $this->render('receipt/list.html.twig', [
                 'form' => $form->createView(),
+                'search' => true,
                 'receipts' => $results,
             ]);
         }
@@ -191,19 +189,19 @@ class ReceiptController extends Controller
             'dni' => $dni,
             'numeroReferenciaGTWIN' => $numeroReferenciaGTWIN,
         ]);
-        if (null != $receipt) {
-            $logger->debug('<--payReceiptAction: End Forwarded to sendRequest');
-
-            return $this->forward('MiPagoBundle:Payment:sendRequest', $this->__createMiPagoParametersArray($receipt));
-        } else {
+        if (null === $receipt) {
             $this->addFlash('error', 'Recibo no encontrado');
             $logger->debug('<--payReceiptAction: End Recibo no encontrado');
 
             return $this->render('receipt/list.html.twig', [
                 'form' => $form->createView(),
+                'search' => true,
                 'receipts' => [],
             ]);
         }
+        $logger->debug('<--payReceiptAction: End Forwarded to sendRequest');
+
+        return $this->forward('MiPagoBundle:Payment:sendRequest', $this->__createMiPagoParametersArray($receipt));
     }
 
     /**
@@ -244,7 +242,7 @@ class ReceiptController extends Controller
             if (null !== $remainingTickets) {
                 /* If payment was not OK we add to remaining tickets, because we substracted previously before the payment */
                 $logger->debug('Payment status: '.$payment->getStatus());
-                if (Payment::PAYMENT_STATUS_NOK === $payment->getStatus()) {
+                if (!$payment->isPaymentSuccessfull()) {
                     $activity->setRemainingTickets($remainingTickets + $tickets->getQuantity());
                     $em->persist($activity);
                     $em->flush();
@@ -287,8 +285,10 @@ class ReceiptController extends Controller
     public function oracleAction(Request $request, LoggerInterface $logger, GTWINIntegrationService $gts)
     {
         $em = $this->getDoctrine()->getManager();
-        $receipt = $em->getRepository(Receipt::class)->find('100000111');
-        $this->updatePayment($receipt, $logger, $gts);
+        $receipt = $em->getRepository(Receipt::class)->find(100000125);
+        $gts->createReciboOpt($receipt);
+        die;
+//        $this->updatePayment($receipt, $logger, $gts);
     }
 
     private function __updatePayment(Receipt $receipt, LoggerInterface $logger, GTWINIntegrationService $gts)

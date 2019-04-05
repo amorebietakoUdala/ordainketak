@@ -71,7 +71,7 @@
 			    </td>
 			    <td>
 				{% if receipt.payment == null or not receipt.payment.isPaymentSuccessfull %}
-				    <a class="js-btnPay" href="javascript:fireAlert('{{ "confirmation.title" | trans | capitalize }}','{{ "receipt.id" | trans | capitalize }}: {{ receipt.id }}<br/>{{ "receipt.concepto" | trans | capitalize }}: {{ receipt.concepto }}<br/>{{ "receipt.dni" | trans | capitalize }}: {{ receipt.dni }}<br/>{{ "receipt.nombre" | trans | capitalize }}: {{ receipt.nombre }}<br/>{{ "receipt.apellidos" | trans | capitalize }}: {{ receipt.apellido1 }} {{ receipt.apellido2 }}<br/>{{ "receipt.ultimoDiaPago" | trans | capitalize }}: {{ receipt.ultimoDiaPago|date("Y/m/d") }}<br/>','{{ "confirmation.pay" | trans | capitalize }}','{{ "confirmation.cancel" | trans | capitalize }}','{{ receipt.id }}','{{ receipt.dni }}');">
+				    <a class="js-btnPay" href="javascript:fireAlert('{{ "confirmation.title" | trans | capitalize }}','{{ "receipt.id" | trans | capitalize }}: {{ receipt.id }}<br/>{{ "receipt.concepto" | trans | capitalize }}: {{ receipt.concepto }}<br/>{{ "receipt.dni" | trans | capitalize }}: {{ receipt.dni }}<br/>{{ "receipt.nombre" | trans | capitalize }}: {{ receipt.nombre }}<br/>{{ "receipt.apellidos" | trans | capitalize }}: {{ receipt.apellido1 }} {{ receipt.apellido2 }}<br/>{{ "receipt.ultimoDiaPago" | trans | capitalize }}: {{ receipt.ultimoDiaPago|date("Y/m/d") }}<br/>','{{ "confirmation.pay" | trans | capitalize }}','{{ "confirmation.cancel" | trans | capitalize }}','{{ receipt.numeroReferenciaGTWIN }}','{{ receipt.dni }}');">
 					<i class="fas fa-credit-card"></i>
 				    </a>
 				{% endif %}

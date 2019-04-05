@@ -32,6 +32,7 @@
 			<th data-sortable="true">{{"concept.id" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"concept.entity" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"concept.suffix" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"concept.accountingConcept" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"concept.name" | trans | capitalize}}</th>
 			<th data-sortable="true">{{"concept.unitaryPrice" | trans | capitalize}}</th>
 			<th data-sortable="true" data-field="options">{{"options" | trans | capitalize}}</th>
@@ -44,6 +45,7 @@
 			    <td>{{concept.id}}</td>
 			    <td>{{concept.entity}}</td>
 			    <td>{{concept.suffix}}</td>
+				<td>{{concept.accountingConcept}}</td>
 			    {% if app.request.locale == 'es' %}
 				<td>{{concept.name}}</td>
 			    {% else %}

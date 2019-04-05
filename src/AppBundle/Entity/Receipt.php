@@ -3,14 +3,11 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
 use MiPago\Bundle\Entity\Payment;
-use AppBundle\Entity\Activity;
 use AppBundle\Entity\GTWIN\ReciboGTWIN;
 
-
 /**
- * Auditoria
+ * Auditoria.
  *
  * @ORM\Table(name="Receipts")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ReceiptRepository")
@@ -18,8 +15,8 @@ use AppBundle\Entity\GTWIN\ReciboGTWIN;
 class Receipt
 {
     const INSTITUCIONES = [
-	'AMOREBIE' => '480034',
-	'AMETX' => '481166',
+    'AMOREBIE' => '480034',
+    'AMETX' => '481166',
     ];
     /**
      * @var int
@@ -77,7 +74,6 @@ class Receipt
      *
      * @ORM\Column(name="dni", type="string", length=15, nullable=true)
      */
-    
     private $dni;
 
     /**
@@ -85,17 +81,16 @@ class Receipt
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
-    
     private $email;
 
-     /**
+    /**
      * @var string
      *
      * @ORM\Column(name="telefono", type="string", length=20, nullable=true)
      */
     private $telefono;
 
-     /**
+    /**
      * @var float
      *
      * @ORM\Column(name="importe", type="decimal", precision=6, scale=2, nullable=true )
@@ -104,7 +99,7 @@ class Receipt
 
     /**
      * @ORM\Column(name="ultimo_dia_pago", type="datetime", nullable=true)
-    */
+     */
     private $ultimoDiaPago;
 
     /**
@@ -113,13 +108,20 @@ class Receipt
      * @ORM\Column(name="entidad", type="string", length=6, nullable=true)
      */
     private $entidad;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="sufijo", type="string", length=3, nullable=true)
      */
     private $sufijo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="concepto_renta", type="string", length=3, nullable=true)
+     */
+    private $conceptoRenta;
 
     /**
      * @var string
@@ -136,205 +138,300 @@ class Receipt
      * @ORM\JoinColumn(name="payment_id", referencedColumnName="id", nullable=true)
      */
     private $payment;
-    
+
 //    public function __construct($inscription = null) {
-//	$instance = new self();
-//	if ( $inscription != null ) {
-//	    $instance->setDni($inscription->getDni());
-//	    $instance->setNombre($inscription->getNombre());
-//	    $instance->setApellido1($inscription->setApellido1());
-//	    $instance->setApellido2($inscription->setApellido2());
-//	    $instance->setEmail($inscription->setEmail());
-//	    $instance->setTelefono($inscription->setTelefono());
-//	}
-//	return $instance;
+    //	$instance = new self();
+    //	if ( $inscription != null ) {
+    //	    $instance->setDni($inscription->getDni());
+    //	    $instance->setNombre($inscription->getNombre());
+    //	    $instance->setApellido1($inscription->setApellido1());
+    //	    $instance->setApellido2($inscription->setApellido2());
+    //	    $instance->setEmail($inscription->setEmail());
+    //	    $instance->setTelefono($inscription->setTelefono());
+    //	}
+    //	return $instance;
 //    }
-    
-    public function getId() {
-	return $this->id;
+
+    public function getId()
+    {
+        return $this->id;
     }
 
-    public function getNumeroReferenciaGTWIN() {
-	return $this->numeroReferenciaGTWIN;
+    public function getNumeroReferenciaGTWIN()
+    {
+        return $this->numeroReferenciaGTWIN;
     }
 
-    public function getConcepto() {
-	return $this->concepto;
+    public function getConcepto()
+    {
+        return $this->concepto;
     }
 
-    public function getNombre() {
-	return $this->nombre;
+    public function getNombre()
+    {
+        return $this->nombre;
     }
 
-    public function getApellido1() {
-	return $this->apellido1;
+    public function getApellido1()
+    {
+        return $this->apellido1;
     }
 
-    public function getApellido2() {
-	return $this->apellido2;
+    public function getApellido2()
+    {
+        return $this->apellido2;
     }
 
-    public function getDni() {
-	return $this->dni;
+    public function getDni()
+    {
+        return $this->dni;
     }
 
-    public function getTelefono() {
-	return $this->telefono;
+    public function getTelefono()
+    {
+        return $this->telefono;
     }
 
-    public function getImporte() {
-	return $this->importe;
+    public function getImporte()
+    {
+        return $this->importe;
     }
 
-    public function getUltimoDiaPago() {
-	return $this->ultimoDiaPago;
+    public function getUltimoDiaPago()
+    {
+        return $this->ultimoDiaPago;
     }
 
-    public function getEntidad() {
-	return $this->entidad;
+    public function getEntidad()
+    {
+        return $this->entidad;
     }
 
-    public function getSufijo() {
-	return $this->sufijo;
+    public function getSufijo()
+    {
+        return $this->sufijo;
     }
 
-    public function getEmail() {
-	return $this->email;
+    public function getConceptoRenta()
+    {
+        return $this->conceptoRenta;
     }
 
-    public function getPayment(): ?Payment {
-	return $this->payment;
+    public function getEmail()
+    {
+        return $this->email;
     }
 
-    public function getTickets() {
-	return $this->tickets;
+    public function getPayment(): ?Payment
+    {
+        return $this->payment;
     }
 
-    public function setId($id) {
-	$this->id = $id;
+    public function getTickets()
+    {
+        return $this->tickets;
     }
 
-    public function setNumeroReferenciaGTWIN($numeroReferenciaGTWIN) {
-	$this->numeroReferenciaGTWIN = $numeroReferenciaGTWIN;
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
-    public function setConcepto($concepto) {
-	$this->concepto = $concepto;
+    public function setNumeroReferenciaGTWIN($numeroReferenciaGTWIN)
+    {
+        $this->numeroReferenciaGTWIN = $numeroReferenciaGTWIN;
+
+        return $this;
     }
 
-    public function setNombre($nombre) {
-	$this->nombre = $nombre;
+    public function setConcepto($concepto)
+    {
+        $this->concepto = $concepto;
+
+        return $this;
     }
 
-    public function setApellido1($apellido1) {
-	$this->apellido1 = $apellido1;
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
     }
 
-    public function setApellido2($apellido2) {
-	$this->apellido2 = $apellido2;
+    public function setApellido1($apellido1)
+    {
+        $this->apellido1 = $apellido1;
+
+        return $this;
     }
 
-    public function setDni($dni) {
-	$this->dni = $dni;
+    public function setApellido2($apellido2)
+    {
+        $this->apellido2 = $apellido2;
+
+        return $this;
     }
 
-    public function setTelefono($telefono) {
-	$this->telefono = $telefono;
+    public function setDni($dni)
+    {
+        $this->dni = $dni;
+
+        return $this;
     }
 
-    public function setImporte($importe) {
-	$this->importe = $importe;
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+
+        return $this;
     }
 
-    public function setUltimoDiaPago($ultimoDiaPago) {
-	$this->ultimoDiaPago = $ultimoDiaPago;
+    public function setImporte($importe)
+    {
+        $this->importe = $importe;
+
+        return $this;
     }
 
-    public function setEntidad($entidad) {
-	$this->entidad = $entidad;
-	return $this;
+    public function setUltimoDiaPago($ultimoDiaPago)
+    {
+        $this->ultimoDiaPago = $ultimoDiaPago;
+
+        return $this;
     }
 
-    public function setSufijo($sufijo) {
-	$this->sufijo = $sufijo;
+    public function setEntidad($entidad)
+    {
+        $this->entidad = $entidad;
+
+        return $this;
     }
 
-    public function setEmail($email) {
-	$this->email = $email;
+    public function setSufijo($sufijo)
+    {
+        $this->sufijo = $sufijo;
+
+        return $this;
     }
 
-    public function setPayment($payment) {
-	$this->payment = $payment;
+    public function setConceptoRenta($conceptoRenta)
+    {
+        $this->conceptoRenta = $conceptoRenta;
+
+        return $this;
     }
 
-    public function setTickets($tickets) {
-	$this->tickets = $tickets;
-	return $this;
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
     }
 
-	public function getFraccion() {
-		return $this->fraccion;
-	}
+    public function setPayment($payment)
+    {
+        $this->payment = $payment;
 
-	public function setFraccion($fraccion = 0 ) {
-		$this->fraccion = $fraccion;
-		return $this;
-	}
+        return $this;
+    }
 
-		
-    public function __toString() {
-	return json_encode($this->toArray());
+    public function setTickets($tickets)
+    {
+        $this->tickets = $tickets;
+
+        return $this;
     }
-    
-    public function toArray() {
-	return [
-	    'id' => $this->id,
-	    'numeroReferenciaGTWIN' => $this->numeroReferenciaGTWIN,
-		'fraccion' => $this->fraccion,
-	    'concepto' => $this->concepto,
-	    'nombre' => $this->nombre,
-	    'apellido1' => $this->apellido1,
-	    'apellido2' => $this->apellido2,
-	    'dni' => $this->dni,
-	    'email' => $this->email,
-	    'telefono' => $this->telefono,
-	    'importe' => $this->importe,
-	    'entidad' => $this->entidad,
-	    'sufijo' => $this->sufijo,
-	    'ultimoDiaPago' => $this->ultimoDiaPago,
-	];
+
+    public function getFraccion()
+    {
+        return $this->fraccion;
     }
-    
-    public static function createFromGTWINReceipt ( ReciboGTWIN $receiptGTWIN ) {
-		$receipt = new Receipt();
-		$nombreCompleto = $receiptGTWIN->getNombreCompleto();
-		$trozos = preg_split("/[\*\,]/", $nombreCompleto);
-		$apellido1 = null;
-		$apellido2 = null;
-		if (sizeof($trozos) === 3 ) {
-			$apellido1 = $trozos[0];
-			$apellido2 = $trozos[1];
-			$nombre = $trozos[2];
-		} else {
-			$nombre = $trozos[0];
-		}
-		$receipt->setNumeroReferenciaGTWIN($receiptGTWIN->getNumeroRecibo());
-		$receipt->setFraccion($receiptGTWIN->getFraccion());
-		$receipt->setConcepto($receiptGTWIN->getTipoIngreso()->getDescripcion().': '.$receiptGTWIN->getNumeroReferenciaExterna());
-		$receipt->setNombre($nombre);
-		$receipt->setApellido1($apellido1);
-		$receipt->setApellido2($apellido2);
-		$receipt->setDni($receiptGTWIN->getDni().$receiptGTWIN->getLetra());
-		$receipt->setTelefono('');
-		$receipt->setImporte($receiptGTWIN->getImporteTotal());
-		$receipt->setUltimoDiaPago($receiptGTWIN->getFechaFinVoluntaria());
-		$receipt->setEntidad(self::INSTITUCIONES[$receiptGTWIN->getCodInstitucion()]);
-		$receipt->setSufijo($receiptGTWIN->getTipoIngreso()->getConceptoC60());
-//		dump($receiptGTWIN,$receipt);die;
-		return $receipt;
+
+    public function setFraccion($fraccion = 0)
+    {
+        $this->fraccion = $fraccion;
+
+        return $this;
     }
-	
-//	private static function __splitFullName ($nombreCompleto) {
+
+    public function __toString()
+    {
+        return json_encode($this->toArray());
+    }
+
+    public function toArray()
+    {
+        return [
+        'id' => $this->id,
+        'numeroReferenciaGTWIN' => $this->numeroReferenciaGTWIN,
+        'fraccion' => $this->fraccion,
+        'concepto' => $this->concepto,
+        'nombre' => $this->nombre,
+        'apellido1' => $this->apellido1,
+        'apellido2' => $this->apellido2,
+        'dni' => $this->dni,
+        'email' => $this->email,
+        'telefono' => $this->telefono,
+        'importe' => $this->importe,
+        'entidad' => $this->entidad,
+        'sufijo' => $this->sufijo,
+        'ultimoDiaPago' => $this->ultimoDiaPago,
+    ];
+    }
+
+    public static function createFromGTWINReceipt(ReciboGTWIN $receiptGTWIN)
+    {
+        $receipt = new self();
+        $nombreCompleto = $receiptGTWIN->getNombreCompleto();
+        $trozos = preg_split("/[\*\,]/", $nombreCompleto);
+        $apellido1 = null;
+        $apellido2 = null;
+        if (3 === sizeof($trozos)) {
+            $apellido1 = $trozos[0];
+            $apellido2 = $trozos[1];
+            $nombre = $trozos[2];
+        } else {
+            $nombre = $trozos[0];
+        }
+        $receipt->setNumeroReferenciaGTWIN($receiptGTWIN->getNumeroRecibo());
+        $receipt->setFraccion($receiptGTWIN->getFraccion());
+        $concepto = $receiptGTWIN->getTipoIngreso()->getDescripcion().': '.$receiptGTWIN->getNumeroReferenciaExterna();
+        $receipt->setConcepto($concepto);
+        $receipt->setNombre($nombre);
+        $receipt->setApellido1($apellido1);
+        $receipt->setApellido2($apellido2);
+        $receipt->setDni($receiptGTWIN->getDni().$receiptGTWIN->getLetra());
+        $receipt->setTelefono('');
+        $receipt->setImporte($receiptGTWIN->getImporteTotal());
+        $receipt->setUltimoDiaPago($receiptGTWIN->getFechaFinVoluntaria());
+        $receipt->setEntidad(self::INSTITUCIONES[$receiptGTWIN->getCodInstitucion()]);
+        $tipoIngreso = $receiptGTWIN->getTipoIngreso();
+        $tipoExaccion = $receiptGTWIN->getTipoExaccion();
+        if ('AU' === $tipoExaccion || null === $tipoExaccion) {
+            $sufijo = $tipoIngreso->getConceptoC60AU();
+        } elseif ('ID' === $tipoExaccion) {
+            $sufijo = $tipoIngreso->getConceptoC60ID();
+        } elseif ('SC' === $tipoExaccion) {
+            $sufijo = $tipoIngreso->getConceptoC60SC();
+        } else {
+            $sufijo = $tipoIngreso->getConceptoC60();
+        }
+        $receipt->setSufijo($sufijo);
+
+        return $receipt;
+    }
+
+    private function __fixEncoding($string)
+    {
+        $check = mb_check_encoding($string, 'ISO-8859-1');
+        if ($check) {
+            return mb_convert_encoding($string, 'UTF-8', 'ISO-8859-1');
+        }
+
+        return $string;
+    }
+
+    //	private static function __splitFullName ($nombreCompleto) {
 //		$trozos = preg_split("/[\*\,]/", $nombreCompleto);
 //		$apellido1 = null;
 //		$apellido2 = null;
@@ -352,4 +449,3 @@ class Receipt
 //		];
 //	}
 }
-

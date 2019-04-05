@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Tipo Ingreso.
  *
  * @ORM\Table(name="SP_TRB_TIPING")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\TipoIngresoRepository",readOnly=true)
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GTWIN\TipoIngresoRepository",readOnly=true)
  */
 class TipoIngreso
 {
@@ -72,7 +72,7 @@ class TipoIngreso
 
     public function __toString()
     {
-        return $this->nombre;
+        return $this->descripcion;
     }
 
     public function getId()
@@ -87,7 +87,10 @@ class TipoIngreso
 
     public function getDescripcion()
     {
-        return $this->descripcion;
+        $check = mb_check_encoding($this->descripcion, 'ISO-8859-1');
+        $descripcion = $check ? mb_convert_encoding($this->descripcion, 'UTF-8', 'ISO-8859-1') : $this->descripcion;
+
+        return $descripcion;
     }
 
     public function setId($id)
