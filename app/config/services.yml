@@ -44,6 +44,6 @@ services:
         class: AppBundle\Utils\IgnoreTablesListener
         public: true
         arguments: 
-            $ignoredEntities: ['AppBundle:GTWIN\ReciboGTWIN','AppBundle:GTWIN\TipoIngreso']
+            $ignoredEntities: ['AppBundle:GTWIN\ReciboGTWIN','AppBundle:GTWIN\TipoIngreso','AppBundle:GTWIN\OperacionesExternas','AppBundle:GTWIN\MensajesError']
         tags:
             - {name: doctrine.event_listener, event: postGenerateSchema }
