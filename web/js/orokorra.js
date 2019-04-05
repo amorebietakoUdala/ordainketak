@@ -20,7 +20,7 @@ $(document).ready(function(){
 	window.location.href=location_new;
     });
     $.ajax({
-	url: "http://garapenak/ordainketak/app_dev.php/api/activity/",
+	url: "/ordainketak/api/activity/",
 	context: document.body
     }).done(function(data){
 	var current_locale = $('html').attr("lang");
