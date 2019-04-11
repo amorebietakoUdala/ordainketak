@@ -215,6 +215,10 @@ class ReceiptController extends Controller
         $em = $this->getDoctrine()->getManager();
         $logger->info('ReferenceNumber: '.$reference_number.', Status: '.$payment->getStatus().', PaymentId: '.$payment->getId());
         $receipt = $em->getRepository(Receipt::class)->findOneBy(['numeroReferenciaGTWIN' => intval($reference_number)]);
+        if (null === $receipt) {
+            $receiptGTWIN = $gts->findByNumRecibo($reference_number);
+            $receipt = Receipt::createFromGTWINReceipt($receiptGTWIN);
+        }
         $receipt->setPayment($payment);
         $em->persist($receipt);
         $em->flush();

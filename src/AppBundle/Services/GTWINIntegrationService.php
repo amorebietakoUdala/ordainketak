@@ -49,6 +49,16 @@ class GTWINIntegrationService
         return $reciboGTWIN;
     }
 
+    public function findByNumRecibo($numRecibo)
+    {
+        $em = $this->em;
+        $reciboGTWIN = $em->getRepository(ReciboGTWIN::class)->findOneBy([
+            'numeroRecibo' => $numRecibo,
+        ]);
+
+        return $reciboGTWIN;
+    }
+
     private function __fixDniNumber($numero)
     {
         if (is_numeric($numero)) {
