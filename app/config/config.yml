@@ -96,7 +96,6 @@ mi_pago:
     sender: '%mipago.sender%'
     suffixes: '%mipago.suffixes%'
     return_url: '%mipago.return_url%'
-    confirmation_url: '%mipago.confirmation_url%'
     forwardController: '%mipago.forwardController%'
 #    payment_modes: ['001','002']
     test_environment: '%mipago.test_environment%'
