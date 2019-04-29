@@ -60,30 +60,37 @@ class ReceiptController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             if ('anon.' === $user && (null === $data->getDni() || null === $data->getId())) {
+                $results = [];
                 $this->addFlash('error', 'El dni y el número de recibo son obligatorios');
-            } else {
-                //		$results = $em->getRepository(Receipt::class)->findReceiptByExample($data, Payment::PAYMENT_STATUS_OK);
-                $results = $em->getRepository(Receipt::class)->findReceiptByNumeroReferenciaGTWIN($data);
-                if (0 === sizeof($results)) {
-                    $result = $gts->findByNumReciboDni($data->getId(), $data->getDni());
-                    $receipts = [];
-                    if (null !== $result) {
-                        $errores = $result->comprobarCondicionesPago();
-                        foreach ($errores as $error) {
-                            $this->addFlash('error', $error);
-                        }
-                        if (0 === sizeof($errores)) {
-                            $receipt = Receipt::createFromGTWINReceipt($result);
-                            $em = $this->getDoctrine()->getManager();
-                            $em->persist($receipt);
-                            $em->flush();
-                            $receipts[] = $receipt;
-                        }
-                    } else {
-                        $this->addFlash('error', 'Recibo no encontrado');
+
+                return $this->render('receipt/list.html.twig', [
+                    'form' => $form->createView(),
+                    'receipts' => $results,
+                    'search' => true,
+                    'readonly' => false,
+                ]);
+            }
+            $results = $em->getRepository(Receipt::class)->findReceiptByExample($data);
+//                $results = $em->getRepository(Receipt::class)->findReceiptByNumeroReferenciaGTWIN($data->getNumeroReferenciaGTWIN());
+            if (0 === sizeof($results)) {
+                $result = $gts->findByNumReciboDni($data->getId(), $data->getDni());
+                $receipts = [];
+                if (null !== $result) {
+                    $errores = $result->comprobarCondicionesPago();
+                    foreach ($errores as $error) {
+                        $this->addFlash('error', $error);
                     }
-                    $results = $receipts;
+                    if (0 === sizeof($errores)) {
+                        $receipt = Receipt::createFromGTWINReceipt($result);
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($receipt);
+                        $em->flush();
+                        $receipts[] = $receipt;
+                    }
+                } else {
+                    $this->addFlash('error', 'Recibo no encontrado');
                 }
+                $results = $receipts;
             }
 
             return $this->render('receipt/list.html.twig', [
