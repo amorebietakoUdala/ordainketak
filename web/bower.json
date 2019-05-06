@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "bootstrap": "^4.2.1",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.1",
     "popper.js": "^1.14.7",
     "bootstrap-table": "^1.13.5",
     "tableexport.jquery.plugin": "^1.10.1",
