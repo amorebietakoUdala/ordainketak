@@ -153,3 +153,15 @@ main {
 .btn-rounded {
     border-radius: 1.5rem 1.5rem 1.5rem 1.5rem;
 }
+
+@media (max-width: 767px) {
+	.logo {
+		height: 50px;
+		width: auto;
+	}
+	
+	h1 {
+		font-size: 1.5rem;
+	}
+  
+}
