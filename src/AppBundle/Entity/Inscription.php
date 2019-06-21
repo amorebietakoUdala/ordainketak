@@ -89,28 +89,28 @@ class Inscription
 
     public function setNombre($nombre)
     {
-        $this->nombre = $nombre;
+        $this->nombre = strtoupper($nombre);
 
         return $this;
     }
 
     public function setApellido1($apellido1)
     {
-        $this->apellido1 = $apellido1;
+        $this->apellido1 = strtoupper($apellido1);
 
         return $this;
     }
 
     public function setApellido2($apellido2)
     {
-        $this->apellido2 = $apellido2;
+        $this->apellido2 = strtoupper($apellido2);
 
         return $this;
     }
 
     public function setDni($dni)
     {
-        $this->dni = $dni;
+        $this->dni = strtoupper($dni);
 
         return $this;
     }

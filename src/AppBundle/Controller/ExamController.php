@@ -83,10 +83,10 @@ class ExamController extends Controller
     private function createReceiptFromInscriptionData(Exam $exam)
     {
         $receipt = new Receipt();
-        $receipt->setDni($exam->getDni());
-        $receipt->setNombre($exam->getNombre());
-        $receipt->setApellido1($exam->getApellido1());
-        $receipt->setApellido2($exam->getApellido2());
+        $receipt->setDni(strtoupper($exam->getDni()));
+        $receipt->setNombre(strtoupper($exam->getNombre()));
+        $receipt->setApellido1(strtoupper($exam->getApellido1()));
+        $receipt->setApellido2(strtoupper($exam->getApellido2()));
         $receipt->setEmail($exam->getEmail());
         $receipt->setTelefono($exam->getTelefono());
 

@@ -19,7 +19,7 @@ class Validaciones
     {
         $letra = substr($dni, -1);
         $numeros = substr($dni, 0, -1);
-        if (substr('TRWAGMYFPDXBNJZSQVHLCKE', $numeros % 23, 1) == $letra && 1 == strlen($letra) && 8 == strlen($numeros)) {
+        if (substr('TRWAGMYFPDXBNJZSQVHLCKE', $numeros % 23, 1) == strtoupper($letra) && 1 == strlen($letra) && 8 == strlen($numeros)) {
             return true;
         } else {
             return false;
