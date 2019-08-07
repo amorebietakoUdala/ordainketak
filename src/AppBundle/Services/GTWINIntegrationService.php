@@ -16,6 +16,7 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 use AppBundle\Utils\Validaciones;
+use AppBundle\Entity\GTWIN\Person;
 
 /**
  * Description of MiPagoConstants.
@@ -57,6 +58,76 @@ class GTWINIntegrationService
         ]);
 
         return $reciboGTWIN;
+    }
+
+    /**
+     * Find a person by dni. DNI must come with it's control digit at the end.
+     *
+     * @param string $dni
+     *
+     * @return \AppBundle\Entity\GTWIN\Person
+     */
+    public function findByDni($dni)
+    {
+        $dc = substr($dni, -1);
+        $numDocumento = substr($dni, 0, -1);
+        $em = $this->em;
+        $person = $em->getRepository(Person::class)->findOneBy([
+           'numDocumento' => $this->__fixDniNumber($numDocumento),
+           'digitoControl' => $dc,
+        ]);
+
+        return $person;
+    }
+
+    /**
+     * Find a person by dni. DNI must come with it's control digit at the end.
+     *
+     * @param string $dni
+     *
+     * @return Person
+     */
+    public function personExists($dni)
+    {
+        $person = $this->findByDni($dni);
+
+        return null !== $person;
+    }
+
+    /**
+     * Find a person by dni. DNI must come with it's control digit at the end.
+     *
+     * @param string $dni
+     *
+     * @return \AppBundle\Entity\GTWIN\Person
+     */
+    public function findByRecibosPendientesByDni($dni)
+    {
+        $dc = substr($dni, -1);
+        $numDocumento = substr($dni, 0, -1);
+        $em = $this->em;
+        $person = $em->getRepository(ReciboGTWIN::class)->findByRecibosPendientesByDni(
+            $this->__fixDniNumber($numDocumento),
+            $dc
+        );
+
+        return $person;
+    }
+
+    /**
+     * Return a list of receipt types.
+     *
+     * @return TipoIngreso
+     */
+    public function getReceiptTypes()
+    {
+        $em = $this->em;
+        $results = $em->getRepository(TipoIngreso::class)->findBy([]);
+        foreach ($results as $result) {
+            $result->setDescripcion($result->getDescripcion());
+        }
+
+        return $results;
     }
 
     private function __fixDniNumber($numero)

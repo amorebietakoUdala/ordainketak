@@ -14,9 +14,9 @@ class TipoIngreso
 {
     private const PLANPAG = 'PLANPAG';
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="TINDBOIDE", type="bigint", nullable=false)
+     * @ORM\Column(name="TINDBOIDE", type="string", nullable=false)
      * @ORM\Id
      */
     private $id;

@@ -4,15 +4,20 @@ namespace AppBundle\Entity\GTWIN;
 
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Tipo Ingreso.
  *
  * @ORM\Table(name="SP_TRB_RECIBO")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GTWIN\ReciboGTWINRepository",readOnly=true)
+ * @Serializer\ExclusionPolicy("all")
  */
 class ReciboGTWIN
 {
+    public const SITUACION_VOLUNTARIA = 'V';
+    public const ESTADO_PENDIENTE = 'P';
+    public const ESTADO_COBRADO = 'C';
     /**
      * @var int
      *
@@ -25,6 +30,7 @@ class ReciboGTWIN
      * @var string
      *
      * @ORM\Column(name="RECNUMREC", type="integer", nullable=false)
+     * @Serializer\Expose
      */
     private $numeroRecibo;
 
@@ -39,6 +45,7 @@ class ReciboGTWIN
      * @var string
      *
      * @ORM\Column(name="RECREFERE", type="string", nullable=false)
+     * @Serializer\Expose
      */
     private $numeroReferenciaExterna;
 
@@ -88,6 +95,7 @@ class ReciboGTWIN
      * @var float
      *
      * @ORM\Column(name="RECIMPTOT", type="decimal", precision=11, scale=2, nullable=false)
+     * @Serializer\Expose
      */
     private $importeTotal;
 
