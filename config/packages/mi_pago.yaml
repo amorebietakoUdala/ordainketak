@@ -1,0 +1,7 @@
+mi_pago:
+  sender: "%env(string:MIPAGO_SENDER)%"
+  #  suffixes: "%env(json:MIPAGO_SUFFIXES)%"
+  return_url: "%env(MIPAGO_RETURN_URL)%"
+  # forwardController: "%env(string:MIPAGO_FORDWARDCONTROLLER)%"
+  # payment_modes: ['001','002']
+  test_environment: "%env(bool:MIPAGO_TEST_ENVIRONMENT)%"

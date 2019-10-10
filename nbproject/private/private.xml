@@ -3,12 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="Local"/>
-        <group>
-            <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Utils/Validaciones.php</file>
-            <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Entity/Inscription.php</file>
-            <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Entity/Exam.php</file>
-            <file>file://garapenak/symfony_projects/ordainketak/src/AppBundle/Controller/ExamController.php</file>
-            <file>file://garapenak/symfony_projects/ordainketak/app/Resources/views/receipt/upload.html.twig</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

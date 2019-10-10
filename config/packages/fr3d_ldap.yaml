@@ -1,0 +1,14 @@
+fr3d_ldap:
+  driver:
+    host: "%env(LDAP_HOST)%"
+    username: "%env(LDAP_USER)%"
+    password: "%env(LDAP_PASSWORD)%"
+    accountDomainName: "%env(LDAP_ACCOUNTDOMAINNAME)%"
+  user:
+    usernameAttribute: samaccountname
+    baseDn: "%env(LDAP_USERS_DN)%"
+    filter: (&(ObjectClass=Person))
+    attributes:
+      - { ldap_attr: samaccountname, user_method: setUsername }
+      - { ldap_attr: mail, user_method: setEmail }
+      - { ldap_attr: cn, user_method: setName }

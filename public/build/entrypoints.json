@@ -1,0 +1,40 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/ordainketak/build/runtime.js",
+        "/ordainketak/build/vendors~app~exam_new~receipt_list.js",
+        "/ordainketak/build/vendors~app~receipt_list.js",
+        "/ordainketak/build/vendors~app.js",
+        "/ordainketak/build/app.js"
+      ],
+      "css": [
+        "/ordainketak/build/app.css"
+      ]
+    },
+    "receipt_list": {
+      "js": [
+        "/ordainketak/build/runtime.js",
+        "/ordainketak/build/vendors~app~exam_new~receipt_list.js",
+        "/ordainketak/build/vendors~app~receipt_list.js",
+        "/ordainketak/build/vendors~exam_new~receipt_list.js",
+        "/ordainketak/build/vendors~receipt_list.js",
+        "/ordainketak/build/receipt_list.js"
+      ],
+      "css": [
+        "/ordainketak/build/receipt_list.css"
+      ]
+    },
+    "exam_new": {
+      "js": [
+        "/ordainketak/build/runtime.js",
+        "/ordainketak/build/vendors~app~exam_new~receipt_list.js",
+        "/ordainketak/build/vendors~exam_new~receipt_list.js",
+        "/ordainketak/build/exam_new.js"
+      ],
+      "css": [
+        "/ordainketak/build/exam_new.css"
+      ]
+    }
+  }
+}

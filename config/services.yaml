@@ -1,0 +1,55 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: "es"
+    uploads_directory: "%env(UPLOADS_DIRECTORY)%"
+    # sender: "%env{MIPAGO_SENDER}%"
+    # suffixes: "%env{MIPAGO_SUFFIXES}%"
+    # return_url: "%env{MIPAGO_RETURN_URL}%"
+    mipago.forwardController: "%env(string:MIPAGO_FORWARDCONTROLLER)%"
+    # #    payment_modes: ['001','002']
+    # test_environment: "%env{MIPAGO_TEST_ENVIRONMENT}%"
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: "../src/*"
+        exclude: "../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php,MiPago}"
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: "../src/Controller"
+        tags: ["controller.service_arguments"]
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+
+    App\Services\:
+        resource: "../src/Services"
+        public: true
+        arguments: ["@doctrine.orm.oracle_entity_manager", "@monolog.logger"]
+
+    App\Utils\IgnoreTablesListener:
+        class: App\Utils\IgnoreTablesListener
+        public: true
+        arguments:
+            $ignoredEntities:
+                [
+                    'App:GTWIN\ReciboGTWIN',
+                    'App:GTWIN\TipoIngreso',
+                    'App:GTWIN\OperacionesExternas',
+                    'App:GTWIN\MensajesError',
+                    'App:GTWIN\Person',
+                ]
+        tags:
+            - { name: doctrine.event_listener, event: postGenerateSchema }
