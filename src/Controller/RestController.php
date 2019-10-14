@@ -32,7 +32,7 @@ class RestController extends AbstractFOSRestController
     /**
      * List enabled activities.
      *
-     * @Get("/activity/")
+     * @Get("/activity/", options={"expose"=true})
      */
     public function getActivitiesAction(ParamFetcherInterface $paramFetcher)
     {

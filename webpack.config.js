@@ -25,7 +25,16 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('receipt_list', './assets/js/receipt/list.js')
     .addEntry('exam_new', './assets/js/exam/new.js')
-
+	.addEntry('concept_list', './assets/js/concept/list.js')
+	.addEntry('concept_new', './assets/js/concept/new.js')
+	.addEntry('concept_edit', './assets/js/concept/edit.js')
+	.addEntry('category_list', './assets/js/category/list.js')
+	.addEntry('category_new', './assets/js/category/new.js')
+	.addEntry('category_edit', './assets/js/category/edit.js')
+	.addEntry('activity_list', './assets/js/activity/list.js')
+	.addEntry('activity_new', './assets/js/activity/new.js')
+	.addEntry('activity_edit', './assets/js/activity/edit.js')
+	.addEntry('tickets_buy', './assets/js/tickets/buy.js')
 // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
 .splitEntryChunks()
 

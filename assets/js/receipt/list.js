@@ -1,7 +1,7 @@
 import '../../css/receipt/list.scss';
 
 import $ from 'jquery';
-import 'jquery-ui';
+// import 'jquery-ui';
 import 'bootstrap-table';
 import 'bootstrap-table/dist/extensions/export/bootstrap-table-export'
 import 'tableexport.jquery.plugin/tableExport';
@@ -9,7 +9,8 @@ import 'bootstrap-table/dist/locale/bootstrap-table-es-ES';
 import 'bootstrap-table/dist/locale/bootstrap-table-eu-EU';
 import {createAlert} from '../common/alert';
 const routes = require('../../../public/js/fos_js_routes.json');
-import Routing from '../../../public/bundles/fosjsrouting/js/router.min';
+import Routing from '../../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js'
+
 
 $(document).ready(function(){
     console.log('Receipt List OnReady!');

@@ -14,26 +14,6 @@
     </main>
 {% endblock body %}
 
-{# {% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('bower_components/bootstrap-table/dist/bootstrap-table.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('bower_components/jquery-ui/themes/base/jquery-ui.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('bower_components/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css">
-{% endblock %} #}
-
-{# {% block message %}
-    {% for msg in app.session.flashBag.get('success') %}
-	<div class="alert alert-success margin-top-13">
-	    {{ msg | trans}}
-	</div>
-    {% endfor %}
-    {% for msg in app.session.flashBag.get('error') %}
-	<div class="alert alert-danger margin-top-13">
-	    {{ msg | trans}}
-	</div>
-    {% endfor %}
-{% endblock %} #}
-
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('exam_new') }}
@@ -43,17 +23,3 @@
     {{ parent() }}
     {{ encore_entry_script_tags('exam_new') }}
 {% endblock %}
-
-
-{# {% block javascripts %}
-    {{  parent() }}
-    <script type="text/javascript">
-	$(document).ready(function(){
-	    $('.js-back').on('click',function(e){
-		e.preventDefault();
-		var url = e.currentTarget.dataset.url;
-		document.location.href=url;
-	    });
-	});
-    </script>    
-{% endblock %} #}

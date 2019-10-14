@@ -1,7 +1,6 @@
 import '../../css/exam/new.scss';
 
-import 'jquery-ui';
-
+import $ from 'jquery';
 
 $(document).ready(function() {
     $('.js-back').on('click', function(e) {

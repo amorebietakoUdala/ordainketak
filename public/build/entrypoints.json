@@ -1,24 +1,25 @@
 {
   "entrypoints": {
-    "app": {
+    "category_list": {
       "js": [
         "/ordainketak/build/runtime.js",
-        "/ordainketak/build/vendors~app~exam_new~receipt_list.js",
-        "/ordainketak/build/vendors~app~receipt_list.js",
-        "/ordainketak/build/vendors~app.js",
-        "/ordainketak/build/app.js"
+        "/ordainketak/build/vendors~activity_edit~activity_list~activity_new~app~category_edit~category_list~category_new~concep~348e466a.js",
+        "/ordainketak/build/vendors~activity_list~app~category_list~concept_list~receipt_list.js",
+        "/ordainketak/build/vendors~activity_list~category_list~concept_list~receipt_list.js",
+        "/ordainketak/build/activity_list~category_list~concept_list~receipt_list.js",
+        "/ordainketak/build/category_list.js"
       ],
       "css": [
-        "/ordainketak/build/app.css"
+        "/ordainketak/build/category_list.css"
       ]
     },
     "receipt_list": {
       "js": [
         "/ordainketak/build/runtime.js",
-        "/ordainketak/build/vendors~app~exam_new~receipt_list.js",
-        "/ordainketak/build/vendors~app~receipt_list.js",
-        "/ordainketak/build/vendors~exam_new~receipt_list.js",
-        "/ordainketak/build/vendors~receipt_list.js",
+        "/ordainketak/build/vendors~activity_edit~activity_list~activity_new~app~category_edit~category_list~category_new~concep~348e466a.js",
+        "/ordainketak/build/vendors~activity_list~app~category_list~concept_list~receipt_list.js",
+        "/ordainketak/build/vendors~activity_list~category_list~concept_list~receipt_list.js",
+        "/ordainketak/build/activity_list~category_list~concept_list~receipt_list.js",
         "/ordainketak/build/receipt_list.js"
       ],
       "css": [
@@ -28,12 +29,119 @@
     "exam_new": {
       "js": [
         "/ordainketak/build/runtime.js",
-        "/ordainketak/build/vendors~app~exam_new~receipt_list.js",
-        "/ordainketak/build/vendors~exam_new~receipt_list.js",
+        "/ordainketak/build/vendors~activity_edit~activity_list~activity_new~app~category_edit~category_list~category_new~concep~348e466a.js",
         "/ordainketak/build/exam_new.js"
       ],
       "css": [
         "/ordainketak/build/exam_new.css"
+      ]
+    },
+    "concept_list": {
+      "js": [
+        "/ordainketak/build/runtime.js",
+        "/ordainketak/build/vendors~activity_edit~activity_list~activity_new~app~category_edit~category_list~category_new~concep~348e466a.js",
+        "/ordainketak/build/vendors~activity_list~app~category_list~concept_list~receipt_list.js",
+        "/ordainketak/build/vendors~activity_list~category_list~concept_list~receipt_list.js",
+        "/ordainketak/build/activity_list~category_list~concept_list~receipt_list.js",
+        "/ordainketak/build/concept_list.js"
+      ],
+      "css": [
+        "/ordainketak/build/concept_list.css"
+      ]
+    },
+    "concept_new": {
+      "js": [
+        "/ordainketak/build/runtime.js",
+        "/ordainketak/build/vendors~activity_edit~activity_list~activity_new~app~category_edit~category_list~category_new~concep~348e466a.js",
+        "/ordainketak/build/concept_new.js"
+      ],
+      "css": [
+        "/ordainketak/build/concept_new.css"
+      ]
+    },
+    "concept_edit": {
+      "js": [
+        "/ordainketak/build/runtime.js",
+        "/ordainketak/build/vendors~activity_edit~activity_list~activity_new~app~category_edit~category_list~category_new~concep~348e466a.js",
+        "/ordainketak/build/concept_edit.js"
+      ],
+      "css": [
+        "/ordainketak/build/concept_edit.css"
+      ]
+    },
+    "app": {
+      "js": [
+        "/ordainketak/build/runtime.js",
+        "/ordainketak/build/vendors~activity_edit~activity_list~activity_new~app~category_edit~category_list~category_new~concep~348e466a.js",
+        "/ordainketak/build/vendors~activity_list~app~category_list~concept_list~receipt_list.js",
+        "/ordainketak/build/vendors~app.js",
+        "/ordainketak/build/app.js"
+      ],
+      "css": [
+        "/ordainketak/build/app.css"
+      ]
+    },
+    "category_new": {
+      "js": [
+        "/ordainketak/build/runtime.js",
+        "/ordainketak/build/vendors~activity_edit~activity_list~activity_new~app~category_edit~category_list~category_new~concep~348e466a.js",
+        "/ordainketak/build/category_new.js"
+      ],
+      "css": [
+        "/ordainketak/build/category_new.css"
+      ]
+    },
+    "category_edit": {
+      "js": [
+        "/ordainketak/build/runtime.js",
+        "/ordainketak/build/vendors~activity_edit~activity_list~activity_new~app~category_edit~category_list~category_new~concep~348e466a.js",
+        "/ordainketak/build/category_edit.js"
+      ],
+      "css": [
+        "/ordainketak/build/category_edit.css"
+      ]
+    },
+    "activity_list": {
+      "js": [
+        "/ordainketak/build/runtime.js",
+        "/ordainketak/build/vendors~activity_edit~activity_list~activity_new~app~category_edit~category_list~category_new~concep~348e466a.js",
+        "/ordainketak/build/vendors~activity_list~app~category_list~concept_list~receipt_list.js",
+        "/ordainketak/build/vendors~activity_list~category_list~concept_list~receipt_list.js",
+        "/ordainketak/build/activity_list~category_list~concept_list~receipt_list.js",
+        "/ordainketak/build/activity_list.js"
+      ],
+      "css": [
+        "/ordainketak/build/activity_list.css"
+      ]
+    },
+    "activity_new": {
+      "js": [
+        "/ordainketak/build/runtime.js",
+        "/ordainketak/build/vendors~activity_edit~activity_list~activity_new~app~category_edit~category_list~category_new~concep~348e466a.js",
+        "/ordainketak/build/activity_new.js"
+      ],
+      "css": [
+        "/ordainketak/build/activity_new.css"
+      ]
+    },
+    "activity_edit": {
+      "js": [
+        "/ordainketak/build/runtime.js",
+        "/ordainketak/build/vendors~activity_edit~activity_list~activity_new~app~category_edit~category_list~category_new~concep~348e466a.js",
+        "/ordainketak/build/activity_edit.js"
+      ],
+      "css": [
+        "/ordainketak/build/activity_edit.css"
+      ]
+    },
+    "tickets_buy": {
+      "js": [
+        "/ordainketak/build/runtime.js",
+        "/ordainketak/build/vendors~activity_edit~activity_list~activity_new~app~category_edit~category_list~category_new~concep~348e466a.js",
+        "/ordainketak/build/tickets_buy.js"
+      ],
+      "css": [
+        "/ordainketak/build/tickets_buy.css"
       ]
     }
   }

@@ -16,7 +16,7 @@ export function showAlert (title, html, confirmationButtonText, cancelButtonText
     }).then( function (result) {
     if (result.value) {
         console.log(confirmURL);
-//        document.location.href=confirmURL;
+        document.location.href=confirmURL;
     }
     });
 }
@@ -39,4 +39,15 @@ export function createAlert(e, confirmURL) {
              + Translator.trans('receipt.importe')+": " + importe + '<br/>' 
              + Translator.trans('receipt.ultimoDiaPago')+": " + ultimodiapago + '<br/>';
     showAlert(Translator.trans('confirmation.title'), html, Translator.trans('confirmation.pay'), Translator.trans('confirmation.cancel'), confirmURL);
+}
+
+export function createConfirmationAlert(confirmURL) {
+    Translator.fromJSON(translations);
+    showAlert(
+		Translator.trans('messages.confirmacion'), 
+		Translator.trans('¿Esta seguro de que desea eliminar el registro?'), 
+		Translator.trans('messages.si'), 
+		Translator.trans('messages.no'), 
+		confirmURL
+	);
 }

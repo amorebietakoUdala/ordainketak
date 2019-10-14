@@ -2,12 +2,6 @@
 
 {% block title %}{{'messages.appTitle' | trans }}{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('bower_components/jquery-ui/themes/base/jquery-ui.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('bower_components/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css">
-{% endblock %}
-
 {% block body %}
     <main class="container-fluid">
 	<div class="mt-2">
@@ -19,16 +13,12 @@
     </main>
 {% endblock body %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('activity_edit') }}
+{% endblock %}
 
 {% block javascripts %}
-    {{  parent() }}
-    <script type="text/javascript">
-	$(document).ready(function(){
-	    $('.js-back').on('click',function(e){
-		e.preventDefault();
-		var url = e.currentTarget.dataset.url;
-		document.location.href=url;
-	    });
-	});
-    </script>
+    {{ parent() }}
+    {{ encore_entry_script_tags('activity_edit') }}
 {% endblock %}
