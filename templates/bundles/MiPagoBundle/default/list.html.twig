@@ -1,0 +1,62 @@
+{% extends "@MiPago/default/layout.html.twig" %}
+{% trans_default_domain "mipago" %}
+
+{% block error %}
+    {{ exception.message | trans({'%suffixes%' : suffixes},"mipago", app.request.locale) }}
+{% endblock %}
+
+{% block body %}
+    <main class="container-fluid">
+	<div class="mt-2">
+	{{ include('@MiPago/default/_form.html.twig',{
+			    }) }}
+	</div>
+	<div class="container-fluid">
+	    <table id="results-table" class="table bootstrap-table mt-3">
+		<thead>
+		    <tr class="row">
+			<th data-sortable="true">{{"payment.timestamp" | trans | capitalize}}</th>
+			<th data-sortable="true" data-width="15%">{{"payment.reference_number" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"payment.suffix" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"payment.status" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"payment.quantity" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"payment.nif" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"payment.email" | trans | capitalize}}</th>
+			<th data-sortable="true" data-field="options">{{"label.options" | trans | capitalize}}</th>
+		    </tr>
+		</thead>
+		<tbody>
+		    {% if payments is defined and payments|length > 0 %}
+			{% for payment in payments %}
+			<tr>
+			    <td>{{payment.timestamp | date('Y-m-d H:i:s') }}</td>
+			    <td>{{payment.reference_number }}</td>
+			    <td data-width="15%">{{payment.suffix }}</td>
+			    <td>{{ constant('MiPago\\Bundle\\Entity\\Payment::PAYMENT_STATUS_DESCRIPTION')[payment.status] | trans | capitalize }}</td>
+			    <td>{{payment.quantity}}</td>
+			    <td>{{payment.nif}}</td>
+			    <td>{{payment.email}}</td>
+			    <td><a href="{{path("mipago_show_payment", {
+				    'id': payment.id,
+				})}}"><i class="fa fa-eye"></i></a>
+			    </td>
+			</tr>
+			{% endfor %}
+		    {% else %}
+			<tr><td colspan="13">{{"messages.results0" | trans }}</td></tr>
+		    {% endif %}
+		</tbody>
+	    </table>
+	</div>
+    </main>
+{% endblock body %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('payment_list') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('payment_list') }}
+{% endblock %}

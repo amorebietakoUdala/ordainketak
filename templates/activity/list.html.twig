@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'messages.appTitle' | trans }}{% endblock %}
+
+{% block body %}
+    <main class="container-fluid">
+	<div class="container-fluid">
+	    <table id="taula" class="table bootstrap-table mt-3">
+		<thead>
+		    <tr class="row">
+			<th data-sortable="true">{{"activity.id" | trans | capitalize}}</th>
+			{% if app.request.locale == 'es'%}
+			    <th data-sortable="true">{{"activity.name" | trans | capitalize}}</th>
+			{% else %}
+			    <th data-sortable="true">{{"activity.name_eu" | trans | capitalize}}</th>
+			{% endif %}
+			<th data-sortable="true">{{"activity.concept" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"activity.totalTickets" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"activity.ticketsRemaining" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"activity.maxTickets" | trans | capitalize}}</th>
+			<th data-sortable="true">{{"activity.enabled" | trans | capitalize}}</th>
+			<th data-sortable="true" data-field="options">{{"options" | trans | capitalize}}</th>
+		    </tr>
+		</thead>
+		<tbody>
+		    {% if activities is defined and activities|length > 0 %}
+			{% for activity in activities %}
+			<tr>
+			    <td>{{activity.id}}</td>
+			    {% if app.request.locale == 'es'%}
+				<td>{{activity.name}}</td>
+			    {% else %}
+				<td>{{activity.nameEu}}</td>
+			    {% endif %}
+			    <td>{{activity.concept}}</td>
+			    <td>{{activity.totalTickets}}</td>
+			    <td>{{activity.remainingTickets}}</td>
+			    <td>{{activity.maxTickets}}</td>
+			    {% if activity.enabled == true %}
+				<td>{{ "Sí" | trans | capitalize }}</td>
+			    {% else %}
+				<td>{{ "No" | trans | capitalize }}</td>
+			    {% endif %}
+			    <td>
+				<a href="{{ path ("activity_show",{'id': activity.id })}}"><i class="fa fa-eye"></i></a>
+				&nbsp;<a href="{{ path ("activity_edit",{'id': activity.id })}}"><i class="fa fa-edit"></i></a>
+				&nbsp;<a class="js-delete" href="#" data-url='{{ path ("activity_delete",{'id': activity.id })}}'><i class="fa fa-trash"></i></a>
+			    </td>
+			</tr>
+			{% endfor %}
+		    {% else %}
+			<tr><td colspan="5">{{"messages.results0" | trans }}</td></tr>
+		    {% endif %}
+		</tbody>
+	    </table>
+	    <span class="pull-right"><a href="{{ path ('activity_new') }}" class="btn btn-primary btn-rounded fixed-bottom-right"><i class="fa fa-plus" title='{{ "btn.new" | trans | capitalize }}'></i></a></span>
+	</div>
+    </main>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('activity_list') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('activity_list') }}
+{% endblock %}
