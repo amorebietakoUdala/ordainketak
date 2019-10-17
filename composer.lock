@@ -4,8 +4,56 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f7cf64e83e3b4e1f21ed7e4921e3ce26",
+    "content-hash": "2786db69389d6a08fd9c98e728d520c4",
     "packages": [
+        {
+            "name": "amorebietakoudala/mipago-bundle",
+            "version": "0.9.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/amorebietakoUdala/mipago-bundle.git",
+                "reference": "8f83b4bda74dcbb4e0ceeda2f00c8c525e4544b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/amorebietakoUdala/mipago-bundle/zipball/8f83b4bda74dcbb4e0ceeda2f00c8c525e4544b3",
+                "reference": "8f83b4bda74dcbb4e0ceeda2f00c8c525e4544b3",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "^2.5",
+                "php": ">=7.1.0",
+                "symfony/config": "^4.3",
+                "symfony/translation": "^4.0",
+                "twig/twig": "^2.12"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "master-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MiPago\\Bundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Amorebietako Udala",
+                    "email": "informatika@amorebieta.eus"
+                }
+            ],
+            "description": "A bundle to make payment through Basque Goverment's MiPago platform in symfony projects",
+            "keywords": [
+                "Payments MiPago Basque Government"
+            ],
+            "time": "2019-10-17T08:30:36+00:00"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.8.0",

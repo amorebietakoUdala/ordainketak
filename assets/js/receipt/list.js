@@ -8,14 +8,15 @@ import 'tableexport.jquery.plugin/tableExport';
 import 'bootstrap-table/dist/locale/bootstrap-table-es-ES';
 import 'bootstrap-table/dist/locale/bootstrap-table-eu-EU';
 import {createAlert} from '../common/alert';
+const app_base = '/ordainketak';
 const routes = require('../../../public/js/fos_js_routes.json');
 import Routing from '../../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js'
-
 
 $(document).ready(function(){
     console.log('Receipt List OnReady!');
     Routing.setRoutingData(routes);
     console.log('Routes loaded!!!');
+	var current_locale = $('html').attr("lang");
 
     $('#taula').bootstrapTable({
         cache : false,
@@ -45,18 +46,18 @@ $(document).ready(function(){
         });
     });
 
-    $('#js-autoPay').on('click',function(e){
+	$(document).on('click','#js-autoPay',function(e){
         e.preventDefault();
-        createAlert(e, Routing.generate('receipt_pay', { numeroReferenciaGTWIN: $(e.currentTarget).data('numeroreferenciagtwin'), dni: $(e.currentTarget).data('dni') } ));
+        createAlert(e, app_base + Routing.generate('receipt_pay', { numeroReferenciaGTWIN: $(e.currentTarget).data('numeroreferenciagtwin'), dni: $(e.currentTarget).data('dni'), _locale: current_locale  } ));
     });
 
     if ($('#js-autoPay').length > 0) { 
         $('#js-autoPay')[0].click();
     }
 
-    $('.js-btnPay').on('click',function(e){
+    $(document).on('click','.js-btnPay',function(e){
         e.preventDefault();
-        createAlert(e, Routing.generate('receipt_pay', { numeroReferenciaGTWIN: $(e.currentTarget).data('numeroreferenciagtwin'), dni: $(e.currentTarget).data('dni') } ));
+        createAlert(e, app_base + Routing.generate('receipt_pay', { numeroReferenciaGTWIN: $(e.currentTarget).data('numeroreferenciagtwin'), dni: $(e.currentTarget).data('dni'), _locale: current_locale } ));
     });
 
 });

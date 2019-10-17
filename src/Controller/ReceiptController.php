@@ -22,7 +22,8 @@ class ReceiptController extends AbstractController
     /**
      * @Route("/", name="receipt_home", methods={"GET","POST"})
      */
-    public function homeAction(Request $request, LoggerInterface $logger, GTWINIntegrationService $gts) {
+    public function homeAction(Request $request, LoggerInterface $logger, GTWINIntegrationService $gts)
+    {
         $locale = $request->attributes->get('_locale');
         if (null !== $locale) {
             $request->getSession()->set('_locale', $locale);
@@ -36,7 +37,8 @@ class ReceiptController extends AbstractController
     /**
      * @Route("/receipts", name="receipt_find", methods={"GET","POST"})
      */
-    public function findReceiptsAction(Request $request, LoggerInterface $logger, GTWINIntegrationService $gts) {
+    public function findReceiptsAction(Request $request, LoggerInterface $logger, GTWINIntegrationService $gts)
+    {
         $logger->debug('-->findReceiptsAction: Start');
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $roles = ('anon.' === $user) ? ['IS_AUTHENTICATED_ANONYMOUSLY'] : $user->getRoles();
@@ -149,9 +151,9 @@ class ReceiptController extends AbstractController
     {
         $logger->debug('-->payForwardedReceiptAction: Start');
         if (null != $receipt) {
-            $logger->debug('<--payForwardedReceiptAction: End Forwarded to MiPagoBundle:Payment:sendRequest');
+            $logger->debug('<--payForwardedReceiptAction: End Forwarded to MiPago\Bundle\Controller\PaymentController::sendRequestAction');
 
-            return $this->forward('MiPagoBundle:Payment:sendRequest', $this->__createMiPagoParametersArray($receipt));
+            return $this->forward('MiPago\Bundle\Controller\PaymentController::sendRequestAction', $this->__createMiPagoParametersArray($receipt));
         } else {
             $this->addFlash('error', 'Recibo no encontrado');
             $logger->debug('<--payForwardedReceiptAction: End Recibo no encontrado');
@@ -204,13 +206,13 @@ class ReceiptController extends AbstractController
         }
         $logger->debug('<--payReceiptAction: End Forwarded to sendRequest');
 
-        return $this->forward('MiPagoBundle:Payment:sendRequest', $this->__createMiPagoParametersArray($receipt));
+        return $this->forward('MiPago\Bundle\Controller\PaymentController::sendRequestAction', $this->__createMiPagoParametersArray($receipt));
     }
 
     /**
      * @Route("/receiptConfirmation", name="receipt_confirmation", methods={"GET","POST"})
      */
-    public function receiptConfirmationAction(Request $request, LoggerInterface $logger, GTWINIntegrationService $gts)
+    public function receiptConfirmationAction(Request $request, LoggerInterface $logger, GTWINIntegrationService $gts, \Swift_Mailer $mailer)
     {
         $logger->debug('-->ReceiptConfirmationAction: Start');
         $payment = $request->get('payment');
@@ -226,7 +228,7 @@ class ReceiptController extends AbstractController
         $em->persist($receipt);
         $em->flush();
         $this->__updateRemainingTickets($receipt, $logger);
-        $this->__sendConfirmationEmails($receipt);
+        $this->__sendConfirmationEmails($receipt, $mailer);
         $this->__updatePayment($receipt, $logger, $gts);
         $logger->debug('<--ReceiptConfirmationAction: End OK');
 
@@ -258,22 +260,21 @@ class ReceiptController extends AbstractController
         }
     }
 
-    private function __sendConfirmationEmails($receipt)
+    private function __sendConfirmationEmails($receipt, $mailer)
     {
         if (true === $this->getParameter('mailer_sendConfirmation') && !empty($receipt->getEmail())) {
             $emails = [$receipt->getEmail()];
-            $this->__sendMessage('Confirmación del Pago / Ordainketaren konfirmazioa', $receipt, $emails);
+            $this->__sendMessage('Confirmación del Pago / Ordainketaren konfirmazioa', $receipt, $emails, $mailer);
         }
         if (true === $this->getParameter('mailer_sendBCC')) {
             $bccs = $this->getParameter('mailer_BCC_email');
-            $this->__sendMessage('Confirmación del Pago / Ordainketaren konfirmazioa', $receipt, $bccs);
+            $this->__sendMessage('Confirmación del Pago / Ordainketaren konfirmazioa', $receipt, $bccs, $mailer);
         }
     }
 
-    private function __sendMessage($subject, $receipt, $emails)
+    private function __sendMessage($subject, $receipt, $emails, $mailer)
     {
         $from = $this->getParameter('mailer_from');
-        $mailer = $this->get('mailer');
         $message = new Swift_Message($subject);
         $message->setFrom($from);
         $message->setTo($emails);

@@ -39,7 +39,7 @@ $(document).ready(function(){
             });
         });
     });
-	$('.js-delete').on('click',function(e){
+	$(document).on('click','.js-delete',function(e){
 		e.preventDefault();
 		var url = e.currentTarget.dataset.url;
 		createConfirmationAlert(url);

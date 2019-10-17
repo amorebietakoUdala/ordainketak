@@ -6,12 +6,11 @@
 parameters:
     locale: "es"
     uploads_directory: "%env(UPLOADS_DIRECTORY)%"
-    # sender: "%env{MIPAGO_SENDER}%"
-    # suffixes: "%env{MIPAGO_SUFFIXES}%"
-    # return_url: "%env{MIPAGO_RETURN_URL}%"
-    mipago.forwardController: "%env(string:MIPAGO_FORWARDCONTROLLER)%"
-    # #    payment_modes: ['001','002']
-    # test_environment: "%env{MIPAGO_TEST_ENVIRONMENT}%"
+    mipago.forwardController: "%env(MIPAGO_FORWARDCONTROLLER)%"
+    mailer_sendConfirmation: "%env(bool:MAILER_SEND_CONFIRMATION)%"
+    mailer_sendBCC: "%env(bool:MAILER_SEND_BCC)%"
+    mailer_BCC_email: "%env(string:MAILER_BCC_EMAIL)%"
+    mailer_from: "%env(string:MAILER_USER)%"
 
 services:
     # default configuration for services in *this* file

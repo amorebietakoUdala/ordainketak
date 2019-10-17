@@ -35,6 +35,8 @@ Encore
 	.addEntry('activity_new', './assets/js/activity/new.js')
 	.addEntry('activity_edit', './assets/js/activity/edit.js')
 	.addEntry('tickets_buy', './assets/js/tickets/buy.js')
+	.addEntry('payment_list', './assets/js/payment/list.js')
+	.addEntry('payment_show', './assets/js/payment/show.js')
 // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
 .splitEntryChunks()
 

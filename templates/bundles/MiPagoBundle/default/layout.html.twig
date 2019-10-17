@@ -1,6 +1,8 @@
 {% extends "base.html.twig" %}
 {% trans_default_domain "mipago" %}
 
+{% block title %}{{'messages.appTitle' | trans({}, 'messages') }}{% endblock %}
+
 {% block body %}
     {% block error %}{% endblock error %}
     {% block request_content %}{% endblock request_content %}
