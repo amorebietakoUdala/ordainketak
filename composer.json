@@ -5,7 +5,8 @@
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+			"MiPago\\Bundle\\": "lib/mipago-bundle/"
         }
     },
     "minimum-stability": "dev",
