@@ -2,6 +2,8 @@
 
 namespace App\Entity\API;
 
+use App\Entity\GTWIN\ReciboGTWIN;
+
 /**
  * This class holds the ApiResponse when.
  *
@@ -17,6 +19,22 @@ class ApiResponse
     {
         $this->status = $status;
         $this->message = $message;
-        $this->data = $data;
+        $this->data = $this->convertEncodingToUTF8($data);
+    }
+
+    private function convertEncodingToUTF8($data)
+    {
+        if (is_array($data)) {
+            foreach ($data as $element) {
+                if ($element instanceof ReciboGTWIN) {
+                    /* @var $element ReciboGTWIN */
+                    $element->setNumeroReferenciaExterna(mb_convert_encoding($element->getNumeroReferenciaExterna(), 'UTF-8'));
+                    $element->setNombreCompleto(mb_convert_encoding($element->getNombreCompleto(), 'UTF-8'));
+                    $element->getTipoIngreso()->setDescripcion(mb_convert_encoding($element->getTipoIngreso()->getDescripcion(), 'UTF-8'));
+                }
+            }
+        }
+
+        return $data;
     }
 }
