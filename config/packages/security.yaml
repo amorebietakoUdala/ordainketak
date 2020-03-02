@@ -32,6 +32,8 @@ security:
             anonymous: true
 
         main:
+            http_basic:   true
+            fr3d_ldap_httpbasic: ~
             provider: chain_provider
             fr3d_ldap: ~
             form_login:
