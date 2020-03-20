@@ -200,6 +200,7 @@ class ReciboGTWIN
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\GTWIN\TipoIngreso")
      * @ORM\JoinColumn(name="RECTIPING", referencedColumnName="TINDBOIDE")
+     * @Serializer\Expose
      */
     private $tipoIngreso;
 
