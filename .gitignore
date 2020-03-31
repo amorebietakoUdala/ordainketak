@@ -39,3 +39,9 @@
 /public/build/
 /public/node_modules/
 /src/MiPago/
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###

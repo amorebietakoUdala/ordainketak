@@ -194,6 +194,9 @@
             "config/routes/nelmio_api_doc.yaml"
         ]
     },
+    "ocramius/package-versions": {
+        "version": "1.4.2"
+    },
     "php": {
         "version": "7.2"
     },
