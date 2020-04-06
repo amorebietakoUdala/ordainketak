@@ -43,7 +43,9 @@
         "twbs/bootstrap": "^4.3",
         "twig/twig": "^1.0||^2.0",
         "willdurand/js-translation-bundle": "^2.6",
-        "amorebietakoudala/mipago-bundle": "^0.9.6"
+        "amorebietakoudala/mipago-bundle": "^0.9.6",
+        "doctrine/doctrine-migrations-bundle": "^2.1",
+        "symfony/security": "^4.4.7"
     },
     "require-dev": {
         "doctrine/data-fixtures": "^1.3",

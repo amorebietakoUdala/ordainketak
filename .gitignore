@@ -38,6 +38,7 @@
 ###< symfony/web-server-bundle ###
 /public/build/
 /public/node_modules/
+<<<<<<< HEAD
 /src/MiPago/
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
@@ -45,3 +46,8 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+=======
+/src/MiPago/
+/lib/
+/node_modules/
+>>>>>>> 22f93b861c75402e49236a062abf85f1695bf54b

@@ -3,12 +3,14 @@
 namespace App\Entity\GTWIN;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Tipo Ingreso.
  *
  * @ORM\Table(name="SP_TRB_TIPING")
  * @ORM\Entity(repositoryClass="App\Repository\GTWIN\TipoIngresoRepository",readOnly=true)
+ * @Serializer\ExclusionPolicy("all")
  */
 class TipoIngreso
 {
@@ -25,6 +27,7 @@ class TipoIngreso
      * @var string
      *
      * @ORM\Column(name="TINCODTIN", type="string", nullable=false)
+     * @Serializer\Expose
      */
     private $codigo;
 
@@ -32,6 +35,7 @@ class TipoIngreso
      * @var string
      *
      * @ORM\Column(name="TINNOMTIN", type="string", nullable=false)
+     * @Serializer\Expose
      */
     private $descripcion;
 
@@ -67,6 +71,7 @@ class TipoIngreso
      * @var string
      *
      * @ORM\Column(name="TINCODO60", type="string", nullable=false)
+     * @Serializer\Expose
      */
     private $conceptoC60;
 
